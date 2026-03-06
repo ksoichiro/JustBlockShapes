@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "justmissingblocks:block/gilded_blackstone_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/gilded_blackstone"
+    },
+    "type=top": {
+      "model": "justmissingblocks:block/gilded_blackstone_slab_top"
+    }
+  }
+}

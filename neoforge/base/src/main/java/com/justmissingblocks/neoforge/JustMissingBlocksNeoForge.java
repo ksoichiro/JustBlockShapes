@@ -1,5 +1,6 @@
 package com.justmissingblocks.neoforge;
 
+import com.justmissingblocks.Compat;
 import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
@@ -24,16 +25,16 @@ public class JustMissingBlocksNeoForge {
 
     public JustMissingBlocksNeoForge(IEventBus modEventBus) {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
-            Block baseBlock = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("minecraft", entry.baseBlockId()));
+            Block baseBlock = Compat.getBlock(
+                Compat.resourceLocation("minecraft", entry.baseBlockId()));
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
 
                 var blockHolder = BLOCKS.register(id,
-                    () -> ModBlocks.createVariantBlock(variant, baseBlock));
+                    () -> ModBlocks.createVariantBlock(variant, baseBlock, id));
                 ITEMS.register(id,
-                    () -> new BlockItem(blockHolder.get(), new Item.Properties()));
+                    () -> new BlockItem(blockHolder.get(), Compat.createItemProperties(JustMissingBlocks.MOD_ID, id)));
 
                 // Register in common map after deferred registration resolves
                 modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) -> {

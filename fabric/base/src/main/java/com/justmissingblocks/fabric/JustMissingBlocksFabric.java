@@ -8,6 +8,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -17,18 +18,18 @@ public class JustMissingBlocksFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
-            Block baseBlock = BuiltInRegistries.BLOCK.get(
+            Block baseBlock = Compat.getBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
-                Block block = ModBlocks.createVariantBlock(variant, baseBlock);
+                Block block = ModBlocks.createVariantBlock(variant, baseBlock, id);
 
                 var resLoc = Compat.resourceLocation(
                     JustMissingBlocks.MOD_ID, id);
                 Registry.register(BuiltInRegistries.BLOCK, resLoc, block);
                 Registry.register(BuiltInRegistries.ITEM, resLoc,
-                    new BlockItem(block, new Item.Properties()));
+                    new BlockItem(block, Compat.createItemProperties(JustMissingBlocks.MOD_ID, id)));
 
                 ModBlocks.register(id, block);
             }

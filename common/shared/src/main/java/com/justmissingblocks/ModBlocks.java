@@ -104,8 +104,9 @@ public class ModBlocks {
         return REGISTERED_BLOCKS;
     }
 
-    public static Block createVariantBlock(VariantType variant, Block baseBlock) {
+    public static Block createVariantBlock(VariantType variant, Block baseBlock, String blockId) {
         BlockBehaviour.Properties props = Compat.copyProperties(baseBlock);
+        props = Compat.withBlockId(props, JustMissingBlocks.MOD_ID, blockId);
         return switch (variant) {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
