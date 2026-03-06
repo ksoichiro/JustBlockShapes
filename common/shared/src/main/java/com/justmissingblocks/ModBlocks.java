@@ -93,7 +93,7 @@ public class ModBlocks {
     }
 
     public static Block createVariantBlock(VariantType variant, Block baseBlock) {
-        BlockBehaviour.Properties props = BlockBehaviour.Properties.ofFullCopy(baseBlock);
+        BlockBehaviour.Properties props = Compat.copyProperties(baseBlock);
         return switch (variant) {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
