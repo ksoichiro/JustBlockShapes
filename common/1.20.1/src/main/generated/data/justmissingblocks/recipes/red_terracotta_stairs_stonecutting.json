@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "minecraft:red_terracotta"
-  },
-  "result": "justmissingblocks:red_terracotta_stairs"
-}

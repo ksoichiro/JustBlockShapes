@@ -59,17 +59,11 @@ loom {
             server()
             runDir("run")
         }
-        datagen {
-            client()
-            runDir("run")
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("../../common/1.20.1/src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=justmissingblocks"
-        }
     }
 }
 
 processResources {
+    dependsOn project(commonModule).tasks.named('convertDatagen')
     from(project(commonModule).sourceSets.main.resources)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 

@@ -20,9 +20,6 @@
     ],
     "client": [
       "com.justmissingblocks.fabric.JustMissingBlocksFabricClient"
-    ],
-    "fabric-datagen": [
-      "com.justmissingblocks.datagen.JustMissingBlocksDataGenerator"
     ]
   },
   "accessWidener": "justmissingblocks.accesswidener",
