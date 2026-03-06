@@ -45,9 +45,21 @@ public class ModBlocks {
         stairsAndWall("cut_sandstone");
         stairsAndWall("cut_red_sandstone");
 
+        // Walls only (stairs + slab already exist in vanilla)
+        wallOnly("smooth_sandstone");
+        wallOnly("smooth_red_sandstone");
+        wallOnly("stone");
+
         // All three (stairs + slab + wall)
         allThree("calcite");
         allThree("cracked_stone_bricks");
+        allThree("smooth_basalt");
+        allThree("cracked_deepslate_bricks");
+        allThree("cracked_polished_blackstone_bricks");
+        allThree("cracked_deepslate_tiles");
+        allThree("cracked_nether_bricks");
+        allThree("end_stone");
+        allThree("gilded_blackstone");
         allThree("terracotta");
 
         // 16 dyed terracotta
