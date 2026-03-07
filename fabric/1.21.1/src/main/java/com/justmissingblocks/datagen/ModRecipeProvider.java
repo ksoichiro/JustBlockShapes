@@ -78,6 +78,19 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                             .unlockedBy("has_material", has(baseBlock))
                             .save(exporter, stonecuttingId);
                     }
+                    case TRAPDOOR -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 2)
+                            .define('#', baseIngredient)
+                            .pattern("##")
+                            .pattern("##")
+                            .pattern("##")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
                 }
             }
         }

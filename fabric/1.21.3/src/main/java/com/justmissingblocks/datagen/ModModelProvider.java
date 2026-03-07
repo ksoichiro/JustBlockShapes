@@ -28,6 +28,7 @@ public class ModModelProvider extends FabricModelProvider {
             Block stairsBlock = null;
             Block slabBlock = null;
             Block wallBlock = null;
+            Block trapdoorBlock = null;
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(baseId, variant);
@@ -38,6 +39,7 @@ public class ModModelProvider extends FabricModelProvider {
                     case STAIRS -> stairsBlock = block;
                     case SLAB -> slabBlock = block;
                     case WALL -> wallBlock = block;
+                    case TRAPDOOR -> trapdoorBlock = block;
                 }
             }
 
@@ -76,6 +78,18 @@ public class ModModelProvider extends FabricModelProvider {
                 ResourceLocation inventory = ModelTemplates.WALL_INVENTORY.create(wallBlock,
                     textureMapping, gen.modelOutput);
                 gen.delegateItemModel(wallBlock, inventory);
+            }
+
+            if (trapdoorBlock != null) {
+                ResourceLocation top = ModelTemplates.TRAPDOOR_TOP.create(trapdoorBlock,
+                    textureMapping, gen.modelOutput);
+                ResourceLocation bottom = ModelTemplates.TRAPDOOR_BOTTOM.create(trapdoorBlock,
+                    textureMapping, gen.modelOutput);
+                ResourceLocation open = ModelTemplates.TRAPDOOR_OPEN.create(trapdoorBlock,
+                    textureMapping, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createTrapdoor(trapdoorBlock, top, bottom, open));
+                gen.delegateItemModel(trapdoorBlock, bottom);
             }
         }
     }

@@ -9,13 +9,15 @@ import java.util.Set;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 public class ModBlocks {
 
     public enum VariantType {
-        STAIRS, SLAB, WALL
+        STAIRS, SLAB, WALL, TRAPDOOR
     }
 
     public record BlockEntry(String baseBlockId, Set<VariantType> variants) {}
@@ -74,15 +76,15 @@ public class ModBlocks {
     }
 
     private static void wallOnly(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR)));
     }
 
     private static void stairsAndWall(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL, VariantType.TRAPDOOR)));
     }
 
     private static void allThree(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR)));
     }
 
     public static List<BlockEntry> getBlockEntries() {
@@ -94,6 +96,7 @@ public class ModBlocks {
             case STAIRS -> baseBlockId + "_stairs";
             case SLAB -> baseBlockId + "_slab";
             case WALL -> baseBlockId + "_wall";
+            case TRAPDOOR -> baseBlockId + "_trapdoor";
         };
     }
 
@@ -111,6 +114,7 @@ public class ModBlocks {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
+            case TRAPDOOR -> new TrapDoorBlock(BlockSetType.IRON, props);
         };
     }
 

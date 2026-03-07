@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "minecraft:smooth_red_sandstone"
+  },
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 2,
+    "id": "justmissingblocks:smooth_red_sandstone_trapdoor"
+  }
+}
