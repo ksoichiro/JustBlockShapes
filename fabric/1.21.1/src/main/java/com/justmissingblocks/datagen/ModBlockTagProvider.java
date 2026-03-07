@@ -1,11 +1,14 @@
 package com.justmissingblocks.datagen;
 
+import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
+import com.justmissingblocks.compat.BiomesOPlentyCompat;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 
@@ -46,6 +49,27 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 }
 
                 pickaxeTag.add(block);
+            }
+        }
+
+        // Compat blocks: added as optional so datagen doesn't require the mod to be present
+        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+            for (VariantType variant : entry.variants()) {
+                String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
+                ResourceLocation resLoc = ResourceLocation.fromNamespaceAndPath(
+                    JustMissingBlocks.MOD_ID, id);
+
+                switch (variant) {
+                    case STAIRS -> stairsTag.addOptional(resLoc);
+                    case SLAB -> slabsTag.addOptional(resLoc);
+                    case WALL -> wallsTag.addOptional(resLoc);
+                    case TRAPDOOR -> trapdoorsTag.addOptional(resLoc);
+                    case DOOR -> doorsTag.addOptional(resLoc);
+                    case PRESSURE_PLATE -> pressurePlatesTag.addOptional(resLoc);
+                    case BUTTON -> buttonsTag.addOptional(resLoc);
+                }
+
+                pickaxeTag.addOptional(resLoc);
             }
         }
     }

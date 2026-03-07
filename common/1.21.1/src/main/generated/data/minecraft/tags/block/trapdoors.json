@@ -56,8 +56,17 @@
     "justmissingblocks:green_concrete_trapdoor",
     "justmissingblocks:red_concrete_trapdoor",
     "justmissingblocks:black_concrete_trapdoor",
-    "justmissingblocks:rose_quartz_block_trapdoor",
-    "justmissingblocks:brimstone_trapdoor",
-    "justmissingblocks:flesh_trapdoor"
+    {
+      "id": "justmissingblocks:rose_quartz_block_trapdoor",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_trapdoor",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_trapdoor",
+      "required": false
+    }
   ]
 }

@@ -56,8 +56,17 @@
     "justmissingblocks:green_concrete_pressure_plate",
     "justmissingblocks:red_concrete_pressure_plate",
     "justmissingblocks:black_concrete_pressure_plate",
-    "justmissingblocks:rose_quartz_block_pressure_plate",
-    "justmissingblocks:brimstone_pressure_plate",
-    "justmissingblocks:flesh_pressure_plate"
+    {
+      "id": "justmissingblocks:rose_quartz_block_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_pressure_plate",
+      "required": false
+    }
   ]
 }

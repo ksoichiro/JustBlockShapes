@@ -367,26 +367,89 @@
     "justmissingblocks:black_concrete_door",
     "justmissingblocks:black_concrete_pressure_plate",
     "justmissingblocks:black_concrete_button",
-    "justmissingblocks:rose_quartz_block_stairs",
-    "justmissingblocks:rose_quartz_block_slab",
-    "justmissingblocks:rose_quartz_block_wall",
-    "justmissingblocks:rose_quartz_block_trapdoor",
-    "justmissingblocks:rose_quartz_block_door",
-    "justmissingblocks:rose_quartz_block_pressure_plate",
-    "justmissingblocks:rose_quartz_block_button",
-    "justmissingblocks:brimstone_stairs",
-    "justmissingblocks:brimstone_slab",
-    "justmissingblocks:brimstone_wall",
-    "justmissingblocks:brimstone_trapdoor",
-    "justmissingblocks:brimstone_door",
-    "justmissingblocks:brimstone_pressure_plate",
-    "justmissingblocks:brimstone_button",
-    "justmissingblocks:flesh_stairs",
-    "justmissingblocks:flesh_slab",
-    "justmissingblocks:flesh_wall",
-    "justmissingblocks:flesh_trapdoor",
-    "justmissingblocks:flesh_door",
-    "justmissingblocks:flesh_pressure_plate",
-    "justmissingblocks:flesh_button"
+    {
+      "id": "justmissingblocks:rose_quartz_block_stairs",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_slab",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_wall",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_trapdoor",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_door",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:rose_quartz_block_button",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_stairs",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_slab",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_wall",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_trapdoor",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_door",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_button",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_stairs",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_slab",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_wall",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_trapdoor",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_door",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_pressure_plate",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_button",
+      "required": false
+    }
   ]
 }

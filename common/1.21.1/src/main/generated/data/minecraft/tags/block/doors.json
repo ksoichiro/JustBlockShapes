@@ -56,8 +56,17 @@
     "justmissingblocks:green_concrete_door",
     "justmissingblocks:red_concrete_door",
     "justmissingblocks:black_concrete_door",
-    "justmissingblocks:rose_quartz_block_door",
-    "justmissingblocks:brimstone_door",
-    "justmissingblocks:flesh_door"
+    {
+      "id": "justmissingblocks:rose_quartz_block_door",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_door",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_door",
+      "required": false
+    }
   ]
 }

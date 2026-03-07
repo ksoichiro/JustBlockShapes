@@ -42,8 +42,17 @@
     "justmissingblocks:green_concrete_slab",
     "justmissingblocks:red_concrete_slab",
     "justmissingblocks:black_concrete_slab",
-    "justmissingblocks:rose_quartz_block_slab",
-    "justmissingblocks:brimstone_slab",
-    "justmissingblocks:flesh_slab"
+    {
+      "id": "justmissingblocks:rose_quartz_block_slab",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_slab",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_slab",
+      "required": false
+    }
   ]
 }

@@ -45,8 +45,17 @@
     "justmissingblocks:green_concrete_stairs",
     "justmissingblocks:red_concrete_stairs",
     "justmissingblocks:black_concrete_stairs",
-    "justmissingblocks:rose_quartz_block_stairs",
-    "justmissingblocks:brimstone_stairs",
-    "justmissingblocks:flesh_stairs"
+    {
+      "id": "justmissingblocks:rose_quartz_block_stairs",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_stairs",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_stairs",
+      "required": false
+    }
   ]
 }
