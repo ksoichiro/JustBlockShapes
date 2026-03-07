@@ -34,6 +34,6 @@ public class Compat {
     public static Item.Properties createItemProperties(String namespace, String itemId) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM,
             Identifier.fromNamespaceAndPath(namespace, itemId));
-        return new Item.Properties().setId(key);
+        return new Item.Properties().setId(key).useBlockDescriptionPrefix();
     }
 }
