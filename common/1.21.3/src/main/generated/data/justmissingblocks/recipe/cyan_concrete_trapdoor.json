@@ -5,9 +5,8 @@
     "#": "minecraft:cyan_concrete"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

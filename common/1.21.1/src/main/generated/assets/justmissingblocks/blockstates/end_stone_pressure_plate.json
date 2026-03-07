@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "justmissingblocks:block/end_stone_pressure_plate"
+    },
+    "powered=true": {
+      "model": "justmissingblocks:block/end_stone_pressure_plate_down"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 package com.justmissingblocks.datagen;
 
+import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -7,13 +8,22 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.BlockStateGenerator;
+import net.minecraft.data.models.model.ModelTemplate;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.data.models.model.TexturedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
+import java.util.Optional;
+
 public class ModModelProvider extends FabricModelProvider {
+
+    private static final ModelTemplate DOOR_ITEM = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "item/template_door")),
+        Optional.empty(),
+        TextureSlot.TEXTURE);
 
     public ModModelProvider(FabricDataOutput output) {
         super(output);
@@ -23,12 +33,16 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockModelGenerators gen) {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             String baseId = entry.baseBlockId();
-            TextureMapping textureMapping = TextureMapping.cube(getBaseTexture(baseId));
+            ResourceLocation baseTexture = getBaseTexture(baseId);
+            TextureMapping textureMapping = TextureMapping.cube(baseTexture);
 
             Block stairsBlock = null;
             Block slabBlock = null;
             Block wallBlock = null;
             Block trapdoorBlock = null;
+            Block doorBlock = null;
+            Block pressurePlateBlock = null;
+            Block buttonBlock = null;
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(baseId, variant);
@@ -40,6 +54,9 @@ public class ModModelProvider extends FabricModelProvider {
                     case SLAB -> slabBlock = block;
                     case WALL -> wallBlock = block;
                     case TRAPDOOR -> trapdoorBlock = block;
+                    case DOOR -> doorBlock = block;
+                    case PRESSURE_PLATE -> pressurePlateBlock = block;
+                    case BUTTON -> buttonBlock = block;
                 }
             }
 
@@ -90,6 +107,48 @@ public class ModModelProvider extends FabricModelProvider {
                 gen.blockStateOutput.accept(
                     BlockModelGenerators.createTrapdoor(trapdoorBlock, top, bottom, open));
                 gen.delegateItemModel(trapdoorBlock, bottom);
+            }
+
+            if (doorBlock != null) {
+                TextureMapping doorTexture = new TextureMapping()
+                    .put(TextureSlot.TOP, baseTexture)
+                    .put(TextureSlot.BOTTOM, baseTexture);
+                ResourceLocation bottomLeft = ModelTemplates.DOOR_BOTTOM_LEFT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomLeftOpen = ModelTemplates.DOOR_BOTTOM_LEFT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomRight = ModelTemplates.DOOR_BOTTOM_RIGHT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomRightOpen = ModelTemplates.DOOR_BOTTOM_RIGHT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation topLeft = ModelTemplates.DOOR_TOP_LEFT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation topLeftOpen = ModelTemplates.DOOR_TOP_LEFT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation topRight = ModelTemplates.DOOR_TOP_RIGHT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation topRightOpen = ModelTemplates.DOOR_TOP_RIGHT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createDoor(doorBlock, bottomLeft, bottomLeftOpen,
+                        bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen));
+                // Item model using template_door parent
+                String doorId = ModBlocks.variantBlockId(baseId, VariantType.DOOR);
+                TextureMapping itemTexture = new TextureMapping().put(TextureSlot.TEXTURE, baseTexture);
+                DOOR_ITEM.create(
+                    ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "item/" + doorId),
+                    itemTexture, gen.modelOutput);
+            }
+
+            if (pressurePlateBlock != null) {
+                TextureMapping singleTexture = new TextureMapping().put(TextureSlot.TEXTURE, baseTexture);
+                ResourceLocation up = ModelTemplates.PRESSURE_PLATE_UP.create(pressurePlateBlock, singleTexture, gen.modelOutput);
+                ResourceLocation down = ModelTemplates.PRESSURE_PLATE_DOWN.create(pressurePlateBlock, singleTexture, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createPressurePlate(pressurePlateBlock, up, down));
+                gen.delegateItemModel(pressurePlateBlock, up);
+            }
+
+            if (buttonBlock != null) {
+                TextureMapping singleTexture = new TextureMapping().put(TextureSlot.TEXTURE, baseTexture);
+                ResourceLocation button = ModelTemplates.BUTTON.create(buttonBlock, singleTexture, gen.modelOutput);
+                ResourceLocation pressed = ModelTemplates.BUTTON_PRESSED.create(buttonBlock, singleTexture, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createButton(buttonBlock, button, pressed));
+                ResourceLocation inventory = ModelTemplates.BUTTON_INVENTORY.create(buttonBlock, singleTexture, gen.modelOutput);
+                gen.delegateItemModel(buttonBlock, inventory);
             }
         }
     }

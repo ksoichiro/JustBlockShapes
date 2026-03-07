@@ -5,9 +5,8 @@
     "#": "minecraft:cyan_terracotta"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

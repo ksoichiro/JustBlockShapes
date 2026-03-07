@@ -5,9 +5,8 @@
     "#": "minecraft:dark_prismarine"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

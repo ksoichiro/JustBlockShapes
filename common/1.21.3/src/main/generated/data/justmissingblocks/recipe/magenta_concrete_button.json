@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:magenta_concrete"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:magenta_concrete_button"
+  }
+}

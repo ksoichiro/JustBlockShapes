@@ -5,9 +5,8 @@
     "#": "minecraft:prismarine_bricks"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:cracked_deepslate_bricks"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:cracked_deepslate_bricks_button"
+  }
+}

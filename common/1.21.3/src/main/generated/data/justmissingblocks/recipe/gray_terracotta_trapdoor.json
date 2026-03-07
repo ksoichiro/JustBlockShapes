@@ -5,9 +5,8 @@
     "#": "minecraft:gray_terracotta"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

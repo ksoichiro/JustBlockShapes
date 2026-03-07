@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:magenta_terracotta"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:magenta_terracotta_button"
+  }
+}

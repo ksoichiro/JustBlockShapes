@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:yellow_terracotta"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:yellow_terracotta_button"
+  }
+}

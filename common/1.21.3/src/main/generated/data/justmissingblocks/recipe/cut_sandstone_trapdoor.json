@@ -5,9 +5,8 @@
     "#": "minecraft:cut_sandstone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

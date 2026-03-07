@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
@@ -17,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 public class ModBlocks {
 
     public enum VariantType {
-        STAIRS, SLAB, WALL, TRAPDOOR
+        STAIRS, SLAB, WALL, TRAPDOOR, DOOR, PRESSURE_PLATE, BUTTON
     }
 
     public record BlockEntry(String baseBlockId, Set<VariantType> variants) {}
@@ -76,15 +79,15 @@ public class ModBlocks {
     }
 
     private static void wallOnly(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     private static void stairsAndWall(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL, VariantType.TRAPDOOR)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     private static void allThree(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     public static List<BlockEntry> getBlockEntries() {
@@ -97,6 +100,9 @@ public class ModBlocks {
             case SLAB -> baseBlockId + "_slab";
             case WALL -> baseBlockId + "_wall";
             case TRAPDOOR -> baseBlockId + "_trapdoor";
+            case DOOR -> baseBlockId + "_door";
+            case PRESSURE_PLATE -> baseBlockId + "_pressure_plate";
+            case BUTTON -> baseBlockId + "_button";
         };
     }
 
@@ -115,6 +121,9 @@ public class ModBlocks {
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
             case TRAPDOOR -> new TrapDoorBlock(BlockSetType.IRON, props);
+            case DOOR -> new DoorBlock(BlockSetType.IRON, props);
+            case PRESSURE_PLATE -> new PressurePlateBlock(BlockSetType.STONE, props);
+            case BUTTON -> new ButtonBlock(BlockSetType.STONE, 20, props);
         };
     }
 

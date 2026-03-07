@@ -5,9 +5,8 @@
     "#": "minecraft:lime_terracotta"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

@@ -1,0 +1,6 @@
+{
+  "parent": "justmissingblocks:item/template_door",
+  "textures": {
+    "texture": "minecraft:block/red_sandstone_top"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:black_concrete"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:black_concrete_button"
+  }
+}

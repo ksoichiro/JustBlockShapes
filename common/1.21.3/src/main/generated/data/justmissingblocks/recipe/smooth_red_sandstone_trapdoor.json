@@ -5,9 +5,8 @@
     "#": "minecraft:smooth_red_sandstone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

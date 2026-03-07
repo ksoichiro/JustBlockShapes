@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "justmissingblocks:block/brown_terracotta_pressure_plate"
+    },
+    "powered=true": {
+      "model": "justmissingblocks:block/brown_terracotta_pressure_plate_down"
+    }
+  }
+}

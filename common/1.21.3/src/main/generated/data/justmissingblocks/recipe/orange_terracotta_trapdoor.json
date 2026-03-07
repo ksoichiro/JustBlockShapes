@@ -5,9 +5,8 @@
     "#": "minecraft:orange_terracotta"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

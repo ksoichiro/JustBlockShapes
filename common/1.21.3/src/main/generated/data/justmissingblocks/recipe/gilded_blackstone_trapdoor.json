@@ -5,9 +5,8 @@
     "#": "minecraft:gilded_blackstone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

@@ -24,6 +24,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         var slabsTag = getOrCreateTagBuilder(BlockTags.SLABS);
         var wallsTag = getOrCreateTagBuilder(BlockTags.WALLS);
         var trapdoorsTag = getOrCreateTagBuilder(BlockTags.TRAPDOORS);
+        var doorsTag = getOrCreateTagBuilder(BlockTags.DOORS);
+        var pressurePlatesTag = getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES);
+        var buttonsTag = getOrCreateTagBuilder(BlockTags.BUTTONS);
         var pickaxeTag = getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE);
 
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
@@ -37,6 +40,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                     case SLAB -> slabsTag.add(block);
                     case WALL -> wallsTag.add(block);
                     case TRAPDOOR -> trapdoorsTag.add(block);
+                    case DOOR -> doorsTag.add(block);
+                    case PRESSURE_PLATE -> pressurePlatesTag.add(block);
+                    case BUTTON -> buttonsTag.add(block);
                 }
 
                 pickaxeTag.add(block);

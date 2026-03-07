@@ -5,9 +5,8 @@
     "#": "minecraft:polished_diorite"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

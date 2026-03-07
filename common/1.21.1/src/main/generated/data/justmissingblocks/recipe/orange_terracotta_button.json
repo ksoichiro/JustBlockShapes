@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:orange_terracotta"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:orange_terracotta_button"
+  }
+}

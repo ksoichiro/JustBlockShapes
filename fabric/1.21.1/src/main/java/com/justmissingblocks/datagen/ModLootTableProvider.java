@@ -26,6 +26,8 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
                 if (variant == VariantType.SLAB) {
                     this.add(block, this::createSlabItemTable);
+                } else if (variant == VariantType.DOOR) {
+                    this.add(block, this::createDoorTable);
                 } else {
                     this.dropSelf(block);
                 }

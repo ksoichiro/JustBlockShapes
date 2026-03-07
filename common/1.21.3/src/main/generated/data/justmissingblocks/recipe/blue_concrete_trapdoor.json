@@ -5,9 +5,8 @@
     "#": "minecraft:blue_concrete"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

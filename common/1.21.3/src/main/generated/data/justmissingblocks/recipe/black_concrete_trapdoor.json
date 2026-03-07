@@ -5,9 +5,8 @@
     "#": "minecraft:black_concrete"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

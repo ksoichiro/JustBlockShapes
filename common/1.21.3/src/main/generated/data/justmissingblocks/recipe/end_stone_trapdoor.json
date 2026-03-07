@@ -5,9 +5,8 @@
     "#": "minecraft:end_stone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

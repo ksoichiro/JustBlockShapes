@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:cracked_deepslate_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:cracked_deepslate_bricks_pressure_plate"
+  }
+}

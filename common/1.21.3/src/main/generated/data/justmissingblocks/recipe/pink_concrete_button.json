@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:pink_concrete"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:pink_concrete_button"
+  }
+}

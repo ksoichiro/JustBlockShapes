@@ -5,9 +5,8 @@
     "#": "minecraft:smooth_stone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

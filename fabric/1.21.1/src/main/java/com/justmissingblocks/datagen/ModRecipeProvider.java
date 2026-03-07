@@ -10,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -81,9 +82,42 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                     case TRAPDOOR -> {
                         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 2)
                             .define('#', baseIngredient)
+                            .pattern("###")
+                            .pattern("###")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
+                    case DOOR -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 3)
+                            .define('#', baseIngredient)
                             .pattern("##")
                             .pattern("##")
                             .pattern("##")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
+                    case PRESSURE_PLATE -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 1)
+                            .define('#', baseIngredient)
+                            .pattern("##")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
+                    case BUTTON -> {
+                        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, block)
+                            .requires(baseIngredient)
                             .unlockedBy("has_material", has(baseBlock))
                             .save(exporter, craftingId);
                         SingleItemRecipeBuilder.stonecutting(baseIngredient,

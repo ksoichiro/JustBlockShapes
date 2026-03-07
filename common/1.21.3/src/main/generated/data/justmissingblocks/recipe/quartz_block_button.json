@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:quartz_block"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:quartz_block_button"
+  }
+}

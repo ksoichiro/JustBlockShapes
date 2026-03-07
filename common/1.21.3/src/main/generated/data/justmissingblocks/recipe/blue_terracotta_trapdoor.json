@@ -5,9 +5,8 @@
     "#": "minecraft:blue_terracotta"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

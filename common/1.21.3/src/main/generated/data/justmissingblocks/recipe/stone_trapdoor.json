@@ -5,9 +5,8 @@
     "#": "minecraft:stone"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

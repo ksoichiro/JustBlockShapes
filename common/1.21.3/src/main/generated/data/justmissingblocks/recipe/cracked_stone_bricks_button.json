@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:cracked_stone_bricks"
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:cracked_stone_bricks_button"
+  }
+}

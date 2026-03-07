@@ -5,9 +5,8 @@
     "#": "minecraft:polished_granite"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

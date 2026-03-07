@@ -5,9 +5,8 @@
     "#": "minecraft:smooth_basalt"
   },
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,
