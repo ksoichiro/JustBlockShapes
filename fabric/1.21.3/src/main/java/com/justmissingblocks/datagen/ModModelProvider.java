@@ -102,6 +102,8 @@ public class ModModelProvider extends FabricModelProvider {
         return switch (baseBlockId) {
             case "quartz_block" -> ResourceLocation.withDefaultNamespace("block/quartz_block_side");
             case "smooth_quartz" -> ResourceLocation.withDefaultNamespace("block/quartz_block_bottom");
+            case "smooth_sandstone" -> ResourceLocation.withDefaultNamespace("block/sandstone_top");
+            case "smooth_red_sandstone" -> ResourceLocation.withDefaultNamespace("block/red_sandstone_top");
             case "prismarine_bricks" -> ResourceLocation.withDefaultNamespace("block/prismarine_bricks");
             case "dark_prismarine" -> ResourceLocation.withDefaultNamespace("block/dark_prismarine");
             default -> ResourceLocation.withDefaultNamespace("block/" + baseBlockId);
