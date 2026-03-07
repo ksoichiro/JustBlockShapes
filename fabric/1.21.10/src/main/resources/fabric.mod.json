@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "justmissingblocks",
+  "version": "${version}",
+  "name": "Just Missing Blocks",
+  "description": "Adds missing wall, stairs, and slab variants for vanilla building blocks.",
+  "authors": [
+    "ksoichiro"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ksoichiro/JustMissingBlocks",
+    "sources": "https://github.com/ksoichiro/JustMissingBlocks"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/justmissingblocks/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.justmissingblocks.fabric.JustMissingBlocksFabric"
+    ],
+    "client": [
+      "com.justmissingblocks.fabric.JustMissingBlocksFabricClient"
+    ]
+  },
+  "accessWidener": "justmissingblocks.accesswidener",
+  "mixins": [
+    "justmissingblocks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "fabric-api": "*",
+    "minecraft": "~1.21.10",
+    "java": ">=21"
+  }
+}
