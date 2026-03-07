@@ -29,3 +29,10 @@ type="required"
 versionRange="[1.21.1]"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.justmissingblocks]]
+modId="biomesoplenty"
+type="optional"
+versionRange="*"
+ordering="AFTER"
+side="BOTH"

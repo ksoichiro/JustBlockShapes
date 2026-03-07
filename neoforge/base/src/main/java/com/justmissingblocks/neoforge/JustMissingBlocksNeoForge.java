@@ -4,11 +4,13 @@ import com.justmissingblocks.Compat;
 import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
+import com.justmissingblocks.compat.BiomesOPlentyCompat;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -38,6 +40,26 @@ public class JustMissingBlocksNeoForge {
                 modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
                     ModBlocks.register(id, blockHolder.get());
                 });
+            }
+        }
+
+        if (ModList.get().isLoaded(BiomesOPlentyCompat.MOD_ID)) {
+            for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+                Block baseBlock = Compat.getBlock(
+                    Compat.resourceLocation(entry.modId(), entry.baseBlockId()));
+
+                for (VariantType variant : entry.variants()) {
+                    String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
+
+                    var blockHolder = BLOCKS.register(id,
+                        () -> ModBlocks.createVariantBlock(variant, baseBlock, id));
+                    ITEMS.register(id,
+                        () -> new BlockItem(blockHolder.get(), Compat.createItemProperties(JustMissingBlocks.MOD_ID, id)));
+
+                    modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
+                        ModBlocks.register(id, blockHolder.get());
+                    });
+                }
             }
         }
 
