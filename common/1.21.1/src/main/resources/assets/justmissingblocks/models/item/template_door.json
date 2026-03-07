@@ -1,16 +1,17 @@
 {
+  "gui_light": "front",
   "textures": {
     "particle": "#texture"
   },
   "elements": [
     {
       "from": [3, 0, 7],
-      "to": [13, 16, 9],
+      "to": [13, 14, 9],
       "faces": {
-        "north": { "texture": "#texture", "uv": [3, 0, 13, 16] },
-        "south": { "texture": "#texture", "uv": [3, 0, 13, 16] },
-        "east": { "texture": "#texture", "uv": [7, 0, 9, 16] },
-        "west": { "texture": "#texture", "uv": [7, 0, 9, 16] },
+        "north": { "texture": "#texture", "uv": [3, 2, 13, 16] },
+        "south": { "texture": "#texture", "uv": [3, 2, 13, 16] },
+        "east": { "texture": "#texture", "uv": [7, 2, 9, 16] },
+        "west": { "texture": "#texture", "uv": [7, 2, 9, 16] },
         "up": { "texture": "#texture", "uv": [3, 7, 13, 9] },
         "down": { "texture": "#texture", "uv": [3, 7, 13, 9] }
       }
@@ -18,9 +19,9 @@
   ],
   "display": {
     "gui": {
-      "rotation": [30, 225, 0],
+      "rotation": [0, 0, 0],
       "translation": [0, 0, 0],
-      "scale": [0.625, 0.625, 0.625]
+      "scale": [1, 1, 1]
     },
     "ground": {
       "rotation": [0, 0, 0],
