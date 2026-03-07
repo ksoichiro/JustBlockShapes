@@ -120,8 +120,8 @@ public class ModBlocks {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
-            case TRAPDOOR -> new TrapDoorBlock(BlockSetType.IRON, props);
-            case DOOR -> new DoorBlock(BlockSetType.IRON, props);
+            case TRAPDOOR -> new TrapDoorBlock(BlockSetType.OAK, props);
+            case DOOR -> new DoorBlock(BlockSetType.OAK, props);
             case PRESSURE_PLATE -> new PressurePlateBlock(BlockSetType.STONE, props);
             case BUTTON -> new ButtonBlock(BlockSetType.STONE, 20, props);
         };

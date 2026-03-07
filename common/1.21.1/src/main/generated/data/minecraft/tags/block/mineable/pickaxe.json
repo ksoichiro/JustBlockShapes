@@ -366,6 +366,27 @@
     "justmissingblocks:black_concrete_trapdoor",
     "justmissingblocks:black_concrete_door",
     "justmissingblocks:black_concrete_pressure_plate",
-    "justmissingblocks:black_concrete_button"
+    "justmissingblocks:black_concrete_button",
+    "justmissingblocks:rose_quartz_block_stairs",
+    "justmissingblocks:rose_quartz_block_slab",
+    "justmissingblocks:rose_quartz_block_wall",
+    "justmissingblocks:rose_quartz_block_trapdoor",
+    "justmissingblocks:rose_quartz_block_door",
+    "justmissingblocks:rose_quartz_block_pressure_plate",
+    "justmissingblocks:rose_quartz_block_button",
+    "justmissingblocks:brimstone_stairs",
+    "justmissingblocks:brimstone_slab",
+    "justmissingblocks:brimstone_wall",
+    "justmissingblocks:brimstone_trapdoor",
+    "justmissingblocks:brimstone_door",
+    "justmissingblocks:brimstone_pressure_plate",
+    "justmissingblocks:brimstone_button",
+    "justmissingblocks:flesh_stairs",
+    "justmissingblocks:flesh_slab",
+    "justmissingblocks:flesh_wall",
+    "justmissingblocks:flesh_trapdoor",
+    "justmissingblocks:flesh_door",
+    "justmissingblocks:flesh_pressure_plate",
+    "justmissingblocks:flesh_button"
   ]
 }

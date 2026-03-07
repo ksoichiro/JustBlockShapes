@@ -1,0 +1,6 @@
+{
+  "parent": "justmissingblocks:item/template_door",
+  "textures": {
+    "texture": "biomesoplenty:block/rose_quartz_block"
+  }
+}
