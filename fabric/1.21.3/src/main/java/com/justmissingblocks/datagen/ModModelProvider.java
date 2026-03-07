@@ -25,6 +25,23 @@ public class ModModelProvider extends FabricModelProvider {
         Optional.empty(),
         TextureSlot.TEXTURE);
 
+    private static final ModelTemplate CUSTOM_DOOR_BOTTOM_LEFT = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "block/template_door_bottom_left")),
+        Optional.of("_bottom_left"),
+        TextureSlot.TOP, TextureSlot.BOTTOM);
+    private static final ModelTemplate CUSTOM_DOOR_BOTTOM_LEFT_OPEN = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "block/template_door_bottom_left_open")),
+        Optional.of("_bottom_left_open"),
+        TextureSlot.TOP, TextureSlot.BOTTOM);
+    private static final ModelTemplate CUSTOM_DOOR_BOTTOM_RIGHT = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "block/template_door_bottom_right")),
+        Optional.of("_bottom_right"),
+        TextureSlot.TOP, TextureSlot.BOTTOM);
+    private static final ModelTemplate CUSTOM_DOOR_BOTTOM_RIGHT_OPEN = new ModelTemplate(
+        Optional.of(ResourceLocation.fromNamespaceAndPath(JustMissingBlocks.MOD_ID, "block/template_door_bottom_right_open")),
+        Optional.of("_bottom_right_open"),
+        TextureSlot.TOP, TextureSlot.BOTTOM);
+
     public ModModelProvider(FabricDataOutput output) {
         super(output);
     }
@@ -113,10 +130,10 @@ public class ModModelProvider extends FabricModelProvider {
                 TextureMapping doorTexture = new TextureMapping()
                     .put(TextureSlot.TOP, baseTexture)
                     .put(TextureSlot.BOTTOM, baseTexture);
-                ResourceLocation bottomLeft = ModelTemplates.DOOR_BOTTOM_LEFT.create(doorBlock, doorTexture, gen.modelOutput);
-                ResourceLocation bottomLeftOpen = ModelTemplates.DOOR_BOTTOM_LEFT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
-                ResourceLocation bottomRight = ModelTemplates.DOOR_BOTTOM_RIGHT.create(doorBlock, doorTexture, gen.modelOutput);
-                ResourceLocation bottomRightOpen = ModelTemplates.DOOR_BOTTOM_RIGHT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomLeft = CUSTOM_DOOR_BOTTOM_LEFT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomLeftOpen = CUSTOM_DOOR_BOTTOM_LEFT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomRight = CUSTOM_DOOR_BOTTOM_RIGHT.create(doorBlock, doorTexture, gen.modelOutput);
+                ResourceLocation bottomRightOpen = CUSTOM_DOOR_BOTTOM_RIGHT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
                 ResourceLocation topLeft = ModelTemplates.DOOR_TOP_LEFT.create(doorBlock, doorTexture, gen.modelOutput);
                 ResourceLocation topLeftOpen = ModelTemplates.DOOR_TOP_LEFT_OPEN.create(doorBlock, doorTexture, gen.modelOutput);
                 ResourceLocation topRight = ModelTemplates.DOOR_TOP_RIGHT.create(doorBlock, doorTexture, gen.modelOutput);

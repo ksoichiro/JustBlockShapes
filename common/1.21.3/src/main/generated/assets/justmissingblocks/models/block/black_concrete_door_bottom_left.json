@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/door_bottom_left",
+  "parent": "justmissingblocks:block/template_door_bottom_left",
   "textures": {
     "bottom": "minecraft:block/black_concrete",
     "top": "minecraft:block/black_concrete"
