@@ -17,7 +17,7 @@ A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla bu
 - `props/` - Version-specific properties files
 
 Supported versions:
-- 1.21.1: Fabric, NeoForge (initial target)
+- 1.21.1, 1.21.3–1.21.11: Fabric, NeoForge
 - 1.20.1: Fabric, Forge (not yet implemented)
 
 ## Build Commands
@@ -29,7 +29,7 @@ Supported versions:
 # Build for specific version
 ./gradlew build -Ptarget_mc_version=1.21.1
 
-# Run datagen (generates resources into common/1.21.1/src/main/generated/)
+# Run datagen (generates resources; available for 1.21.1 and 1.21.3)
 ./gradlew fabric:runDatagen -Ptarget_mc_version=1.21.1
 
 # Run client for testing
@@ -49,7 +49,7 @@ Supported versions:
 ## Key Files
 
 - `gradle.properties` - Mod version, target MC version
-- `props/1.21.1.properties` - Version-specific dependencies for 1.21.1
+- `props/{version}.properties` - Version-specific dependencies
 - `common/shared/.../JustMissingBlocks.java` - MOD_ID holder
 - `common/shared/.../ModBlocks.java` - Block definitions (data-driven list of base blocks and variant types)
 - `fabric/base/.../JustMissingBlocksFabric.java` - Fabric registration
@@ -61,7 +61,7 @@ Supported versions:
 - **Data-driven**: Adding/removing blocks means editing `ModBlocks.java`. All datagen providers consume this list.
 - **`Properties.ofFullCopy()`**: Copies all properties from vanilla base block automatically.
 - **StairBlock access widener**: `StairBlock` constructor is protected; access widener in `justmissingblocks.accesswidener` makes it accessible.
-- **Generated resources in common**: Datagen outputs to `common/1.21.1/src/main/generated/` so both platforms share the same generated resources.
+- **Generated resources in common**: Datagen outputs to `common/{version}/src/main/generated/` so both platforms share the same generated resources. Versions 1.21.4+ share generated resources from 1.21.3 (identical JSON format within 1.21.x).
 
 ## Development Notes
 
@@ -71,9 +71,29 @@ Supported versions:
 
 ### Version-specific API differences
 
+**1.21.3+ vs 1.21.1:**
+- `BuiltInRegistries.BLOCK.get()` returns `Optional<Reference<Block>>` (1.21.1 returns `Block` directly)
+- `BlockBehaviour.Properties` requires block ID via `setId(ResourceKey)` before construction
+- `Item.Properties` requires item ID via `setId(ResourceKey)` before construction
+- `FabricRecipeProvider` uses `createRecipeProvider()` pattern instead of `buildRecipes()`
+- `ShapedRecipeBuilder.shaped()` takes `HolderGetter<Item>` as first param
+- Recipe `save()` uses `ResourceKey<Recipe<?>>` instead of `ResourceLocation`
+
+**1.21.4+:**
+- Model datagen API was reorganized (`net.minecraft.data.models` package removed)
+- Datagen code exists only for 1.21.1 and 1.21.3; later versions share generated resources
+
+**1.21.10+:**
+- `pack.mcmeta` uses `min_format`/`max_format` instead of `pack_format`
+
+**1.21.11:**
+- `ResourceLocation` renamed to `Identifier`
+
 **1.21.1 vs 1.20.1:**
 - ResourceLocation: 1.21 uses `fromNamespaceAndPath()`, 1.20.1 uses constructor
 - StairBlock: 1.21 constructor is protected (needs access widener)
+
+All version differences are abstracted via `Compat.java` in each `common/{version}/` module.
 
 ### Forge 1.20.1 with Architectury Loom
 

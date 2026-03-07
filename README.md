@@ -2,7 +2,7 @@
 
 A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla building blocks.
 
-- **1.21.1**: Fabric + NeoForge
+- **1.21.1, 1.21.3–1.21.11**: Fabric + NeoForge
 
 ## Added Blocks
 
