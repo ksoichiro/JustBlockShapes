@@ -55,6 +55,18 @@
     "justmissingblocks:brown_concrete_wall",
     "justmissingblocks:green_concrete_wall",
     "justmissingblocks:red_concrete_wall",
-    "justmissingblocks:black_concrete_wall"
+    "justmissingblocks:black_concrete_wall",
+    {
+      "id": "justmissingblocks:rose_quartz_block_wall",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_wall",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_wall",
+      "required": false
+    }
   ]
 }

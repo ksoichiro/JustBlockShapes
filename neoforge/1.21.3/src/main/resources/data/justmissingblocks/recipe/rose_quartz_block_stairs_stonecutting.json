@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "biomesoplenty"
+    }
+  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "biomesoplenty:rose_quartz_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:rose_quartz_block_stairs"
+  }
+}

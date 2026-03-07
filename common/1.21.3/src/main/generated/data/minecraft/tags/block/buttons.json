@@ -55,6 +55,18 @@
     "justmissingblocks:brown_concrete_button",
     "justmissingblocks:green_concrete_button",
     "justmissingblocks:red_concrete_button",
-    "justmissingblocks:black_concrete_button"
+    "justmissingblocks:black_concrete_button",
+    {
+      "id": "justmissingblocks:rose_quartz_block_button",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:brimstone_button",
+      "required": false
+    },
+    {
+      "id": "justmissingblocks:flesh_button",
+      "required": false
+    }
   ]
 }

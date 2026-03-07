@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": {"model": "justmissingblocks:block/brimstone_pressure_plate"},
+    "powered=true": {"model": "justmissingblocks:block/brimstone_pressure_plate_down"}
+  }
+}

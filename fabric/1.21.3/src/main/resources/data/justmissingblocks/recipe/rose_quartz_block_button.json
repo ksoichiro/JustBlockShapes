@@ -1,0 +1,21 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "biomesoplenty"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "biomesoplenty:rose_quartz_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "justmissingblocks:rose_quartz_block_button"
+  }
+}
