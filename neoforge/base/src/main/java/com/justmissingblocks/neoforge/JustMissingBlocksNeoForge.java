@@ -45,14 +45,19 @@ public class JustMissingBlocksNeoForge {
 
         if (ModList.get().isLoaded(BiomesOPlentyCompat.MOD_ID)) {
             for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
-                Block baseBlock = Compat.getBlock(
-                    Compat.resourceLocation(entry.modId(), entry.baseBlockId()));
+                String compatModId = entry.modId();
+                String baseBlockId = entry.baseBlockId();
 
                 for (VariantType variant : entry.variants()) {
-                    String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
+                    String id = ModBlocks.variantBlockId(baseBlockId, variant);
 
+                    // Resolve base block inside supplier: BOP blocks aren't registered yet during mod construction
                     var blockHolder = BLOCKS.register(id,
-                        () -> ModBlocks.createVariantBlock(variant, baseBlock, id));
+                        () -> {
+                            Block baseBlock = Compat.getBlock(
+                                Compat.resourceLocation(compatModId, baseBlockId));
+                            return ModBlocks.createVariantBlock(variant, baseBlock, id);
+                        });
                     ITEMS.register(id,
                         () -> new BlockItem(blockHolder.get(), Compat.createItemProperties(JustMissingBlocks.MOD_ID, id)));
 
