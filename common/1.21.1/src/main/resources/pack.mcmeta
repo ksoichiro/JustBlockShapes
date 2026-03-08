@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "Just Missing Blocks",
-    "pack_format": ${pack_format}
+    "pack_format": ${pack_format},
+    "description": "Just Missing Blocks Mod Resources"
   }
 }
