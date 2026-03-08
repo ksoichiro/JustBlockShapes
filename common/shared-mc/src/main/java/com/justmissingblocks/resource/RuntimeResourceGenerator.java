@@ -28,27 +28,22 @@ public class RuntimeResourceGenerator {
     }
 
     public static void generate(InMemoryResourcePack pack) {
-        generateVanillaBlocks(pack);
+        // Collect block IDs per tag for combined tag generation
+        java.util.Map<String, java.util.List<String>> tagEntries = new java.util.LinkedHashMap<>();
+        java.util.Map<String, java.util.List<String>> optionalTagEntries = new java.util.LinkedHashMap<>();
 
-        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
-            for (VariantType variant : entry.variants()) {
-                String blockId = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
-                String texture = entry.modId() + ":block/" + entry.baseBlockId();
-                String baseItem = entry.modId() + ":" + entry.baseBlockId();
+        generateVanillaBlocks(pack, tagEntries);
+        generateCompatBlocks(pack, optionalTagEntries);
 
-                generateBlockstate(pack, blockId, variant);
-                generateBlockModels(pack, blockId, variant, texture);
-                generateItemModel(pack, blockId, variant, texture);
-                generateLootTable(pack, blockId, variant);
-                generateRecipes(pack, blockId, variant, baseItem, entry.modId());
-            }
+        // Generate combined tag files
+        for (var tagEntry : tagEntries.entrySet()) {
+            java.util.List<String> optional = optionalTagEntries.getOrDefault(tagEntry.getKey(), java.util.List.of());
+            generateTag(pack, tagEntry.getKey(), tagEntry.getValue(), optional);
         }
     }
 
-    private static void generateVanillaBlocks(InMemoryResourcePack pack) {
-        // Collect block IDs per tag for tag generation
-        java.util.Map<String, java.util.List<String>> tagEntries = new java.util.LinkedHashMap<>();
-
+    private static void generateVanillaBlocks(InMemoryResourcePack pack,
+                                               java.util.Map<String, java.util.List<String>> tagEntries) {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             String baseBlockId = entry.baseBlockId();
             String texture = getVanillaTexture(baseBlockId);
@@ -73,10 +68,29 @@ public class RuntimeResourceGenerator {
                     .add(MOD_ID + ":" + blockId);
             }
         }
+    }
 
-        // Generate tag files
-        for (var tagEntry : tagEntries.entrySet()) {
-            generateTag(pack, tagEntry.getKey(), tagEntry.getValue());
+    private static void generateCompatBlocks(InMemoryResourcePack pack,
+                                              java.util.Map<String, java.util.List<String>> optionalTagEntries) {
+        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+            for (VariantType variant : entry.variants()) {
+                String blockId = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
+                String texture = entry.modId() + ":block/" + entry.baseBlockId();
+                String baseItem = entry.modId() + ":" + entry.baseBlockId();
+
+                generateBlockstate(pack, blockId, variant);
+                generateBlockModels(pack, blockId, variant, texture);
+                generateItemModel(pack, blockId, variant, texture);
+                generateLootTable(pack, blockId, variant);
+                generateRecipes(pack, blockId, variant, baseItem, entry.modId());
+
+                // Collect for tags (optional entries)
+                String tagName = variantTagName(variant);
+                optionalTagEntries.computeIfAbsent(tagName, k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
+                optionalTagEntries.computeIfAbsent("mineable/pickaxe", k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
+            }
         }
     }
 
@@ -541,11 +555,19 @@ public class RuntimeResourceGenerator {
         };
     }
 
-    private static void generateTag(InMemoryResourcePack pack, String tagName, java.util.List<String> blockIds) {
+    private static void generateTag(InMemoryResourcePack pack, String tagName,
+                                     java.util.List<String> requiredIds, java.util.List<String> optionalIds) {
         StringBuilder sb = new StringBuilder("{\"values\":[");
-        for (int i = 0; i < blockIds.size(); i++) {
-            if (i > 0) sb.append(",");
-            sb.append("\"").append(blockIds.get(i)).append("\"");
+        boolean first = true;
+        for (String id : requiredIds) {
+            if (!first) sb.append(",");
+            sb.append("\"").append(id).append("\"");
+            first = false;
+        }
+        for (String id : optionalIds) {
+            if (!first) sb.append(",");
+            sb.append("{\"id\":\"").append(id).append("\",\"required\":false}");
+            first = false;
         }
         sb.append("]}");
         pack.addResource(PackType.SERVER_DATA,

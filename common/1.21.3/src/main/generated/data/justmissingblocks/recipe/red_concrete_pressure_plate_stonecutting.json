@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "minecraft:red_concrete",
-  "result": {
-    "count": 1,
-    "id": "justmissingblocks:red_concrete_pressure_plate"
-  }
-}

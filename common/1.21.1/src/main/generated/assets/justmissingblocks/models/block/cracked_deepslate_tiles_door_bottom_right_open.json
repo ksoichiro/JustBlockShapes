@@ -1,7 +1,0 @@
-{
-  "parent": "justmissingblocks:block/template_door_bottom_right_open",
-  "textures": {
-    "bottom": "minecraft:block/cracked_deepslate_tiles",
-    "top": "minecraft:block/cracked_deepslate_tiles"
-  }
-}

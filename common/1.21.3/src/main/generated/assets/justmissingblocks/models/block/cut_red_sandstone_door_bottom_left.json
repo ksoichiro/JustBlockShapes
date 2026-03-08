@@ -1,7 +1,0 @@
-{
-  "parent": "justmissingblocks:block/template_door_bottom_left",
-  "textures": {
-    "bottom": "minecraft:block/cut_red_sandstone",
-    "top": "minecraft:block/cut_red_sandstone"
-  }
-}

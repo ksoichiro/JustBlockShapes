@@ -1,7 +1,0 @@
-{
-  "parent": "justmissingblocks:block/template_door_bottom_left",
-  "textures": {
-    "bottom": "minecraft:block/green_concrete",
-    "top": "minecraft:block/green_concrete"
-  }
-}

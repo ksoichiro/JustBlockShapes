@@ -1,6 +1,0 @@
-{
-  "parent": "justmissingblocks:item/template_door",
-  "textures": {
-    "texture": "minecraft:block/purple_concrete"
-  }
-}
