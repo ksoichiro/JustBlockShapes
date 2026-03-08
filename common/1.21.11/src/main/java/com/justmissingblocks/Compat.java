@@ -50,6 +50,26 @@ public class Compat {
         return new Item.Properties().setId(key).useBlockDescriptionPrefix();
     }
 
+    public static Block createTrapDoor(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.TrapDoorBlock(
+            net.minecraft.world.level.block.state.properties.BlockSetType.OAK, props);
+    }
+
+    public static Block createDoor(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.DoorBlock(
+            net.minecraft.world.level.block.state.properties.BlockSetType.OAK, props);
+    }
+
+    public static Block createPressurePlate(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.PressurePlateBlock(
+            net.minecraft.world.level.block.state.properties.BlockSetType.STONE, props);
+    }
+
+    public static Block createButton(int ticksToStayPressed, BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.ButtonBlock(
+            net.minecraft.world.level.block.state.properties.BlockSetType.STONE, ticksToStayPressed, props);
+    }
+
     public static InMemoryResourcePack createInMemoryResourcePack(PackLocationInfo locationInfo) {
         return new InMemoryResourcePack(locationInfo) {
             @SuppressWarnings("unchecked")

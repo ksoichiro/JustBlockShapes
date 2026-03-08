@@ -17,9 +17,6 @@
   "entrypoints": {
     "main": [
       "com.justmissingblocks.fabric.JustMissingBlocksFabric"
-    ],
-    "client": [
-      "com.justmissingblocks.fabric.JustMissingBlocksFabricClient"
     ]
   },
   "accessWidener": "justmissingblocks.accesswidener",

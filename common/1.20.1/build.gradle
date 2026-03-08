@@ -13,31 +13,9 @@ sourceSets {
             srcDir '../shared/src/main/java'
         }
         resources {
-            srcDir "${buildDir}/generated/datagen"
+            srcDir '../shared-resources'
         }
     }
-}
-
-// Convert datagen output from 1.21.1 format to 1.20.1 format
-tasks.register('convertDatagen', Exec) {
-    group = 'build'
-    description = 'Convert datagen output from 1.21.1 to 1.20.1 format'
-
-    def inputDir = rootProject.file('common/1.21.1/src/main/generated')
-    def outputDir = file("${buildDir}/generated/datagen")
-    def scriptPath = rootProject.file('scripts/convert_datagen_1_21_to_1_20.py')
-
-    inputs.dir(inputDir)
-    inputs.file(scriptPath)
-    outputs.dir(outputDir)
-
-    commandLine 'python3', scriptPath.absolutePath, inputDir.absolutePath, outputDir.absolutePath
-}
-
-processResources.dependsOn convertDatagen
-
-tasks.named('sourcesJar') {
-    dependsOn convertDatagen
 }
 
 dependencies {
@@ -121,6 +99,7 @@ if (rootProject.findProperty('enable_nbt_conversion') == 'true') {
 
 // Expand pack_format variable in pack.mcmeta
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     inputs.property 'pack_format', project.ext.pack_format
 
     filesMatching('pack.mcmeta') {

@@ -30,4 +30,26 @@ public class Compat {
     public static Item.Properties createItemProperties(String namespace, String itemId) {
         return new Item.Properties();
     }
+
+    public static Block createTrapDoor(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.TrapDoorBlock(props,
+            net.minecraft.world.level.block.state.properties.BlockSetType.OAK);
+    }
+
+    public static Block createDoor(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.DoorBlock(props,
+            net.minecraft.world.level.block.state.properties.BlockSetType.OAK);
+    }
+
+    public static Block createPressurePlate(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.PressurePlateBlock(
+            net.minecraft.world.level.block.PressurePlateBlock.Sensitivity.MOBS, props,
+            net.minecraft.world.level.block.state.properties.BlockSetType.STONE) {};
+    }
+
+    public static Block createButton(int ticksToStayPressed, BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.ButtonBlock(props,
+            net.minecraft.world.level.block.state.properties.BlockSetType.STONE,
+            ticksToStayPressed, false) {};
+    }
 }

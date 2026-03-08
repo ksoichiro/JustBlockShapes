@@ -35,7 +35,6 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDir '../base/src/main/java'
             srcDir 'src/main/java'
         }
         resources {
@@ -63,7 +62,6 @@ loom {
 }
 
 processResources {
-    dependsOn project(commonModule).tasks.named('convertDatagen')
     from(project(commonModule).sourceSets.main.resources)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 

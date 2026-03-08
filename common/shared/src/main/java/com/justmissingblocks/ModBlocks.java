@@ -7,15 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ButtonBlock;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 public class ModBlocks {
 
@@ -121,10 +116,10 @@ public class ModBlocks {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
-            case TRAPDOOR -> new TrapDoorBlock(BlockSetType.OAK, props);
-            case DOOR -> new DoorBlock(BlockSetType.OAK, props);
-            case PRESSURE_PLATE -> new PressurePlateBlock(BlockSetType.STONE, props);
-            case BUTTON -> new ButtonBlock(BlockSetType.STONE, 20, props);
+            case TRAPDOOR -> Compat.createTrapDoor(props);
+            case DOOR -> Compat.createDoor(props);
+            case PRESSURE_PLATE -> Compat.createPressurePlate(props);
+            case BUTTON -> Compat.createButton(20, props);
         };
     }
 

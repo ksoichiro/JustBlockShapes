@@ -37,7 +37,7 @@ public class JustMissingBlocksForge {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
 
                 RegistryObject<Block> blockHolder = BLOCKS.register(id,
-                    () -> ModBlocks.createVariantBlock(variant, baseBlock));
+                    () -> ModBlocks.createVariantBlock(variant, baseBlock, id));
                 ITEMS.register(id,
                     () -> new BlockItem(blockHolder.get(), new Item.Properties()));
 
