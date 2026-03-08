@@ -53,7 +53,8 @@ public class ModBlocks {
         // Walls only (stairs + slab already exist in vanilla)
         wallOnly("smooth_sandstone");
         wallOnly("smooth_red_sandstone");
-        wallOnly("stone");
+        // Stone: wall, trapdoor, door only (pressure_plate and button already exist in vanilla)
+        BLOCK_ENTRIES.add(new BlockEntry("stone", EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR)));
 
         // All three (stairs + slab + wall)
         allThree("calcite");
