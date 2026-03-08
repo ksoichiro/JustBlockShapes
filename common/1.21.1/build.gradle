@@ -15,6 +15,7 @@ sourceSets {
         }
         resources {
             srcDir 'src/main/generated'
+            srcDir '../shared-resources'
         }
     }
 }
