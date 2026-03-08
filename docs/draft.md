@@ -1,8 +1,8 @@
-# Just Missing Blocks
+# Just Block Shapes
 
 ## Overview
 
-**Just Missing Blocks** is a simple Minecraft mod that adds missing block shape variants (walls, stairs, slabs) for vanilla materials that lack them.
+**Just Block Shapes** is a simple Minecraft mod that adds missing block shape variants (walls, stairs, slabs) for vanilla materials that lack them.
 
 Vanilla Minecraft has inconsistencies where:
 
@@ -14,7 +14,7 @@ This results in situations like:
 
 > "I want to build a wall with this material, but there's no wall block for it."
 
-Just Missing Blocks fills these gaps by adding the **missing shape variants**, making vanilla building materials **more consistently usable**.
+Just Block Shapes fills these gaps by adding the **missing shape variants**, making vanilla building materials **more consistently usable**.
 
 ## Concept
 
@@ -104,7 +104,7 @@ Target blocks are limited to materials where walls are architecturally appropria
 
 ### Wall material tag
 
-A block tag `justmissingblocks:wall_materials` determines which blocks are eligible:
+A block tag `justblockshapes:wall_materials` determines which blocks are eligible:
 
 ```json
 {

@@ -1,6 +1,6 @@
 # Third-Party Licenses
 
-This document lists all third-party dependencies used in Just Missing Blocks and their respective licenses.
+This document lists all third-party dependencies used in Just Block Shapes and their respective licenses.
 
 ## Runtime Dependencies
 
@@ -83,12 +83,12 @@ Very permissive license allowing nearly unrestricted use, modification, and dist
 ## Notes
 
 - All dependencies are used in compliance with their respective licenses
-- Runtime dependencies are not bundled with Just Missing Blocks; users must install them separately
-- NeoForge's LGPL-2.1 license does not affect Just Missing Blocks's license due to linking exception
+- Runtime dependencies are not bundled with Just Block Shapes; users must install them separately
+- NeoForge's LGPL-2.1 license does not affect Just Block Shapes's license due to linking exception
 
 ## License Compliance
 
-Just Missing Blocks is licensed under the LGPL-3.0-only License. All dependencies are compatible with this license:
+Just Block Shapes is licensed under the LGPL-3.0-only License. All dependencies are compatible with this license:
 - **Permissive licenses** (Apache 2.0, MIT): Fully compatible
 - **LGPL licenses** (LGPL-2.1): Compatible due to dynamic linking (no license propagation)
 

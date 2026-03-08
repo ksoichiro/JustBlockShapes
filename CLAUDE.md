@@ -1,4 +1,4 @@
-# Just Missing Blocks
+# Just Block Shapes
 
 ## About This Project
 
@@ -50,17 +50,17 @@ Supported versions:
 
 - `gradle.properties` - Mod version, target MC version
 - `props/{version}.properties` - Version-specific dependencies
-- `common/shared/.../JustMissingBlocks.java` - MOD_ID holder
+- `common/shared/.../JustBlockShapes.java` - MOD_ID holder
 - `common/shared/.../ModBlocks.java` - Block definitions (data-driven list of base blocks and variant types)
-- `fabric/base/.../JustMissingBlocksFabric.java` - Fabric registration
-- `neoforge/base/.../JustMissingBlocksNeoForge.java` - NeoForge registration
+- `fabric/base/.../JustBlockShapesFabric.java` - Fabric registration
+- `neoforge/base/.../JustBlockShapesNeoForge.java` - NeoForge registration
 
 ## Architecture
 
 - **No Architectury API runtime dependency**: Common module holds block definitions (data only). Each platform registers using native APIs.
 - **Data-driven**: Adding/removing blocks means editing `ModBlocks.java`. All datagen providers consume this list.
 - **`Properties.ofFullCopy()`**: Copies all properties from vanilla base block automatically.
-- **StairBlock access widener**: `StairBlock` constructor is protected; access widener in `justmissingblocks.accesswidener` makes it accessible.
+- **StairBlock access widener**: `StairBlock` constructor is protected; access widener in `justblockshapes.accesswidener` makes it accessible.
 - **Generated resources in common**: Datagen outputs to `common/{version}/src/main/generated/` so both platforms share the same generated resources. Versions 1.21.4+ share generated resources from 1.21.3 (identical JSON format within 1.21.x).
 
 ## Development Notes
@@ -106,8 +106,8 @@ When using Architectury Loom 1.11+ with Forge 1.20.1, `loom.platform = forge` mu
 
 ## Resources Location
 
-- Assets: `common/{version}/src/main/resources/assets/justmissingblocks/`
-- Generated assets: `common/{version}/src/main/generated/assets/justmissingblocks/`
+- Assets: `common/{version}/src/main/resources/assets/justblockshapes/`
+- Generated assets: `common/{version}/src/main/generated/assets/justblockshapes/`
 - Generated data: `common/{version}/src/main/generated/data/`
-- Mixin config: `common/{version}/src/main/resources/justmissingblocks.mixins.json`
-- Access widener: `common/{version}/src/main/resources/justmissingblocks.accesswidener`
+- Mixin config: `common/{version}/src/main/resources/justblockshapes.mixins.json`
+- Access widener: `common/{version}/src/main/resources/justblockshapes.accesswidener`

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.justblockshapes.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PackRepositoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

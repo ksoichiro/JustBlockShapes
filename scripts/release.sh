@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # --- Project-specific settings ---
-MOD_ID="justmissingblocks"
+MOD_ID="justblockshapes"
 MODRINTH_PROJECT_ID="XXXXXXXX"
-PROJECT_NAME="Just Missing Blocks"
+PROJECT_NAME="Just Block Shapes"
 # Modrinth project IDs for dependencies
 DEP_FABRIC_API="P7dR8mSH"
 # ---------------------------------

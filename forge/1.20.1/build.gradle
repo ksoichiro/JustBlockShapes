@@ -37,7 +37,7 @@ loom {
     accessWidenerPath = project(commonModule).loom.accessWidenerPath
 
     forge {
-        mixinConfig "justmissingblocks.mixins.json"
+        mixinConfig "justblockshapes.mixins.json"
     }
 
     runs {
@@ -74,7 +74,7 @@ tasks.named("processResources", ProcessResources).configure {
     from(project(commonModule).sourceSets.main.resources) {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         exclude "fabric.mod.json"
-        exclude "justmissingblocks.mixins.json"
+        exclude "justblockshapes.mixins.json"
     }
 }
 

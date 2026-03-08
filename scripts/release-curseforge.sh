@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # --- Project-specific settings ---
-MOD_ID="justmissingblocks"
+MOD_ID="justblockshapes"
 CURSEFORGE_PROJECT_ID="XXXXXXXX"
-PROJECT_NAME="Just Missing Blocks"
+PROJECT_NAME="Just Block Shapes"
 # ---------------------------------
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

@@ -65,7 +65,7 @@ loom {
             runDir("run")
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("../../common/1.21.6/src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=justmissingblocks"
+            vmArg "-Dfabric-api.datagen.modid=justblockshapes"
         }
     }
 }

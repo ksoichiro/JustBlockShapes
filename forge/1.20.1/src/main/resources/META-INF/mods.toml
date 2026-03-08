@@ -3,23 +3,23 @@ loaderVersion="[47,)"
 license="LGPL-3.0-only"
 
 [[mods]]
-modId="justmissingblocks"
+modId="justblockshapes"
 version="${version}"
-displayName="Just Missing Blocks"
+displayName="Just Block Shapes"
 description='''
 Adds missing wall, stairs, and slab variants for vanilla building blocks.
 '''
 authors="ksoichiro"
-displayURL="https://github.com/ksoichiro/JustMissingBlocks"
+displayURL="https://github.com/ksoichiro/JustBlockShapes"
 
-[[dependencies.justmissingblocks]]
+[[dependencies.justblockshapes]]
 modId="forge"
 mandatory=true
 versionRange="[47,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.justmissingblocks]]
+[[dependencies.justblockshapes]]
 modId="minecraft"
 mandatory=true
 versionRange="[1.20.1]"

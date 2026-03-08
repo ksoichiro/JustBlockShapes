@@ -3,7 +3,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/justmissingblocks.accesswidener")
+    accessWidenerPath = file("src/main/resources/justblockshapes.accesswidener")
 }
 
 sourceSets {
@@ -48,8 +48,8 @@ if (rootProject.findProperty('enable_nbt_conversion') == 'true') {
         }
 
         // 1.21.1 uses 'structure' (singular), 1.20.1 uses 'structures' (plural)
-        def inputDir = rootProject.file('common/1.21.1/src/main/resources/data/justmissingblocks/structure')
-        def outputDir = file('build/generated/nbt/data/justmissingblocks/structures')
+        def inputDir = rootProject.file('common/1.21.1/src/main/resources/data/justblockshapes/structure')
+        def outputDir = file('build/generated/nbt/data/justblockshapes/structures')
         def scriptPath = rootProject.file('scripts/convert_nbt_1_21_to_1_20.py')
 
         inputs.dir(inputDir).optional()
