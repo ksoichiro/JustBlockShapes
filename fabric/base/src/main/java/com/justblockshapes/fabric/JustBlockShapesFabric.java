@@ -16,8 +16,12 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JustBlockShapesFabric implements ModInitializer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JustBlockShapes.MOD_ID);
+
     @Override
     public void onInitialize() {
         RuntimeResourceGenerator.setPlatform("fabric");
@@ -41,8 +45,13 @@ public class JustBlockShapesFabric implements ModInitializer {
 
         if (FabricLoader.getInstance().isModLoaded(BiomesOPlentyCompat.MOD_ID)) {
             for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
-                Block baseBlock = Compat.getBlock(
+                Block baseBlock = Compat.tryGetBlock(
                     Compat.resourceLocation(entry.modId(), entry.baseBlockId()));
+                if (baseBlock == null) {
+                    LOGGER.warn("Compat block {}:{} not found, skipping variants",
+                        entry.modId(), entry.baseBlockId());
+                    continue;
+                }
 
                 for (VariantType variant : entry.variants()) {
                     String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);

@@ -36,6 +36,11 @@ public class Compat {
         return BuiltInRegistries.BLOCK.get(id).orElseThrow().value();
     }
 
+    @Nullable
+    public static Block tryGetBlock(ResourceLocation id) {
+        return BuiltInRegistries.BLOCK.get(id).map(ref -> ref.value()).orElse(null);
+    }
+
     public static BlockBehaviour.Properties withBlockId(BlockBehaviour.Properties props, String namespace, String blockId) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK,
             ResourceLocation.fromNamespaceAndPath(namespace, blockId));

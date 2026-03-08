@@ -15,9 +15,12 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Mod(JustBlockShapes.MOD_ID)
 public class JustBlockShapesNeoForge {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JustBlockShapes.MOD_ID);
 
     public static final DeferredRegister.Blocks BLOCKS =
         DeferredRegister.createBlocks(JustBlockShapes.MOD_ID);
@@ -57,8 +60,12 @@ public class JustBlockShapesNeoForge {
                     // Resolve base block inside supplier: BOP blocks aren't registered yet during mod construction
                     var blockHolder = BLOCKS.register(id,
                         () -> {
-                            Block baseBlock = Compat.getBlock(
+                            Block baseBlock = Compat.tryGetBlock(
                                 Compat.resourceLocation(compatModId, baseBlockId));
+                            if (baseBlock == null) {
+                                LOGGER.warn("Compat block {}:{} not found, using stone as fallback", compatModId, baseBlockId);
+                                baseBlock = Compat.getBlock(Compat.resourceLocation("minecraft", "stone"));
+                            }
                             return ModBlocks.createVariantBlock(variant, baseBlock, id);
                         });
                     ITEMS.register(id,

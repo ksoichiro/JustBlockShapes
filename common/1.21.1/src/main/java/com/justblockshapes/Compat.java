@@ -34,6 +34,12 @@ public class Compat {
         return BuiltInRegistries.BLOCK.get(id);
     }
 
+    @Nullable
+    public static Block tryGetBlock(ResourceLocation id) {
+        if (!BuiltInRegistries.BLOCK.containsKey(id)) return null;
+        return BuiltInRegistries.BLOCK.get(id);
+    }
+
     public static BlockBehaviour.Properties withBlockId(BlockBehaviour.Properties props, String namespace, String blockId) {
         return props;
     }
