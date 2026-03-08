@@ -5,6 +5,7 @@ import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
 import com.justmissingblocks.compat.BiomesOPlentyCompat;
+import com.justmissingblocks.resource.RuntimeResourceGenerator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,8 @@ public class JustMissingBlocksNeoForge {
         DeferredRegister.createItems(JustMissingBlocks.MOD_ID);
 
     public JustMissingBlocksNeoForge(IEventBus modEventBus) {
+        RuntimeResourceGenerator.setPlatform("neoforge");
+
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             Block baseBlock = Compat.getBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));

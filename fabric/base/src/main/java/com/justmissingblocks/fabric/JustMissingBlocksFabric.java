@@ -5,6 +5,7 @@ import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.ModBlocks;
 import com.justmissingblocks.ModBlocks.VariantType;
 import com.justmissingblocks.compat.BiomesOPlentyCompat;
+import com.justmissingblocks.resource.RuntimeResourceGenerator;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 public class JustMissingBlocksFabric implements ModInitializer {
     @Override
     public void onInitialize() {
+        RuntimeResourceGenerator.setPlatform("fabric");
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             Block baseBlock = Compat.getBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));

@@ -4,6 +4,7 @@
   "package": "com.justmissingblocks.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "PackRepositoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

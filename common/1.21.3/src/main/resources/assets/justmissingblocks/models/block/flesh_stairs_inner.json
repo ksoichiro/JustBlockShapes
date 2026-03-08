@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "biomesoplenty:block/flesh",
-    "side": "biomesoplenty:block/flesh",
-    "top": "biomesoplenty:block/flesh"
-  }
-}
