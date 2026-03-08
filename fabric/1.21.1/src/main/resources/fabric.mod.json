@@ -27,7 +27,8 @@
   },
   "accessWidener": "justmissingblocks.accesswidener",
   "mixins": [
-    "justmissingblocks.mixins.json"
+    "justmissingblocks.mixins.json",
+    "justmissingblocks-fabric.mixins.json"
   ],
   "suggests": {
     "biomesoplenty": "*"

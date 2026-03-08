@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.justmissingblocks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PackRepositoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
