@@ -1,5 +1,6 @@
 package com.justmissingblocks.mixin;
 
+import com.justmissingblocks.Compat;
 import com.justmissingblocks.JustMissingBlocks;
 import com.justmissingblocks.resource.InMemoryResourcePack;
 import com.justmissingblocks.resource.RuntimeResourceGenerator;
@@ -38,7 +39,7 @@ public class PackRepositoryMixin {
                 PackSource.BUILT_IN,
                 Optional.empty()
             );
-            justmissingblocks_compatPack = new InMemoryResourcePack(locationInfo);
+            justmissingblocks_compatPack = Compat.createInMemoryResourcePack(locationInfo);
             RuntimeResourceGenerator.generate(justmissingblocks_compatPack);
         }
 

@@ -11,6 +11,7 @@ sourceSets {
         java {
             srcDir 'src/main/java'
             srcDir '../shared/src/main/java'
+            srcDir '../shared-mc/src/main/java'
         }
         resources {
             srcDir 'src/main/generated'

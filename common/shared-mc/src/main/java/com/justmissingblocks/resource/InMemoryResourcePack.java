@@ -1,32 +1,31 @@
 package com.justmissingblocks.resource;
 
-import net.minecraft.SharedConstants;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class InMemoryResourcePack implements PackResources {
+/**
+ * Abstract in-memory resource pack. Subclasses must implement getMetadataSection
+ * which has different signatures across Minecraft versions.
+ * Use {@link com.justmissingblocks.Compat#createInMemoryResourcePack(PackLocationInfo)} to create instances.
+ */
+public abstract class InMemoryResourcePack implements PackResources {
 
     private final PackLocationInfo locationInfo;
     private final Map<PackType, Map<ResourceLocation, byte[]>> resources = new HashMap<>();
 
-    public InMemoryResourcePack(PackLocationInfo locationInfo) {
+    protected InMemoryResourcePack(PackLocationInfo locationInfo) {
         this.locationInfo = locationInfo;
         for (PackType type : PackType.values()) {
             resources.put(type, new HashMap<>());
@@ -69,21 +68,6 @@ public class InMemoryResourcePack implements PackResources {
         return resources.get(type).keySet().stream()
             .map(ResourceLocation::getNamespace)
             .collect(Collectors.toSet());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Nullable
-    @Override
-    public <T> T getMetadataSection(MetadataSectionSerializer<T> serializer) throws IOException {
-        if (serializer == PackMetadataSection.TYPE) {
-            int packFormat = SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES);
-            return (T) new PackMetadataSection(
-                Component.literal("JustMissingBlocks compat resources"),
-                packFormat,
-                Optional.empty()
-            );
-        }
-        return null;
     }
 
     @Override
