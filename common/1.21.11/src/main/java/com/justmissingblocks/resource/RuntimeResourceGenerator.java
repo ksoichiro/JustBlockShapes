@@ -28,6 +28,51 @@ public class RuntimeResourceGenerator {
     }
 
     public static void generate(InMemoryResourcePack pack) {
+        // Collect block IDs per tag for combined tag generation
+        java.util.Map<String, java.util.List<String>> tagEntries = new java.util.LinkedHashMap<>();
+        java.util.Map<String, java.util.List<String>> optionalTagEntries = new java.util.LinkedHashMap<>();
+
+        generateVanillaBlocks(pack, tagEntries);
+        generateCompatBlocks(pack, optionalTagEntries);
+
+        // Generate combined tag files
+        for (var tagEntry : tagEntries.entrySet()) {
+            java.util.List<String> optional = optionalTagEntries.getOrDefault(tagEntry.getKey(), java.util.List.of());
+            generateTag(pack, tagEntry.getKey(), tagEntry.getValue(), optional);
+        }
+    }
+
+    private static void generateVanillaBlocks(InMemoryResourcePack pack,
+                                               java.util.Map<String, java.util.List<String>> tagEntries) {
+        for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
+            String baseBlockId = entry.baseBlockId();
+            String texture = getVanillaTexture(baseBlockId);
+            String baseItem = "minecraft:" + baseBlockId;
+
+            for (VariantType variant : entry.variants()) {
+                String blockId = ModBlocks.variantBlockId(baseBlockId, variant);
+
+                generateBlockstate(pack, blockId, variant);
+                generateBlockModels(pack, blockId, variant, texture);
+                generateItemModel(pack, blockId, variant, texture);
+                generateItemDefinition(pack, blockId);
+                generateLootTable(pack, blockId, variant);
+                generateVanillaRecipes(pack, blockId, variant, baseItem);
+                generateAdvancement(pack, blockId, baseItem);
+                generateAdvancement(pack, blockId + "_stonecutting", baseItem);
+
+                // Collect for tags
+                String tagName = variantTagName(variant);
+                tagEntries.computeIfAbsent(tagName, k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
+                tagEntries.computeIfAbsent("mineable/pickaxe", k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
+            }
+        }
+    }
+
+    private static void generateCompatBlocks(InMemoryResourcePack pack,
+                                              java.util.Map<String, java.util.List<String>> optionalTagEntries) {
         for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
             for (VariantType variant : entry.variants()) {
                 String blockId = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
@@ -37,10 +82,32 @@ public class RuntimeResourceGenerator {
                 generateBlockstate(pack, blockId, variant);
                 generateBlockModels(pack, blockId, variant, texture);
                 generateItemModel(pack, blockId, variant, texture);
-                generateLootTable(pack, blockId);
+                generateItemDefinition(pack, blockId);
+                generateLootTable(pack, blockId, variant);
                 generateRecipes(pack, blockId, variant, baseItem, entry.modId());
+
+                // Collect for tags (optional entries)
+                String tagName = variantTagName(variant);
+                optionalTagEntries.computeIfAbsent(tagName, k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
+                optionalTagEntries.computeIfAbsent("mineable/pickaxe", k -> new java.util.ArrayList<>())
+                    .add(MOD_ID + ":" + blockId);
             }
         }
+    }
+
+    /**
+     * Resolves the base texture for vanilla blocks.
+     * Some vanilla blocks use a different texture than their block ID would suggest.
+     */
+    private static String getVanillaTexture(String baseBlockId) {
+        return switch (baseBlockId) {
+            case "quartz_block" -> "minecraft:block/quartz_block_side";
+            case "smooth_quartz" -> "minecraft:block/quartz_block_bottom";
+            case "smooth_sandstone" -> "minecraft:block/sandstone_top";
+            case "smooth_red_sandstone" -> "minecraft:block/red_sandstone_top";
+            default -> "minecraft:block/" + baseBlockId;
+        };
     }
 
     // ---- Blockstate generation ----
@@ -344,13 +411,39 @@ public class RuntimeResourceGenerator {
             Identifier.fromNamespaceAndPath(MOD_ID, "models/item/" + blockId + ".json"), json);
     }
 
+    // ---- Item definition generation (1.21.4+ items/ directory format) ----
+
+    private static void generateItemDefinition(InMemoryResourcePack pack, String blockId) {
+        String json = "{\"model\":{\"type\":\"minecraft:model\",\"model\":\"%s:item/%s\"}}".formatted(MOD_ID, blockId);
+        pack.addResource(PackType.CLIENT_RESOURCES,
+            Identifier.fromNamespaceAndPath(MOD_ID, "items/" + blockId + ".json"), json);
+    }
+
     // ---- Loot table generation ----
 
-    private static void generateLootTable(InMemoryResourcePack pack, String blockId) {
-        String json = """
-            {"type":"minecraft:block","pools":[{"bonus_rolls":0.0,"conditions":[{"condition":"minecraft:survives_explosion"}],"entries":[{"type":"minecraft:item","name":"%s:%s"}],"rolls":1.0}]}""".formatted(MOD_ID, blockId);
+    private static void generateLootTable(InMemoryResourcePack pack, String blockId, VariantType variant) {
+        String json = switch (variant) {
+            case SLAB -> slabLootTable(blockId);
+            case DOOR -> doorLootTable(blockId);
+            default -> simpleLootTable(blockId);
+        };
         pack.addResource(PackType.SERVER_DATA,
             Identifier.fromNamespaceAndPath(MOD_ID, "loot_table/blocks/" + blockId + ".json"), json);
+    }
+
+    private static String simpleLootTable(String blockId) {
+        return """
+            {"type":"minecraft:block","pools":[{"bonus_rolls":0.0,"conditions":[{"condition":"minecraft:survives_explosion"}],"entries":[{"type":"minecraft:item","name":"%s:%s"}],"rolls":1.0}]}""".formatted(MOD_ID, blockId);
+    }
+
+    private static String slabLootTable(String blockId) {
+        return """
+            {"type":"minecraft:block","pools":[{"bonus_rolls":0.0,"entries":[{"type":"minecraft:item","functions":[{"add":false,"conditions":[{"block":"%s:%s","condition":"minecraft:block_state_property","properties":{"type":"double"}}],"count":2.0,"function":"minecraft:set_count"},{"function":"minecraft:explosion_decay"}],"name":"%s:%s"}],"rolls":1.0}]}""".formatted(MOD_ID, blockId, MOD_ID, blockId);
+    }
+
+    private static String doorLootTable(String blockId) {
+        return """
+            {"type":"minecraft:block","pools":[{"bonus_rolls":0.0,"conditions":[{"condition":"minecraft:survives_explosion"}],"entries":[{"type":"minecraft:item","conditions":[{"block":"%s:%s","condition":"minecraft:block_state_property","properties":{"half":"lower"}}],"name":"%s:%s"}],"rolls":1.0}]}""".formatted(MOD_ID, blockId, MOD_ID, blockId);
     }
 
     // ---- Recipe generation ----
@@ -410,9 +503,85 @@ public class RuntimeResourceGenerator {
         }
     }
 
+    private static void generateVanillaRecipes(InMemoryResourcePack pack, String blockId,
+                                                VariantType variant, String baseItem) {
+        String craftingJson = switch (variant) {
+            case STAIRS ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"#  \",\"## \",\"###\"],\"result\":{\"count\":4,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case SLAB ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case WALL ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case TRAPDOOR ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":2,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case DOOR ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"##\",\"##\",\"##\"],\"result\":{\"count\":3,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case PRESSURE_PLATE ->
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"##\"],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+            case BUTTON ->
+                "{\"type\":\"minecraft:crafting_shapeless\",\"category\":\"building\",\"ingredients\":[{\"item\":\"%s\"}],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
+                    baseItem, MOD_ID, blockId);
+        };
+        addRecipe(pack, blockId, craftingJson);
+
+        // Stonecutting recipe for all variant types
+        int count = variant == VariantType.SLAB ? 2 : 1;
+        String scJson = "{\"type\":\"minecraft:stonecutting\",\"ingredient\":{\"item\":\"%s\"},\"result\":{\"count\":%d,\"id\":\"%s:%s\"}}".formatted(
+            baseItem, count, MOD_ID, blockId);
+        addRecipe(pack, blockId + "_stonecutting", scJson);
+    }
+
     private static void addRecipe(InMemoryResourcePack pack, String recipeId, String json) {
         pack.addResource(PackType.SERVER_DATA,
             Identifier.fromNamespaceAndPath(MOD_ID, "recipe/" + recipeId + ".json"), json);
+    }
+
+    // ---- Advancement generation ----
+
+    private static void generateAdvancement(InMemoryResourcePack pack, String recipeId, String baseItem) {
+        String json = "{\"parent\":\"minecraft:recipes/root\",\"criteria\":{\"has_material\":{\"conditions\":{\"items\":[{\"items\":\"%s\"}]},\"trigger\":\"minecraft:inventory_changed\"},\"has_the_recipe\":{\"conditions\":{\"recipe\":\"%s:%s\"},\"trigger\":\"minecraft:recipe_unlocked\"}},\"requirements\":[[\"has_the_recipe\",\"has_material\"]],\"rewards\":{\"recipes\":[\"%s:%s\"]}}".formatted(
+            baseItem, MOD_ID, recipeId, MOD_ID, recipeId);
+        pack.addResource(PackType.SERVER_DATA,
+            Identifier.fromNamespaceAndPath(MOD_ID, "advancement/recipes/building_blocks/" + recipeId + ".json"), json);
+    }
+
+    // ---- Tag generation ----
+
+    private static String variantTagName(VariantType variant) {
+        return switch (variant) {
+            case STAIRS -> "stairs";
+            case SLAB -> "slabs";
+            case WALL -> "walls";
+            case TRAPDOOR -> "trapdoors";
+            case DOOR -> "doors";
+            case PRESSURE_PLATE -> "pressure_plates";
+            case BUTTON -> "buttons";
+        };
+    }
+
+    private static void generateTag(InMemoryResourcePack pack, String tagName,
+                                     java.util.List<String> requiredIds, java.util.List<String> optionalIds) {
+        StringBuilder sb = new StringBuilder("{\"values\":[");
+        boolean first = true;
+        for (String id : requiredIds) {
+            if (!first) sb.append(",");
+            sb.append("\"").append(id).append("\"");
+            first = false;
+        }
+        for (String id : optionalIds) {
+            if (!first) sb.append(",");
+            sb.append("{\"id\":\"").append(id).append("\",\"required\":false}");
+            first = false;
+        }
+        sb.append("]}");
+        pack.addResource(PackType.SERVER_DATA,
+            Identifier.fromNamespaceAndPath("minecraft", "tags/block/" + tagName + ".json"), sb.toString());
     }
 
     private static String findModId(String baseBlockId) {
