@@ -15,13 +15,27 @@ public class BiomesOPlentyCompat {
         Set<VariantType> variants
     ) {}
 
+    private static CompatBlockEntry allThree(String baseBlockId) {
+        return new CompatBlockEntry(MOD_ID, baseBlockId,
+            EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL,
+                VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON));
+    }
+
+    private static CompatBlockEntry wallOnly(String baseBlockId) {
+        return new CompatBlockEntry(MOD_ID, baseBlockId,
+            EnumSet.of(VariantType.WALL,
+                VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON));
+    }
+
     private static final List<CompatBlockEntry> ENTRIES = List.of(
-        new CompatBlockEntry(MOD_ID, "rose_quartz_block",
-            EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)),
-        new CompatBlockEntry(MOD_ID, "brimstone",
-            EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)),
-        new CompatBlockEntry(MOD_ID, "flesh",
-            EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON))
+        // Full variants (no existing BOP stairs/slab/wall)
+        allThree("rose_quartz_block"),
+        allThree("brimstone"),
+        allThree("flesh"),
+        allThree("chiseled_brimstone_bricks"),
+
+        // BOP already has stairs+slab+wall → wall + trapdoor/door/plate/button only
+        wallOnly("brimstone_bricks")
     );
 
     public static List<CompatBlockEntry> getEntries() {
