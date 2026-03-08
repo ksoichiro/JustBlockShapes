@@ -55,6 +55,7 @@ public class RuntimeResourceGenerator {
                 generateBlockstate(pack, blockId, variant);
                 generateBlockModels(pack, blockId, variant, texture);
                 generateItemModel(pack, blockId, variant, texture);
+                generateItemDefinition(pack, blockId);
                 generateLootTable(pack, blockId, variant);
                 generateVanillaRecipes(pack, blockId, variant, baseItem);
                 generateAdvancement(pack, blockId, baseItem);
@@ -81,6 +82,7 @@ public class RuntimeResourceGenerator {
                 generateBlockstate(pack, blockId, variant);
                 generateBlockModels(pack, blockId, variant, texture);
                 generateItemModel(pack, blockId, variant, texture);
+                generateItemDefinition(pack, blockId);
                 generateLootTable(pack, blockId, variant);
                 generateRecipes(pack, blockId, variant, baseItem, entry.modId());
 
@@ -407,6 +409,14 @@ public class RuntimeResourceGenerator {
         };
         pack.addResource(PackType.CLIENT_RESOURCES,
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "models/item/" + blockId + ".json"), json);
+    }
+
+    // ---- Item definition generation (1.21.4+ items/ directory format) ----
+
+    private static void generateItemDefinition(InMemoryResourcePack pack, String blockId) {
+        String json = "{\"model\":{\"type\":\"minecraft:model\",\"model\":\"%s:item/%s\"}}".formatted(MOD_ID, blockId);
+        pack.addResource(PackType.CLIENT_RESOURCES,
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "items/" + blockId + ".json"), json);
     }
 
     // ---- Loot table generation ----
