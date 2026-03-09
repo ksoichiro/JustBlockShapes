@@ -4,16 +4,9 @@ import com.justblockshapes.ModBlocks.VariantType;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 public class BiomesOPlentyCompat {
     public static final String MOD_ID = "biomesoplenty";
-
-    public record CompatBlockEntry(
-        String modId,
-        String baseBlockId,
-        Set<VariantType> variants
-    ) {}
 
     private static CompatBlockEntry allThree(String baseBlockId) {
         return new CompatBlockEntry(MOD_ID, baseBlockId,

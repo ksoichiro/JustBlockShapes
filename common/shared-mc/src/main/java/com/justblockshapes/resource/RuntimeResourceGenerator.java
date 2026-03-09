@@ -4,6 +4,8 @@ import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
 import com.justblockshapes.compat.BiomesOPlentyCompat;
+import com.justblockshapes.compat.CompatBlockEntry;
+import com.justblockshapes.compat.CreateCompat;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 
@@ -71,12 +73,19 @@ public class RuntimeResourceGenerator {
         }
     }
 
+    private static java.util.List<CompatBlockEntry> getAllCompatEntries() {
+        java.util.List<CompatBlockEntry> all = new java.util.ArrayList<>();
+        all.addAll(BiomesOPlentyCompat.getEntries());
+        all.addAll(CreateCompat.getEntries());
+        return all;
+    }
+
     private static void generateCompatBlocks(InMemoryResourcePack pack,
                                               java.util.Map<String, java.util.List<String>> optionalTagEntries) {
-        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+        for (CompatBlockEntry entry : getAllCompatEntries()) {
             for (VariantType variant : entry.variants()) {
                 String blockId = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
-                String texture = entry.modId() + ":block/" + entry.baseBlockId();
+                String texture = entry.texturePath();
                 String baseItem = entry.modId() + ":" + entry.baseBlockId();
 
                 generateBlockstate(pack, blockId, variant);
@@ -585,7 +594,7 @@ public class RuntimeResourceGenerator {
     }
 
     private static String findModId(String baseBlockId) {
-        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+        for (CompatBlockEntry entry : getAllCompatEntries()) {
             if (entry.baseBlockId().equals(baseBlockId)) {
                 return entry.modId();
             }

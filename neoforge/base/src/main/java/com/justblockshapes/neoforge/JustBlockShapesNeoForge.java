@@ -5,6 +5,8 @@ import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
 import com.justblockshapes.compat.BiomesOPlentyCompat;
+import com.justblockshapes.compat.CompatBlockEntry;
+import com.justblockshapes.compat.CreateCompat;
 import com.justblockshapes.resource.RuntimeResourceGenerator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -49,21 +51,30 @@ public class JustBlockShapesNeoForge {
             }
         }
 
-        if (ModList.get().isLoaded(BiomesOPlentyCompat.MOD_ID)) {
-            for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+        registerCompatMod(modEventBus, BiomesOPlentyCompat.MOD_ID, BiomesOPlentyCompat.getEntries());
+        registerCompatMod(modEventBus, CreateCompat.MOD_ID, CreateCompat.getEntries());
+
+        BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
+        modEventBus.addListener(this::addCreative);
+    }
+
+    private void registerCompatMod(IEventBus modEventBus, String modId, java.util.List<CompatBlockEntry> entries) {
+        if (ModList.get().isLoaded(modId)) {
+            for (CompatBlockEntry entry : entries) {
                 String compatModId = entry.modId();
                 String baseBlockId = entry.baseBlockId();
 
                 for (VariantType variant : entry.variants()) {
                     String id = ModBlocks.variantBlockId(baseBlockId, variant);
 
-                    // Resolve base block inside supplier: BOP blocks aren't registered yet during mod construction
+                    // Resolve base block inside supplier: compat mod blocks aren't registered yet during mod construction
                     var blockHolder = BLOCKS.register(id,
                         () -> {
                             Block baseBlock = Compat.tryGetBlock(
                                 Compat.resourceLocation(compatModId, baseBlockId));
                             if (baseBlock == null) {
-                                LOGGER.warn("Compat block {}:{} not found, using stone as fallback", compatModId, baseBlockId);
+                                LOGGER.debug("Compat block {}:{} not found, using stone as fallback", compatModId, baseBlockId);
                                 baseBlock = Compat.getBlock(Compat.resourceLocation("minecraft", "stone"));
                             }
                             return ModBlocks.createVariantBlock(variant, baseBlock, id);
@@ -77,10 +88,6 @@ public class JustBlockShapesNeoForge {
                 }
             }
         }
-
-        BLOCKS.register(modEventBus);
-        ITEMS.register(modEventBus);
-        modEventBus.addListener(this::addCreative);
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

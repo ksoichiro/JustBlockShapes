@@ -4,6 +4,8 @@ import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
 import com.justblockshapes.compat.BiomesOPlentyCompat;
+import com.justblockshapes.compat.CompatBlockEntry;
+import com.justblockshapes.compat.CreateCompat;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
@@ -53,7 +55,10 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         }
 
         // Compat blocks: added as optional so datagen doesn't require the mod to be present
-        for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+        java.util.List<CompatBlockEntry> allCompat = new java.util.ArrayList<>();
+        allCompat.addAll(BiomesOPlentyCompat.getEntries());
+        allCompat.addAll(CreateCompat.getEntries());
+        for (CompatBlockEntry entry : allCompat) {
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
                 ResourceLocation resLoc = ResourceLocation.fromNamespaceAndPath(

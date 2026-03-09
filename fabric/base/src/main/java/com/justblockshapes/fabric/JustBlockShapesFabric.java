@@ -5,6 +5,7 @@ import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
 import com.justblockshapes.compat.BiomesOPlentyCompat;
+import com.justblockshapes.compat.CompatBlockEntry;
 import com.justblockshapes.resource.RuntimeResourceGenerator;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -44,7 +45,7 @@ public class JustBlockShapesFabric implements ModInitializer {
         }
 
         if (FabricLoader.getInstance().isModLoaded(BiomesOPlentyCompat.MOD_ID)) {
-            for (BiomesOPlentyCompat.CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
+            for (CompatBlockEntry entry : BiomesOPlentyCompat.getEntries()) {
                 Block baseBlock = Compat.tryGetBlock(
                     Compat.resourceLocation(entry.modId(), entry.baseBlockId()));
                 if (baseBlock == null) {
