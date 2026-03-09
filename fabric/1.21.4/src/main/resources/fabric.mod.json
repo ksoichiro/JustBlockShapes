@@ -26,9 +26,7 @@
   "mixins": [
     "justblockshapes.mixins.json"
   ],
-  "suggests": {
-    "biomesoplenty": "*"
-  },
+  "suggests": {},
   "depends": {
     "fabricloader": ">=0.17.3",
     "fabric-api": "*",

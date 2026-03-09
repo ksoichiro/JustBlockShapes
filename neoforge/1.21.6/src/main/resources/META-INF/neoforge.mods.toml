@@ -29,17 +29,3 @@ type="required"
 versionRange="[1.21.6]"
 ordering="NONE"
 side="BOTH"
-
-[[dependencies.justblockshapes]]
-modId="biomesoplenty"
-type="optional"
-versionRange="*"
-ordering="BEFORE"
-side="BOTH"
-
-[[dependencies.justblockshapes]]
-modId="create"
-type="optional"
-versionRange="*"
-ordering="BEFORE"
-side="BOTH"
