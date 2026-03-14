@@ -1,5 +1,7 @@
 # Just Block Shapes - CurseForge Description
 
+**Completes the vanilla building palette with 365+ missing block shape variants.**
+
 ---
 
 ## 🧱 Just Block Shapes - Complete Your Building Palette

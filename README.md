@@ -1,5 +1,7 @@
 # Just Block Shapes
 
+Completes the vanilla building palette with 365+ missing block shape variants.
+
 A Minecraft mod that adds missing wall, stairs, slab, trapdoor, door, pressure plate, and button variants for vanilla building blocks.
 
 ![overview](docs/screenshots/05_many-types-of-blocks.png)
