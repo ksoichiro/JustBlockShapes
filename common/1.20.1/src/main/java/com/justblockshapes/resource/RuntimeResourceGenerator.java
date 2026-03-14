@@ -303,10 +303,10 @@ public class RuntimeResourceGenerator {
                 addBlockModel(pack, blockId + "_bottom_left_open", MOD_ID + ":block/template_door_bottom_left_open", doorTextures(texture));
                 addBlockModel(pack, blockId + "_bottom_right", MOD_ID + ":block/template_door_bottom_right", doorTextures(texture));
                 addBlockModel(pack, blockId + "_bottom_right_open", MOD_ID + ":block/template_door_bottom_right_open", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_left", "minecraft:block/door_top_left", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_left_open", "minecraft:block/door_top_left_open", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_right", "minecraft:block/door_top_right", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_right_open", "minecraft:block/door_top_right_open", doorTextures(texture));
+                addBlockModel(pack, blockId + "_top_left", MOD_ID + ":block/template_door_top_left", doorTextures(texture));
+                addBlockModel(pack, blockId + "_top_left_open", MOD_ID + ":block/template_door_top_left_open", doorTextures(texture));
+                addBlockModel(pack, blockId + "_top_right", MOD_ID + ":block/template_door_top_right", doorTextures(texture));
+                addBlockModel(pack, blockId + "_top_right_open", MOD_ID + ":block/template_door_top_right_open", doorTextures(texture));
             }
             case BUTTON -> {
                 addBlockModel(pack, blockId, "minecraft:block/button", singleTexture(texture));

@@ -1,5 +1,5 @@
 {
-  "ambientocclusion": false,
+  "ambientocclusion": true,
   "textures": {
     "particle": "#bottom",
     "handle": "justblockshapes:block/door_handle"
