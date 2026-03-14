@@ -1,25 +1,32 @@
 # Just Block Shapes
 
-A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla building blocks.
+A Minecraft mod that adds missing wall, stairs, slab, trapdoor, door, pressure plate, and button variants for vanilla building blocks.
 
-- **1.21.1, 1.21.3–1.21.11**: Fabric + NeoForge
+![overview](docs/screenshots/05_many-types-of-blocks.png)
+
+- **1.21.1, 1.21.3–1.21.11**: Fabric + NeoForge + Forge
 
 ## Added Blocks
 
-### Walls only (stairs + slab already exist in vanilla)
-Quartz, Smooth Quartz, Polished Andesite, Polished Granite, Polished Diorite, Dark Prismarine, Prismarine Bricks, Purpur
+Each base block receives the variant types listed below. Variants that already exist in vanilla are not duplicated.
 
-### Stairs + Wall (slab already exists)
+### Wall + Trapdoor + Door + Pressure Plate + Button (stairs + slab already exist in vanilla)
+Quartz, Smooth Quartz, Polished Andesite, Polished Granite, Polished Diorite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Sandstone, Smooth Red Sandstone
+
+### Stairs + Wall + Trapdoor + Door + Pressure Plate + Button (slab already exists)
 Smooth Stone, Cut Sandstone, Cut Red Sandstone
 
-### Stairs + Slab + Wall
-Calcite, Cracked Stone Bricks, Terracotta (plain), 16 Dyed Terracotta, 16 Concrete
+### Wall + Trapdoor + Door (pressure plate + button already exist in vanilla)
+Stone
 
-**Total: ~119 new blocks**
+### Stairs + Slab + Wall + Trapdoor + Door + Pressure Plate + Button
+Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked Polished Blackstone Bricks, Cracked Deepslate Tiles, Cracked Nether Bricks, End Stone, Gilded Blackstone, Terracotta (plain), 16 Dyed Terracotta, 16 Concrete
+
+**Total: ~365 new blocks**
 
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/) or [NeoForge](https://neoforged.net/)
+1. Install [Fabric Loader](https://fabricmc.net/), [NeoForge](https://neoforged.net/), or [Forge](https://files.minecraftforge.net/)
 2. Install [Fabric API](https://modrinth.com/mod/fabric-api) (Fabric only)
 3. Place the mod JAR in your `mods/` folder
 
@@ -35,6 +42,7 @@ Calcite, Cracked Stone Bricks, Terracotta (plain), 16 Dyed Terracotta, 16 Concre
 # Run client for testing
 ./gradlew fabric:runClient -Ptarget_mc_version=1.21.1
 ./gradlew neoforge:runClient -Ptarget_mc_version=1.21.1
+./gradlew forge:runClient -Ptarget_mc_version=1.21.1
 ```
 
 ## License
