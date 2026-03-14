@@ -2,7 +2,7 @@
 
 ## About This Project
 
-A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla building blocks. Uses Architectury Loom for multi-loader build tooling but does NOT depend on Architectury API at runtime.
+A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla building blocks. Uses Architectury Loom (Fabric/NeoForge) and ForgeGradle (Forge 1.21.x+) for multi-loader build tooling but does NOT depend on Architectury API at runtime.
 
 ## Project Structure
 
@@ -11,13 +11,14 @@ A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla bu
 - `common/{version}/src/main/generated/` - Datagen output (block states, models, recipes, tags, loot tables)
 - `fabric/{version}/` - Fabric platform implementation
 - `neoforge/{version}/` - NeoForge platform implementation (1.21+)
-- `forge/{version}/` - Forge platform implementation (1.20.x)
-- `fabric/base/`, `neoforge/base/`, `forge/base/` - Base platform code (included as srcDirs)
+- `forge/{version}/` - Forge platform implementation (1.20.1, 1.21.1–1.21.11)
+- `fabric/base/`, `neoforge/base/` - Base platform code (included as srcDirs)
+- `forge/base/` - Base Forge code for 1.20.1 (1.21.x+ has version-specific code in `forge/{version}/`)
 - `fabric/{version}/src/main/java/.../datagen/` - Data generation providers (Fabric only)
 - `props/` - Version-specific properties files
 
 Supported versions:
-- 1.21.1, 1.21.3–1.21.11: Fabric, NeoForge
+- 1.21.1, 1.21.3–1.21.11: Fabric, NeoForge, Forge
 - 1.20.1: Fabric, Forge (not yet implemented)
 
 ## Build Commands
@@ -35,6 +36,7 @@ Supported versions:
 # Run client for testing
 ./gradlew fabric:runClient -Ptarget_mc_version=1.21.1
 ./gradlew neoforge:runClient -Ptarget_mc_version=1.21.1
+./gradlew forge:runClient -Ptarget_mc_version=1.21.1
 
 # Clean build
 ./gradlew clean build -Ptarget_mc_version=1.21.1
@@ -54,6 +56,7 @@ Supported versions:
 - `common/shared/.../ModBlocks.java` - Block definitions (data-driven list of base blocks and variant types)
 - `fabric/base/.../JustBlockShapesFabric.java` - Fabric registration
 - `neoforge/base/.../JustBlockShapesNeoForge.java` - NeoForge registration
+- `forge/{version}/.../JustBlockShapesForge.java` - Forge registration (1.21.x, version-specific)
 
 ## Architecture
 
@@ -65,7 +68,7 @@ Supported versions:
 
 ## Development Notes
 
-- Platform-specific code goes in `fabric/base/`, `neoforge/base/`
+- Platform-specific code goes in `fabric/base/`, `neoforge/base/`, `forge/{version}/`
 - After changing `ModBlocks.java`, re-run datagen to regenerate resources
 - Update `en_us.json` manually when adding new blocks (lang file is hand-maintained)
 
@@ -95,9 +98,17 @@ Supported versions:
 
 All version differences are abstracted via `Compat.java` in each `common/{version}/` module.
 
-### Forge 1.20.1 with Architectury Loom
+### Forge build system
 
-When using Architectury Loom 1.11+ with Forge 1.20.1, `loom.platform = forge` must be set in `forge/{version}/gradle.properties`.
+**Forge 1.20.1**: Uses Architectury Loom (`loom.platform = forge` in `forge/{version}/gradle.properties`). Shares code from `forge/base/`.
+
+**Forge 1.21.x**: Uses ForgeGradle directly (not Architectury Loom) because Architectury Loom's Forge runtime has JPMS conflicts with Forge 1.21.x. Each version has its own source in `forge/{version}/src/main/java/`. Common code is included directly in sourceSets (not via Architectury's shadow/transform pipeline). Runtime resources are generated via `AddPackFindersEvent` (not Mixin, which is used by Fabric/NeoForge).
+
+**Forge 1.21.x API differences:**
+- Forge 52–55 (1.21.1–1.21.5): Uses `IEventBus` + `context.getModEventBus()` + `modEventBus.addListener()`
+- Forge 56–59 (1.21.6–1.21.9): Uses `BusGroup` + `context.getModBusGroup()` + `@SubscribeEvent` annotations. All events (`AddPackFindersEvent`, `BuildCreativeModeTabContentsEvent`) are on the MOD bus
+- Forge 60+ (1.21.10+): Same as 56–59 but `AddPackFindersEvent` and `BuildCreativeModeTabContentsEvent` moved to the FORGE (default) bus
+- Forge 56+: `@SubscribeEvent` is in `net.minecraftforge.eventbus.api.listener` (not `net.minecraftforge.eventbus.api`). All methods in `@EventBusSubscriber` classes are scanned, so helper methods must be in separate classes
 
 ## Scripts
 
