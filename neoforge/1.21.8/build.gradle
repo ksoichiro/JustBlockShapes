@@ -18,7 +18,7 @@ configurations {
 sourceSets {
     main {
         java {
-            srcDir '../base/src/main/java'
+            srcDir '../1.21.5/src/main/java'
             srcDir 'src/main/java'
         }
         resources {
@@ -28,6 +28,14 @@ sourceSets {
             // Shared resources SECOND (lower priority)
             srcDir '../base/src/main/resources'
         }
+    }
+}
+
+// Add base sources excluding classes that have 1.21.5-specific versions
+tasks.named('compileJava') {
+    source fileTree('../base/src/main/java') {
+        exclude 'com/justblockshapes/neoforge/JustBlockShapesNeoForge.java'
+        exclude 'com/justblockshapes/neoforge/gametest/**'
     }
 }
 
@@ -48,6 +56,16 @@ loom {
             setConfigName("NeoForge Server")
             ideConfigGenerated(true)
             runDir("run")
+        }
+        gameTestServer {
+            server()
+            setConfigName("NeoForge GameTest Server")
+            ideConfigGenerated(true)
+            runDir("run")
+            environment("gametestserver")
+            property("neoforge.enabledGameTestNamespaces", "justblockshapes")
+            property("neoforge.enableGameTest", "true")
+            programArgs("--nogui")
         }
     }
 }

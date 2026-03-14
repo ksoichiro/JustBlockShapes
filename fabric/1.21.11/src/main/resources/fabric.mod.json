@@ -20,6 +20,9 @@
     ],
     "client": [
       "com.justblockshapes.fabric.JustBlockShapesFabricClient"
+    ],
+    "fabric-gametest": [
+      "com.justblockshapes.gametest.JustBlockShapesGameTest"
     ]
   },
   "accessWidener": "justblockshapes.accesswidener",

@@ -27,6 +27,13 @@ dependencies {
 
 }
 
+// Include only gametest package from shared-mc (other packages have 1.21.11-specific versions)
+tasks.named('compileJava') {
+    source fileTree('../shared-mc/src/main/java') {
+        include 'com/justblockshapes/gametest/**'
+    }
+}
+
 // Expand pack_format variable in pack.mcmeta
 processResources {
     inputs.property 'pack_format', project.ext.pack_format

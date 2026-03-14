@@ -49,6 +49,15 @@ loom {
             ideConfigGenerated(true)
             runDir("run")
         }
+        gameTestServer {
+            server()
+            setConfigName("NeoForge GameTest Server")
+            ideConfigGenerated(true)
+            runDir("run")
+            property("neoforge.enabledGameTestNamespaces", "justblockshapes")
+            property("neoforge.gameTestServer", "true")
+            programArgs("--nogui")
+        }
     }
 }
 

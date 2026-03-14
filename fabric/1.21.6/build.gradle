@@ -67,6 +67,11 @@ loom {
             vmArg "-Dfabric-api.datagen.output-dir=${file("../../common/1.21.6/src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=justblockshapes"
         }
+        gameTest {
+            server()
+            runDir("run")
+            vmArg "-Dfabric-api.gametest"
+        }
     }
 }
 
