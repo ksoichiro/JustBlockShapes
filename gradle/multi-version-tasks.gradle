@@ -161,13 +161,13 @@ tasks.register('gameTestAll') {
         // Each entry: [version, [list of tasks]]
         // NeoForge GameTest is not available for 1.21.9+ (NeoForge launch.cfg missing launchTarget)
         def versionGroups = [
-            [version: '1.21.1', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.3', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.4', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.5', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.6', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.7', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
-            [version: '1.21.8', tasks: [':fabric:runGameTest', ':neoforge:runGameTestServer']],
+            [version: '1.21.1', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.3', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.4', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.5', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.6', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.7', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
+            [version: '1.21.8', tasks: [':fabric:runGameTest', ':neoforge:runGameTest']],
             [version: '1.21.9', tasks: [':fabric:runGameTest']],
             [version: '1.21.10', tasks: [':fabric:runGameTest']],
             [version: '1.21.11', tasks: [':fabric:runGameTest']],

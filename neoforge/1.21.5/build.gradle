@@ -56,7 +56,7 @@ loom {
             ideConfigGenerated(true)
             runDir("run")
         }
-        gameTestServer {
+        gameTest {
             server()
             setConfigName("NeoForge GameTest Server")
             ideConfigGenerated(true)
