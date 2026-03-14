@@ -2,7 +2,7 @@
 
 # --- Project-specific settings ---
 MOD_ID="justblockshapes"
-CURSEFORGE_PROJECT_ID="XXXXXXXX"
+CURSEFORGE_PROJECT_ID="1485856"
 PROJECT_NAME="Just Block Shapes"
 # ---------------------------------
 

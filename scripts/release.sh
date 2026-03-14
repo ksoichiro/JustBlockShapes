@@ -2,7 +2,7 @@
 
 # --- Project-specific settings ---
 MOD_ID="justblockshapes"
-MODRINTH_PROJECT_ID="XXXXXXXX"
+MODRINTH_PROJECT_ID="yggUWseW"
 PROJECT_NAME="Just Block Shapes"
 # Modrinth project IDs for dependencies
 DEP_FABRIC_API="P7dR8mSH"
