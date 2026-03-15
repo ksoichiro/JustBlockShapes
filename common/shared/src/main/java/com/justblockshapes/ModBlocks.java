@@ -72,6 +72,13 @@ public class ModBlocks {
         for (String color : COLORS) {
             allThree(color + "_concrete");
         }
+
+        // Natural / mineral blocks
+        allThree("packed_mud");
+        // mud_bricks: stairs, slab, wall already exist in vanilla
+        BLOCK_ENTRIES.add(new BlockEntry("mud_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        allThree("dripstone_block");
+        allThree("amethyst_block");
     }
 
     private static void wallOnly(String baseBlockId) {
