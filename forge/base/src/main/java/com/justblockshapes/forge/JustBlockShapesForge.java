@@ -30,8 +30,9 @@ public class JustBlockShapesForge {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
-            Block baseBlock = BuiltInRegistries.BLOCK.get(
+            Block baseBlock = Compat.tryGetBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));
+            if (baseBlock == null) continue;
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);

@@ -22,8 +22,9 @@ public class JustBlockShapesNeoForge {
 
     public JustBlockShapesNeoForge(IEventBus modEventBus) {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
-            Block baseBlock = Compat.getBlock(
+            Block baseBlock = Compat.tryGetBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));
+            if (baseBlock == null) continue;
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);

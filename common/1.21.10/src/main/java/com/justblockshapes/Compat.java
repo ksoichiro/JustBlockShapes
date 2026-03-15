@@ -39,7 +39,11 @@ public class Compat {
 
     @Nullable
     public static Block tryGetBlock(ResourceLocation id) {
-        return BuiltInRegistries.BLOCK.get(id).map(ref -> ref.value()).orElse(null);
+        try {
+            return getBlock(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static BlockBehaviour.Properties withBlockId(BlockBehaviour.Properties props, String namespace, String blockId) {
