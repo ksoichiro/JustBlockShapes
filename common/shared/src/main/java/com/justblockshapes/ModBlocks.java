@@ -73,6 +73,15 @@ public class ModBlocks {
             allThree(color + "_concrete");
         }
 
+        // Deepslate variants (stairs, slab, wall already exist in vanilla)
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_deepslate", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+
+        // Nether brick variants (stairs, slab, wall already exist in vanilla)
+        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("red_nether_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+
         // Natural / mineral blocks
         allThree("packed_mud");
         // mud_bricks: stairs, slab, wall already exist in vanilla
