@@ -28,6 +28,7 @@ public class RuntimeResourceGenerator {
 
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             String baseBlockId = entry.baseBlockId();
+            if (ModBlocks.isSkipped(baseBlockId)) continue;
             String texture = getVanillaTexture(baseBlockId);
             String baseItem = "minecraft:" + baseBlockId;
 

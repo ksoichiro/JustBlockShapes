@@ -18,6 +18,7 @@ public class RuntimeResourceGenerator {
         java.util.Map<String, java.util.List<String>> tagEntries = new java.util.LinkedHashMap<>();
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             String baseBlockId = entry.baseBlockId();
+            if (ModBlocks.isSkipped(baseBlockId)) continue;
             String texture = getVanillaTexture(baseBlockId);
             String baseItem = "minecraft:" + baseBlockId;
 

@@ -2,6 +2,7 @@ package com.justblockshapes;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,19 @@ public class ModBlocks {
             allThree(color + "_concrete");
         }
 
+        // Tuff variants
+        allThree("tuff");
+        // tuff_bricks, polished_tuff: added in 1.21, skipped on older versions via tryGetBlock
+        BLOCK_ENTRIES.add(new BlockEntry("tuff_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_tuff", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+
+        // Obsidian variants
+        allThree("obsidian");
+        allThree("crying_obsidian");
+
+        // End stone bricks (stairs, slab, wall already exist in vanilla)
+        BLOCK_ENTRIES.add(new BlockEntry("end_stone_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+
         // Deepslate variants (stairs, slab, wall already exist in vanilla)
         BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
         BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
@@ -116,6 +130,17 @@ public class ModBlocks {
             case PRESSURE_PLATE -> baseBlockId + "_pressure_plate";
             case BUTTON -> baseBlockId + "_button";
         };
+    }
+
+    // Base blocks that were skipped because they don't exist in the current MC version
+    private static final Set<String> SKIPPED_BASE_BLOCKS = new HashSet<>();
+
+    public static void markSkipped(String baseBlockId) {
+        SKIPPED_BASE_BLOCKS.add(baseBlockId);
+    }
+
+    public static boolean isSkipped(String baseBlockId) {
+        return SKIPPED_BASE_BLOCKS.contains(baseBlockId);
     }
 
     // Registered block instances, keyed by variant block ID
