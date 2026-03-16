@@ -77,43 +77,43 @@ public class ModBlocks {
         // Tuff variants
         allThree("tuff");
         // tuff_bricks, polished_tuff: added in 1.21, skipped on older versions via tryGetBlock
-        BLOCK_ENTRIES.add(new BlockEntry("tuff_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("polished_tuff", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("tuff_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_tuff", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
 
         // Obsidian variants
         allThree("obsidian");
         allThree("crying_obsidian");
 
         // End stone bricks (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("end_stone_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("end_stone_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
 
         // Deepslate variants (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("polished_deepslate", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_deepslate", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
 
         // Nether brick variants (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("red_nether_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("red_nether_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
 
         // Natural / mineral blocks
         allThree("packed_mud");
         // mud_bricks: stairs, slab, wall already exist in vanilla
-        BLOCK_ENTRIES.add(new BlockEntry("mud_bricks", EnumSet.of(VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("mud_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
         allThree("dripstone_block");
         allThree("amethyst_block");
     }
 
     private static void wallOnly(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.WALL, VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     private static void stairsAndWall(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.WALL, VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     private static void allThree(String baseBlockId) {
-        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry(baseBlockId, EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
     }
 
     public static List<BlockEntry> getBlockEntries() {
