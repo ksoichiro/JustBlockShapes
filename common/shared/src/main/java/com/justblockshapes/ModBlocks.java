@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public class ModBlocks {
 
     public enum VariantType {
-        STAIRS, SLAB, WALL, TRAPDOOR, DOOR, PRESSURE_PLATE, BUTTON
+        STAIRS, SLAB, WALL, FENCE, FENCE_GATE, TRAPDOOR, DOOR, PRESSURE_PLATE, BUTTON
     }
 
     public record BlockEntry(String baseBlockId, Set<VariantType> variants) {}
@@ -49,8 +49,8 @@ public class ModBlocks {
         // Walls only (stairs + slab already exist in vanilla)
         wallOnly("smooth_sandstone");
         wallOnly("smooth_red_sandstone");
-        // Stone: wall, trapdoor, door only (pressure_plate and button already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("stone", EnumSet.of(VariantType.WALL, VariantType.TRAPDOOR, VariantType.DOOR)));
+        // Stone: wall, fence, fence_gate, trapdoor, door only (pressure_plate and button already exist in vanilla)
+        BLOCK_ENTRIES.add(new BlockEntry("stone", EnumSet.of(VariantType.WALL, VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR)));
 
         // All three (stairs + slab + wall)
         allThree("calcite");
@@ -125,6 +125,8 @@ public class ModBlocks {
             case STAIRS -> baseBlockId + "_stairs";
             case SLAB -> baseBlockId + "_slab";
             case WALL -> baseBlockId + "_wall";
+            case FENCE -> baseBlockId + "_fence";
+            case FENCE_GATE -> baseBlockId + "_fence_gate";
             case TRAPDOOR -> baseBlockId + "_trapdoor";
             case DOOR -> baseBlockId + "_door";
             case PRESSURE_PLATE -> baseBlockId + "_pressure_plate";
@@ -157,6 +159,8 @@ public class ModBlocks {
             case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
+            case FENCE -> Compat.createFence(props);
+            case FENCE_GATE -> Compat.createFenceGate(props);
             case TRAPDOOR -> Compat.createTrapDoor(props);
             case DOOR -> Compat.createDoor(props);
             case PRESSURE_PLATE -> Compat.createPressurePlate(props);

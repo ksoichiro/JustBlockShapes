@@ -41,7 +41,8 @@ public class RuntimeResourceGenerator {
                 generateLootTable(pack, blockId, variant);
                 generateRecipe(pack, blockId, variant, baseItem);
                 generateAdvancement(pack, blockId, baseItem);
-                if (variant == VariantType.STAIRS || variant == VariantType.SLAB || variant == VariantType.WALL) {
+                if (variant == VariantType.STAIRS || variant == VariantType.SLAB || variant == VariantType.WALL
+                    || variant == VariantType.FENCE || variant == VariantType.FENCE_GATE) {
                     generateAdvancement(pack, blockId + "_stonecutting", baseItem);
                 }
 
@@ -75,6 +76,8 @@ public class RuntimeResourceGenerator {
             case STAIRS -> stairsBlockstate(blockId);
             case SLAB -> slabBlockstate(blockId);
             case WALL -> wallBlockstate(blockId);
+            case FENCE -> fenceBlockstate(blockId);
+            case FENCE_GATE -> fenceGateBlockstate(blockId);
             case TRAPDOOR -> trapdoorBlockstate(blockId);
             case DOOR -> doorBlockstate(blockId);
             case BUTTON -> buttonBlockstate(blockId);
@@ -165,6 +168,41 @@ public class RuntimeResourceGenerator {
             {"apply":{"model":"%s_side_tall","uvlock":true,"y":180},"when":{"south":"tall"}},
             {"apply":{"model":"%s_side_tall","uvlock":true,"y":270},"when":{"west":"tall"}}
             ]}""".formatted(m, m, m, m, m, m, m, m, m);
+    }
+
+    private static String fenceBlockstate(String id) {
+        String m = MOD_ID + ":block/" + id;
+        return """
+            {"multipart":[
+            {"apply":{"model":"%s_post"}},
+            {"apply":{"model":"%s_side","uvlock":true},"when":{"north":"true"}},
+            {"apply":{"model":"%s_side","uvlock":true,"y":90},"when":{"east":"true"}},
+            {"apply":{"model":"%s_side","uvlock":true,"y":180},"when":{"south":"true"}},
+            {"apply":{"model":"%s_side","uvlock":true,"y":270},"when":{"west":"true"}}
+            ]}""".formatted(m, m, m, m, m);
+    }
+
+    private static String fenceGateBlockstate(String id) {
+        String m = MOD_ID + ":block/" + id;
+        return """
+            {"variants":{
+            "facing=east,in_wall=false,open=false":{"model":"%s","uvlock":true,"y":270},
+            "facing=east,in_wall=false,open=true":{"model":"%s_open","uvlock":true,"y":270},
+            "facing=east,in_wall=true,open=false":{"model":"%s_wall","uvlock":true,"y":270},
+            "facing=east,in_wall=true,open=true":{"model":"%s_wall_open","uvlock":true,"y":270},
+            "facing=north,in_wall=false,open=false":{"model":"%s","uvlock":true,"y":180},
+            "facing=north,in_wall=false,open=true":{"model":"%s_open","uvlock":true,"y":180},
+            "facing=north,in_wall=true,open=false":{"model":"%s_wall","uvlock":true,"y":180},
+            "facing=north,in_wall=true,open=true":{"model":"%s_wall_open","uvlock":true,"y":180},
+            "facing=south,in_wall=false,open=false":{"model":"%s"},
+            "facing=south,in_wall=false,open=true":{"model":"%s_open"},
+            "facing=south,in_wall=true,open=false":{"model":"%s_wall"},
+            "facing=south,in_wall=true,open=true":{"model":"%s_wall_open"},
+            "facing=west,in_wall=false,open=false":{"model":"%s","uvlock":true,"y":90},
+            "facing=west,in_wall=false,open=true":{"model":"%s_open","uvlock":true,"y":90},
+            "facing=west,in_wall=true,open=false":{"model":"%s_wall","uvlock":true,"y":90},
+            "facing=west,in_wall=true,open=true":{"model":"%s_wall_open","uvlock":true,"y":90}
+            }}""".formatted(m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m);
     }
 
     private static String doorBlockstate(String id) {
@@ -294,6 +332,17 @@ public class RuntimeResourceGenerator {
                 addBlockModel(pack, blockId + "_side", "minecraft:block/template_wall_side", wallTexture(texture));
                 addBlockModel(pack, blockId + "_side_tall", "minecraft:block/template_wall_side_tall", wallTexture(texture));
             }
+            case FENCE -> {
+                addBlockModel(pack, blockId + "_post", "minecraft:block/fence_post", singleTexture(texture));
+                addBlockModel(pack, blockId + "_side", "minecraft:block/fence_side", singleTexture(texture));
+                addBlockModel(pack, blockId + "_inventory", "minecraft:block/fence_inventory", singleTexture(texture));
+            }
+            case FENCE_GATE -> {
+                addBlockModel(pack, blockId, "minecraft:block/template_fence_gate", singleTexture(texture));
+                addBlockModel(pack, blockId + "_open", "minecraft:block/template_fence_gate_open", singleTexture(texture));
+                addBlockModel(pack, blockId + "_wall", "minecraft:block/template_fence_gate_wall", singleTexture(texture));
+                addBlockModel(pack, blockId + "_wall_open", "minecraft:block/template_fence_gate_wall_open", singleTexture(texture));
+            }
             case TRAPDOOR -> {
                 addBlockModel(pack, blockId + "_bottom", "minecraft:block/template_trapdoor_bottom", singleTexture(texture));
                 addBlockModel(pack, blockId + "_open", "minecraft:block/template_trapdoor_open", singleTexture(texture));
@@ -353,8 +402,10 @@ public class RuntimeResourceGenerator {
                 "{\"parent\":\"%s:block/%s\"}".formatted(MOD_ID, blockId);
             case TRAPDOOR ->
                 "{\"parent\":\"%s:block/%s_bottom\"}".formatted(MOD_ID, blockId);
-            case WALL ->
+            case WALL, FENCE ->
                 "{\"parent\":\"%s:block/%s_inventory\"}".formatted(MOD_ID, blockId);
+            case FENCE_GATE ->
+                "{\"parent\":\"%s:block/%s\"}".formatted(MOD_ID, blockId);
             case DOOR ->
                 "{\"parent\":\"%s:item/template_door\",\"textures\":{\"texture\":\"%s\"}}".formatted(MOD_ID, texture);
             case BUTTON ->
@@ -420,6 +471,22 @@ public class RuntimeResourceGenerator {
                     baseItem, MOD_ID, blockId);
                 addRecipe(pack, blockId + "_stonecutting", scJson);
             }
+            case FENCE -> {
+                String json = "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"# #\"],\"result\":{\"count\":6,\"item\":\"%s:%s\"},\"show_notification\":true}".formatted(
+                    baseItem, MOD_ID, blockId);
+                addRecipe(pack, blockId, json);
+                String scJson = "{\"type\":\"minecraft:stonecutting\",\"count\":1,\"ingredient\":{\"item\":\"%s\"},\"result\":\"%s:%s\"}".formatted(
+                    baseItem, MOD_ID, blockId);
+                addRecipe(pack, blockId + "_stonecutting", scJson);
+            }
+            case FENCE_GATE -> {
+                String json = "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"# #\",\"###\"],\"result\":{\"count\":1,\"item\":\"%s:%s\"},\"show_notification\":true}".formatted(
+                    baseItem, MOD_ID, blockId);
+                addRecipe(pack, blockId, json);
+                String scJson = "{\"type\":\"minecraft:stonecutting\",\"count\":1,\"ingredient\":{\"item\":\"%s\"},\"result\":\"%s:%s\"}".formatted(
+                    baseItem, MOD_ID, blockId);
+                addRecipe(pack, blockId + "_stonecutting", scJson);
+            }
             case TRAPDOOR -> {
                 String json = "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":2,\"item\":\"%s:%s\"},\"show_notification\":true}".formatted(
                     baseItem, MOD_ID, blockId);
@@ -464,6 +531,8 @@ public class RuntimeResourceGenerator {
             case STAIRS -> "stairs";
             case SLAB -> "slabs";
             case WALL -> "walls";
+            case FENCE -> "fences";
+            case FENCE_GATE -> "fence_gates";
             case TRAPDOOR -> "trapdoors";
             case DOOR -> "doors";
             case PRESSURE_PLATE -> "pressure_plates";

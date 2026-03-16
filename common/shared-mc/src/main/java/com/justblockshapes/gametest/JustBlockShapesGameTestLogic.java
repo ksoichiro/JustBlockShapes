@@ -7,6 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -40,6 +42,8 @@ public class JustBlockShapesGameTestLogic {
                     case STAIRS -> StairBlock.class;
                     case SLAB -> SlabBlock.class;
                     case WALL -> WallBlock.class;
+                    case FENCE -> FenceBlock.class;
+                    case FENCE_GATE -> FenceGateBlock.class;
                     case TRAPDOOR -> TrapDoorBlock.class;
                     case DOOR -> DoorBlock.class;
                     case PRESSURE_PLATE -> PressurePlateBlock.class;
@@ -61,6 +65,8 @@ public class JustBlockShapesGameTestLogic {
                 case STAIRS -> "_stairs";
                 case SLAB -> "_slab";
                 case WALL -> "_wall";
+                case FENCE -> "_fence";
+                case FENCE_GATE -> "_fence_gate";
                 case TRAPDOOR -> "_trapdoor";
                 case DOOR -> "_door";
                 case PRESSURE_PLATE -> "_pressure_plate";

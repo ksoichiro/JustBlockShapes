@@ -22,6 +22,8 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         var stairsTag = getOrCreateTagBuilder(BlockTags.STAIRS);
         var slabsTag = getOrCreateTagBuilder(BlockTags.SLABS);
         var wallsTag = getOrCreateTagBuilder(BlockTags.WALLS);
+        var fencesTag = getOrCreateTagBuilder(BlockTags.FENCES);
+        var fenceGatesTag = getOrCreateTagBuilder(BlockTags.FENCE_GATES);
         var trapdoorsTag = getOrCreateTagBuilder(BlockTags.TRAPDOORS);
         var doorsTag = getOrCreateTagBuilder(BlockTags.DOORS);
         var pressurePlatesTag = getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES);
@@ -38,6 +40,8 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                     case STAIRS -> stairsTag.add(block);
                     case SLAB -> slabsTag.add(block);
                     case WALL -> wallsTag.add(block);
+                    case FENCE -> fencesTag.add(block);
+                    case FENCE_GATE -> fenceGatesTag.add(block);
                     case TRAPDOOR -> trapdoorsTag.add(block);
                     case DOOR -> doorsTag.add(block);
                     case PRESSURE_PLATE -> pressurePlatesTag.add(block);

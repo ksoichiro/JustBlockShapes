@@ -59,6 +59,8 @@ public class ModModelProvider extends FabricModelProvider {
             Block trapdoorBlock = null;
             Block doorBlock = null;
             Block pressurePlateBlock = null;
+            Block fenceBlock = null;
+            Block fenceGateBlock = null;
             Block buttonBlock = null;
 
             for (VariantType variant : entry.variants()) {
@@ -70,6 +72,8 @@ public class ModModelProvider extends FabricModelProvider {
                     case STAIRS -> stairsBlock = block;
                     case SLAB -> slabBlock = block;
                     case WALL -> wallBlock = block;
+                    case FENCE -> fenceBlock = block;
+                    case FENCE_GATE -> fenceGateBlock = block;
                     case TRAPDOOR -> trapdoorBlock = block;
                     case DOOR -> doorBlock = block;
                     case PRESSURE_PLATE -> pressurePlateBlock = block;
@@ -112,6 +116,27 @@ public class ModModelProvider extends FabricModelProvider {
                 ResourceLocation inventory = ModelTemplates.WALL_INVENTORY.create(wallBlock,
                     textureMapping, gen.modelOutput);
                 gen.delegateItemModel(wallBlock, inventory);
+            }
+
+            if (fenceBlock != null) {
+                TextureMapping singleTexture = new TextureMapping().put(TextureSlot.TEXTURE, baseTexture);
+                ResourceLocation post = ModelTemplates.FENCE_POST.create(fenceBlock, singleTexture, gen.modelOutput);
+                ResourceLocation side = ModelTemplates.FENCE_SIDE.create(fenceBlock, singleTexture, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createFence(fenceBlock, post, side));
+                ResourceLocation inventory = ModelTemplates.FENCE_INVENTORY.create(fenceBlock, singleTexture, gen.modelOutput);
+                gen.delegateItemModel(fenceBlock, inventory);
+            }
+
+            if (fenceGateBlock != null) {
+                TextureMapping singleTexture = new TextureMapping().put(TextureSlot.TEXTURE, baseTexture);
+                ResourceLocation gate = ModelTemplates.FENCE_GATE_CLOSED.create(fenceGateBlock, singleTexture, gen.modelOutput);
+                ResourceLocation gateOpen = ModelTemplates.FENCE_GATE_OPEN.create(fenceGateBlock, singleTexture, gen.modelOutput);
+                ResourceLocation gateWall = ModelTemplates.FENCE_GATE_WALL_CLOSED.create(fenceGateBlock, singleTexture, gen.modelOutput);
+                ResourceLocation gateWallOpen = ModelTemplates.FENCE_GATE_WALL_OPEN.create(fenceGateBlock, singleTexture, gen.modelOutput);
+                gen.blockStateOutput.accept(
+                    BlockModelGenerators.createFenceGate(fenceGateBlock, gate, gateOpen, gateWall, gateWallOpen, false));
+                gen.delegateItemModel(fenceGateBlock, gate);
             }
 
             if (trapdoorBlock != null) {

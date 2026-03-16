@@ -79,6 +79,15 @@ public class Compat {
             net.minecraft.world.level.block.state.properties.BlockSetType.STONE, ticksToStayPressed, props);
     }
 
+    public static Block createFence(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.FenceBlock(props);
+    }
+
+    public static Block createFenceGate(BlockBehaviour.Properties props) {
+        return new net.minecraft.world.level.block.FenceGateBlock(
+            net.minecraft.world.level.block.state.properties.WoodType.OAK, props);
+    }
+
     public static InMemoryResourcePack createInMemoryResourcePack(PackLocationInfo locationInfo) {
         return new InMemoryResourcePack(locationInfo) {
             @SuppressWarnings("unchecked")

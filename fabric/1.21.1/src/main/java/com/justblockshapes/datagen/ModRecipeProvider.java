@@ -79,6 +79,30 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                             .unlockedBy("has_material", has(baseBlock))
                             .save(exporter, stonecuttingId);
                     }
+                    case FENCE -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 6)
+                            .define('#', baseIngredient)
+                            .pattern("###")
+                            .pattern("# #")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
+                    case FENCE_GATE -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 1)
+                            .define('#', baseIngredient)
+                            .pattern("# #")
+                            .pattern("###")
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, craftingId);
+                        SingleItemRecipeBuilder.stonecutting(baseIngredient,
+                                RecipeCategory.BUILDING_BLOCKS, block)
+                            .unlockedBy("has_material", has(baseBlock))
+                            .save(exporter, stonecuttingId);
+                    }
                     case TRAPDOOR -> {
                         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 2)
                             .define('#', baseIngredient)
