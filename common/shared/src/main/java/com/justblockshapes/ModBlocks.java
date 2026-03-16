@@ -30,76 +30,122 @@ public class ModBlocks {
 
     private static final List<BlockEntry> BLOCK_ENTRIES = new ArrayList<>();
 
+    /**
+     * Shorthand for blocks where vanilla has stairs, slab, wall already.
+     * Adds only: fence, fence_gate, trapdoor, door, pressure_plate, button.
+     */
+    private static final Set<VariantType> VANILLA_HAS_STAIRS_SLAB_WALL =
+        EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON);
+
     static {
-        // Walls only (stairs + slab already exist in vanilla)
-        wallOnly("quartz_block");
-        wallOnly("smooth_quartz");
-        wallOnly("polished_andesite");
-        wallOnly("polished_granite");
-        wallOnly("polished_diorite");
-        wallOnly("dark_prismarine");
-        wallOnly("prismarine_bricks");
-        wallOnly("purpur_block");
+        // --- Cobblestone family (vanilla has stairs, slab, wall) ---
+        BLOCK_ENTRIES.add(new BlockEntry("cobblestone", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("mossy_cobblestone", VANILLA_HAS_STAIRS_SLAB_WALL));
 
-        // Stairs + Wall (slab already exists)
-        stairsAndWall("smooth_stone");
-        stairsAndWall("cut_sandstone");
-        stairsAndWall("cut_red_sandstone");
-
-        // Walls only (stairs + slab already exist in vanilla)
-        wallOnly("smooth_sandstone");
-        wallOnly("smooth_red_sandstone");
+        // --- Stone family ---
         // Stone: wall, fence, fence_gate, trapdoor, door only (pressure_plate and button already exist in vanilla)
         BLOCK_ENTRIES.add(new BlockEntry("stone", EnumSet.of(VariantType.WALL, VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR)));
+        // stone_bricks: vanilla has stairs(stone_brick_), slab(stone_brick_), wall(stone_brick_)
+        BLOCK_ENTRIES.add(new BlockEntry("stone_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("mossy_stone_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        // Smooth stone: vanilla has slab only
+        stairsAndWall("smooth_stone");
 
-        // All three (stairs + slab + wall)
-        allThree("calcite");
-        allThree("cracked_stone_bricks");
-        allThree("smooth_basalt");
-        allThree("cracked_deepslate_bricks");
+        // --- Natural stone variants (vanilla has stairs, slab, wall) ---
+        BLOCK_ENTRIES.add(new BlockEntry("granite", VANILLA_HAS_STAIRS_SLAB_WALL));
+        wallOnly("polished_granite");
+        BLOCK_ENTRIES.add(new BlockEntry("diorite", VANILLA_HAS_STAIRS_SLAB_WALL));
+        wallOnly("polished_diorite");
+        BLOCK_ENTRIES.add(new BlockEntry("andesite", VANILLA_HAS_STAIRS_SLAB_WALL));
+        wallOnly("polished_andesite");
+
+        // --- Bricks (vanilla has brick_stairs, brick_slab, brick_wall) ---
+        BLOCK_ENTRIES.add(new BlockEntry("bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+
+        // --- Sandstone family ---
+        // sandstone: vanilla has stairs, slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("sandstone", VANILLA_HAS_STAIRS_SLAB_WALL));
+        stairsAndWall("cut_sandstone");
+        wallOnly("smooth_sandstone");
+        // red_sandstone: vanilla has stairs, slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("red_sandstone", VANILLA_HAS_STAIRS_SLAB_WALL));
+        stairsAndWall("cut_red_sandstone");
+        wallOnly("smooth_red_sandstone");
+
+        // --- Quartz family (vanilla has stairs, slab) ---
+        wallOnly("quartz_block");
+        wallOnly("smooth_quartz");
+
+        // --- Prismarine family ---
+        // prismarine: vanilla has stairs, slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("prismarine", VANILLA_HAS_STAIRS_SLAB_WALL));
+        wallOnly("dark_prismarine");
+        wallOnly("prismarine_bricks");
+
+        // --- Purpur ---
+        wallOnly("purpur_block");
+
+        // --- Blackstone family ---
+        // blackstone: vanilla has stairs, slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("blackstone", VANILLA_HAS_STAIRS_SLAB_WALL));
+        // polished_blackstone: vanilla has stairs, slab, wall, pressure_plate, button
+        BLOCK_ENTRIES.add(new BlockEntry("polished_blackstone", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR)));
+        // polished_blackstone_bricks: vanilla has stairs(polished_blackstone_brick_), slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("polished_blackstone_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
         allThree("cracked_polished_blackstone_bricks");
-        allThree("cracked_deepslate_tiles");
-        allThree("cracked_nether_bricks");
-        allThree("end_stone");
         allThree("gilded_blackstone");
-        allThree("terracotta");
 
-        // 16 dyed terracotta
+        // --- Deepslate family ---
+        // cobbled_deepslate: vanilla has stairs, slab, wall
+        BLOCK_ENTRIES.add(new BlockEntry("cobbled_deepslate", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_deepslate", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", VANILLA_HAS_STAIRS_SLAB_WALL));
+        allThree("cracked_deepslate_bricks");
+        allThree("cracked_deepslate_tiles");
+
+        // --- Nether family ---
+        // nether_bricks: vanilla has stairs(nether_brick_), slab(nether_brick_), wall(nether_brick_), fence(nether_brick_)
+        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("red_nether_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        allThree("cracked_nether_bricks");
+
+        // --- End family ---
+        allThree("end_stone");
+        // end_stone_bricks: vanilla has stairs(end_stone_brick_), slab(end_stone_brick_), wall(end_stone_brick_)
+        BLOCK_ENTRIES.add(new BlockEntry("end_stone_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+
+        // --- Calcite / Basalt ---
+        allThree("calcite");
+        allThree("smooth_basalt");
+
+        // --- Terracotta ---
+        allThree("terracotta");
         for (String color : COLORS) {
             allThree(color + "_terracotta");
         }
 
-        // 16 concrete
+        // --- Concrete ---
         for (String color : COLORS) {
             allThree(color + "_concrete");
         }
 
-        // Tuff variants
+        // --- Tuff family ---
         allThree("tuff");
         // tuff_bricks, polished_tuff: added in 1.21, skipped on older versions via tryGetBlock
-        BLOCK_ENTRIES.add(new BlockEntry("tuff_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("polished_tuff", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        BLOCK_ENTRIES.add(new BlockEntry("tuff_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+        BLOCK_ENTRIES.add(new BlockEntry("polished_tuff", VANILLA_HAS_STAIRS_SLAB_WALL));
 
-        // Obsidian variants
+        // --- Obsidian ---
         allThree("obsidian");
         allThree("crying_obsidian");
 
-        // End stone bricks (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("end_stone_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-
-        // Deepslate variants (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("deepslate_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("deepslate_tiles", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("polished_deepslate", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-
-        // Nether brick variants (stairs, slab, wall already exist in vanilla)
-        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-        BLOCK_ENTRIES.add(new BlockEntry("red_nether_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
-
-        // Natural / mineral blocks
+        // --- Mud family ---
         allThree("packed_mud");
-        // mud_bricks: stairs, slab, wall already exist in vanilla
-        BLOCK_ENTRIES.add(new BlockEntry("mud_bricks", EnumSet.of(VariantType.FENCE, VariantType.FENCE_GATE, VariantType.TRAPDOOR, VariantType.DOOR, VariantType.PRESSURE_PLATE, VariantType.BUTTON)));
+        // mud_bricks: vanilla has stairs(mud_brick_), slab(mud_brick_), wall(mud_brick_)
+        BLOCK_ENTRIES.add(new BlockEntry("mud_bricks", VANILLA_HAS_STAIRS_SLAB_WALL));
+
+        // --- Natural / mineral blocks ---
         allThree("dripstone_block");
         allThree("amethyst_block");
     }
