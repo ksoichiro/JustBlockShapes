@@ -86,6 +86,14 @@ public class Compat {
             net.minecraft.world.level.block.state.properties.WoodType.OAK, props);
     }
 
+    /**
+     * Returns an ingredient JSON fragment for the given item.
+     * 1.21.3+ uses the plain string format: "minecraft:foo"
+     */
+    public static String ingredientJson(String item) {
+        return "\"%s\"".formatted(item);
+    }
+
     public static InMemoryResourcePack createInMemoryResourcePack(PackLocationInfo locationInfo) {
         return new InMemoryResourcePack(locationInfo) {
             @SuppressWarnings("unchecked")

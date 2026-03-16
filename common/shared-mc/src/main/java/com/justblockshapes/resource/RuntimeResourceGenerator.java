@@ -1,5 +1,6 @@
 package com.justblockshapes.resource;
 
+import com.justblockshapes.Compat;
 import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
@@ -450,41 +451,42 @@ public class RuntimeResourceGenerator {
 
     private static void generateVanillaRecipes(InMemoryResourcePack pack, String blockId,
                                                 VariantType variant, String baseItem) {
+        String ingredient = Compat.ingredientJson(baseItem);
         String craftingJson = switch (variant) {
             case STAIRS ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"#  \",\"## \",\"###\"],\"result\":{\"count\":4,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"#  \",\"## \",\"###\"],\"result\":{\"count\":4,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case SLAB ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case WALL ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case FENCE ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"# #\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"###\",\"# #\"],\"result\":{\"count\":6,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case FENCE_GATE ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"# #\",\"###\"],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"# #\",\"###\"],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case TRAPDOOR ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":2,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"###\",\"###\"],\"result\":{\"count\":2,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case DOOR ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"##\",\"##\",\"##\"],\"result\":{\"count\":3,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"##\",\"##\",\"##\"],\"result\":{\"count\":3,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case PRESSURE_PLATE ->
-                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":{\"item\":\"%s\"}},\"pattern\":[\"##\"],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shaped\",\"category\":\"building\",\"key\":{\"#\":%s},\"pattern\":[\"##\"],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
             case BUTTON ->
-                "{\"type\":\"minecraft:crafting_shapeless\",\"category\":\"building\",\"ingredients\":[{\"item\":\"%s\"}],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
-                    baseItem, MOD_ID, blockId);
+                "{\"type\":\"minecraft:crafting_shapeless\",\"category\":\"building\",\"ingredients\":[%s],\"result\":{\"count\":1,\"id\":\"%s:%s\"}}".formatted(
+                    ingredient, MOD_ID, blockId);
         };
         addRecipe(pack, blockId, craftingJson);
 
         // Stonecutting recipe for all variant types
         int count = variant == VariantType.SLAB ? 2 : 1;
-        String scJson = "{\"type\":\"minecraft:stonecutting\",\"ingredient\":{\"item\":\"%s\"},\"result\":{\"count\":%d,\"id\":\"%s:%s\"}}".formatted(
-            baseItem, count, MOD_ID, blockId);
+        String scJson = "{\"type\":\"minecraft:stonecutting\",\"ingredient\":%s,\"result\":{\"count\":%d,\"id\":\"%s:%s\"}}".formatted(
+            ingredient, count, MOD_ID, blockId);
         addRecipe(pack, blockId + "_stonecutting", scJson);
     }
 
