@@ -13,6 +13,7 @@ import net.minecraft.server.packs.PackType;
 public class RuntimeResourceGenerator {
 
     private static final String MOD_ID = JustBlockShapes.MOD_ID;
+    private static final String DEFAULT_HANDLE_TEXTURE = MOD_ID + ":block/door_handle";
 
     public static void generate(InMemoryResourcePack pack) {
         java.util.Map<String, java.util.List<String>> tagEntries = new java.util.LinkedHashMap<>();
@@ -25,9 +26,20 @@ public class RuntimeResourceGenerator {
             for (VariantType variant : entry.variants()) {
                 String blockId = ModBlocks.variantBlockId(baseBlockId, variant);
 
+                String handleTexture = null;
+                if (variant == VariantType.DOOR) {
+                    byte[] handlePng = DoorHandleTextureGenerator.generate(texture);
+                    if (handlePng != null) {
+                        String handleId = "door_handle_" + baseBlockId;
+                        pack.addBinaryResource(PackType.CLIENT_RESOURCES,
+                            Identifier.fromNamespaceAndPath(MOD_ID, "textures/block/" + handleId + ".png"), handlePng);
+                        handleTexture = MOD_ID + ":block/" + handleId;
+                    }
+                }
+
                 generateBlockstate(pack, blockId, variant);
-                generateBlockModels(pack, blockId, variant, texture);
-                generateItemModel(pack, blockId, variant, texture);
+                generateBlockModels(pack, blockId, variant, texture, handleTexture);
+                generateItemModel(pack, blockId, variant, texture, handleTexture);
                 generateItemDefinition(pack, blockId);
                 generateLootTable(pack, blockId, variant);
                 generateVanillaRecipes(pack, blockId, variant, baseItem);
@@ -310,7 +322,8 @@ public class RuntimeResourceGenerator {
     // ---- Block model generation ----
 
     private static void generateBlockModels(InMemoryResourcePack pack, String blockId,
-                                            VariantType variant, String texture) {
+                                            VariantType variant, String texture,
+                                            String handleTexture) {
         switch (variant) {
             case STAIRS -> {
                 addBlockModel(pack, blockId, "minecraft:block/stairs", threeTextures(texture));
@@ -345,14 +358,14 @@ public class RuntimeResourceGenerator {
             }
             case DOOR -> {
                 // Both halves use custom templates (with ambient occlusion enabled)
-                addBlockModel(pack, blockId + "_bottom_left", MOD_ID + ":block/template_door_bottom_left", doorTextures(texture));
-                addBlockModel(pack, blockId + "_bottom_left_open", MOD_ID + ":block/template_door_bottom_left_open", doorTextures(texture));
-                addBlockModel(pack, blockId + "_bottom_right", MOD_ID + ":block/template_door_bottom_right", doorTextures(texture));
-                addBlockModel(pack, blockId + "_bottom_right_open", MOD_ID + ":block/template_door_bottom_right_open", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_left", MOD_ID + ":block/template_door_top_left", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_left_open", MOD_ID + ":block/template_door_top_left_open", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_right", MOD_ID + ":block/template_door_top_right", doorTextures(texture));
-                addBlockModel(pack, blockId + "_top_right_open", MOD_ID + ":block/template_door_top_right_open", doorTextures(texture));
+                addBlockModel(pack, blockId + "_bottom_left", MOD_ID + ":block/template_door_bottom_left", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_bottom_left_open", MOD_ID + ":block/template_door_bottom_left_open", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_bottom_right", MOD_ID + ":block/template_door_bottom_right", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_bottom_right_open", MOD_ID + ":block/template_door_bottom_right_open", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_top_left", MOD_ID + ":block/template_door_top_left", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_top_left_open", MOD_ID + ":block/template_door_top_left_open", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_top_right", MOD_ID + ":block/template_door_top_right", doorTextures(texture, handleTexture));
+                addBlockModel(pack, blockId + "_top_right_open", MOD_ID + ":block/template_door_top_right_open", doorTextures(texture, handleTexture));
             }
             case BUTTON -> {
                 addBlockModel(pack, blockId, "minecraft:block/button", singleTexture(texture));
@@ -385,14 +398,16 @@ public class RuntimeResourceGenerator {
         return "\"texture\":\"%s\"".formatted(texture);
     }
 
-    private static String doorTextures(String texture) {
-        return "\"bottom\":\"%s\",\"top\":\"%s\"".formatted(texture, texture);
+    private static String doorTextures(String texture, String handleTexture) {
+        String handle = handleTexture != null ? handleTexture : DEFAULT_HANDLE_TEXTURE;
+        return "\"bottom\":\"%s\",\"top\":\"%s\",\"handle\":\"%s\"".formatted(texture, texture, handle);
     }
 
     // ---- Item model generation ----
 
     private static void generateItemModel(InMemoryResourcePack pack, String blockId,
-                                          VariantType variant, String texture) {
+                                          VariantType variant, String texture,
+                                          String handleTexture) {
         String json = switch (variant) {
             case STAIRS, SLAB, PRESSURE_PLATE ->
                 "{\"parent\":\"%s:block/%s\"}".formatted(MOD_ID, blockId);
@@ -402,8 +417,10 @@ public class RuntimeResourceGenerator {
                 "{\"parent\":\"%s:block/%s_inventory\"}".formatted(MOD_ID, blockId);
             case FENCE_GATE ->
                 "{\"parent\":\"%s:block/%s\"}".formatted(MOD_ID, blockId);
-            case DOOR ->
-                "{\"parent\":\"%s:item/template_door\",\"textures\":{\"texture\":\"%s\"}}".formatted(MOD_ID, texture);
+            case DOOR -> {
+                String handle = handleTexture != null ? handleTexture : DEFAULT_HANDLE_TEXTURE;
+                yield "{\"parent\":\"%s:item/template_door\",\"textures\":{\"texture\":\"%s\",\"handle\":\"%s\"}}".formatted(MOD_ID, texture, handle);
+            }
             case BUTTON ->
                 "{\"parent\":\"%s:block/%s_inventory\"}".formatted(MOD_ID, blockId);
         };

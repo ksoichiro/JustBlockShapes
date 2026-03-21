@@ -35,6 +35,10 @@ public abstract class InMemoryResourcePack implements PackResources {
         resources.get(type).put(location, json.getBytes(StandardCharsets.UTF_8));
     }
 
+    public void addBinaryResource(PackType type, Identifier location, byte[] data) {
+        resources.get(type).put(location, data);
+    }
+
     @Nullable
     @Override
     public IoSupplier<InputStream> getRootResource(String... paths) {
