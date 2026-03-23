@@ -20,8 +20,11 @@ import javax.imageio.ImageIO;
 public class DoorHandleTextureGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("JustBlockShapes");
-    private static final float BRIGHTNESS_FACTOR = 0.5f;
+    private static final float BRIGHTNESS_FACTOR_MIN = 0.5f;
+    private static final float BRIGHTNESS_FACTOR_RANGE = 0.2f;
     private static final float MIN_SATURATION = 0.15f;
+    private static final float MIN_CONTRAST = 0.15f;
+    private static final float MIN_BRIGHTNESS = 0.08f;
     private static final int TEXTURE_SIZE = 16;
 
     /**
@@ -124,7 +127,8 @@ public class DoorHandleTextureGenerator {
     }
 
     /**
-     * Darkens a color by reducing its HSB brightness.
+     * Darkens a color by reducing its HSB brightness adaptively:
+     * light colors are darkened less, dark colors are darkened more.
      * For colors with some hue, ensures a minimum saturation so that
      * pale blocks (quartz, sandstone, end stone) retain their tint
      * instead of becoming plain gray after darkening.
@@ -138,7 +142,15 @@ public class DoorHandleTextureGenerator {
         if (hsb[1] > 0.01f) {
             hsb[1] = Math.max(hsb[1], MIN_SATURATION);
         }
-        hsb[2] *= BRIGHTNESS_FACTOR;
+        // Adaptive darkening: factor = 0.5 + 0.2 * brightness
+        // Light colors (B≈0.9) get factor ≈0.68, dark colors (B≈0.2) get factor ≈0.54
+        float original = hsb[2];
+        float factor = BRIGHTNESS_FACTOR_MIN + BRIGHTNESS_FACTOR_RANGE * hsb[2];
+        hsb[2] *= factor;
+        // Ensure minimum contrast from original so knob is always visible
+        if (original - hsb[2] < MIN_CONTRAST) {
+            hsb[2] = Math.max(original - MIN_CONTRAST, MIN_BRIGHTNESS);
+        }
         // HSBtoRGB returns 0xFFRRGGBB; strip alpha here, generatePng() adds it back
         return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]) & 0x00FFFFFF;
     }
