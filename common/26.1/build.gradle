@@ -1,0 +1,40 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = neoform_version
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common/shared/src/main/java')
+    }
+    resources {
+        srcDir '../1.21.3/src/main/generated'
+        srcDir '../shared-resources'
+    }
+}
+
+// Include only gametest package from shared-mc (other packages have 26.1-specific versions)
+tasks.named('compileJava') {
+    source fileTree('../shared-mc/src/main/java') {
+        include 'com/justblockshapes/gametest/**'
+    }
+}
+
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.srcDirs.first()
+    commonResources sourceSets.main.resources.srcDirs.first()
+}
