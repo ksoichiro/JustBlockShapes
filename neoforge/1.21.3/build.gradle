@@ -31,7 +31,7 @@ sourceSets {
     }
 }
 
-def commonModule = ':common-1.21.3'
+def commonModule = ':common'
 
 loom {
     accessWidenerPath = project(commonModule).loom.accessWidenerPath

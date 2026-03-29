@@ -23,7 +23,7 @@ configurations {
     }
 }
 
-def commonModule = ':common-1.21.8'
+def commonModule = ':common'
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"

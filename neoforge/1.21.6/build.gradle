@@ -39,7 +39,7 @@ tasks.named('compileJava') {
     }
 }
 
-def commonModule = ':common-1.21.6'
+def commonModule = ':common'
 
 loom {
     accessWidenerPath = project(commonModule).loom.accessWidenerPath
