@@ -1,8 +1,21 @@
 // Multi-version build tasks
 // Defines custom Gradle tasks for building the mod across multiple Minecraft versions.
 
-def supportedVersions = ['1.21.1', '1.21.3', '1.21.4', '1.21.5', '1.21.6', '1.21.7', '1.21.8', '1.21.9', '1.21.10', '1.21.11', '1.20.1']
+def supportedVersions = ['1.21.1', '1.21.3', '1.21.4', '1.21.5', '1.21.6', '1.21.7', '1.21.8', '1.21.9', '1.21.10', '1.21.11', '26.1', '1.20.1']
 def taskGroup = 'mod build'
+
+// Helper: run a Gradle command in a subprocess
+def runGradle = { List args ->
+    def cmd = ['./gradlew'] + args.collect { it.toString() }
+    def proc = new ProcessBuilder(cmd as String[])
+            .directory(rootDir)
+            .inheritIO()
+            .start()
+    def exitCode = proc.waitFor()
+    if (exitCode != 0) {
+        throw new GradleException("Command failed (exit ${exitCode}): ${cmd.join(' ')}")
+    }
+}
 
 // ============================================================
 // Clean Tasks
@@ -16,9 +29,7 @@ supportedVersions.each { version ->
         description = "Clean build outputs for Minecraft ${version}"
 
         doLast {
-            project.exec {
-                commandLine './gradlew', 'clean', "-Ptarget_mc_version=${version}"
-            }
+            runGradle(['clean', "-Ptarget_mc_version=${version}"])
         }
     }
 }
@@ -30,10 +41,7 @@ tasks.register('cleanAll') {
     doLast {
         supportedVersions.each { version ->
             logger.lifecycle(">>> Cleaning for Minecraft ${version}...")
-
-            project.exec {
-                commandLine './gradlew', 'clean', "-Ptarget_mc_version=${version}"
-            }
+            runGradle(['clean', "-Ptarget_mc_version=${version}"])
         }
 
         logger.lifecycle('')
@@ -61,9 +69,7 @@ supportedVersions.each { version ->
         }
 
         doLast {
-            project.exec {
-                commandLine './gradlew', 'clean', 'build', "-Ptarget_mc_version=${version}", '-x', 'test'
-            }
+            runGradle(['clean', 'build', "-Ptarget_mc_version=${version}", '-x', 'test'])
         }
     }
 }
@@ -90,10 +96,7 @@ tasks.register('buildAll') {
             logger.lifecycle('')
 
             try {
-                project.exec {
-                    commandLine './gradlew', 'clean', 'build', "-Ptarget_mc_version=${version}", '-x', 'test'
-                    errorOutput = System.err
-                }
+                runGradle(['clean', 'build', "-Ptarget_mc_version=${version}", '-x', 'test'])
                 logger.lifecycle("SUCCESS: Minecraft ${version}")
             } catch (Exception e) {
                 logger.error("FAILED: Minecraft ${version}")
@@ -134,9 +137,7 @@ tasks.register('release') {
 
     doLast {
         ['cleanAll', 'buildAll', 'collectJars'].each { taskName ->
-            project.exec {
-                commandLine './gradlew', taskName
-            }
+            runGradle([taskName])
         }
     }
 }
@@ -171,6 +172,7 @@ tasks.register('gameTestAll') {
             [version: '1.21.9', tasks: [':fabric:runGameTest']],
             [version: '1.21.10', tasks: [':fabric:runGameTest']],
             [version: '1.21.11', tasks: [':fabric:runGameTest']],
+            [version: '26.1', tasks: [':fabric:runGameTest']],
         ]
 
         def passed = java.util.Collections.synchronizedList([])
