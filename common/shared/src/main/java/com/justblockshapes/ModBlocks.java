@@ -204,7 +204,7 @@ public class ModBlocks {
         BlockBehaviour.Properties props = Compat.copyProperties(baseBlock);
         props = Compat.withBlockId(props, JustBlockShapes.MOD_ID, blockId);
         return switch (variant) {
-            case STAIRS -> new StairBlock(baseBlock.defaultBlockState(), props);
+            case STAIRS -> Compat.createStairs(baseBlock.defaultBlockState(), props);
             case SLAB -> new SlabBlock(props);
             case WALL -> new WallBlock(props);
             case FENCE -> Compat.createFence(props);

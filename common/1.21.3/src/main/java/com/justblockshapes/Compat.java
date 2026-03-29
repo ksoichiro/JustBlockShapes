@@ -13,6 +13,8 @@ import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
@@ -84,6 +86,10 @@ public class Compat {
     public static Block createFenceGate(BlockBehaviour.Properties props) {
         return new net.minecraft.world.level.block.FenceGateBlock(
             net.minecraft.world.level.block.state.properties.WoodType.OAK, props);
+    }
+
+    public static Block createStairs(BlockState baseBlockState, BlockBehaviour.Properties props) {
+        return new StairBlock(baseBlockState, props);
     }
 
     /**

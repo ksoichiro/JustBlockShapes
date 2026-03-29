@@ -1,18 +1,9 @@
-def is26x = !providers.gradleProperty('target_mc_version').get().startsWith('1.')
-
 plugins {
-    if (!providers.gradleProperty('target_mc_version').get().startsWith('1.')) {
-        // MC 26.x+: NeoForge ModDev plugins (applied per-subproject)
-        id 'net.neoforged.moddev' version "${moddevgradle_version}" apply false
-        id 'net.neoforged.moddev.legacyforge' version "${moddevgradle_version}" apply false
-    } else {
-        // MC 1.x: Architectury plugins
-        id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
-        id 'architectury-plugin' version '3.4-SNAPSHOT'
-        id 'com.gradleup.shadow' version '8.3.6' apply false
-        id 'net.minecraftforge.gradle' version "${forgegradle_version}" apply false
-    }
+    id 'net.minecraftforge.gradle' version '[7.0.17,8.0)' apply false
 }
+
+// Determine if building for MC 26.x+
+def is26x = !providers.gradleProperty('target_mc_version').get().startsWith('1.')
 
 // Multi-version support: Load version-specific properties
 ext.loadVersionProperties = { String version ->
@@ -52,24 +43,13 @@ allprojects {
 }
 
 subprojects {
-    if (is26x) {
-        // MC 26.x+: Each subproject applies its own platform plugin
-        apply plugin: 'java'
-        apply plugin: 'maven-publish'
-    } else {
-        // MC 1.x: Architectury Loom for all except Forge 1.21.x+
-        // Forge 1.21.x+ uses ForgeGradle directly instead of Architectury Loom
-        // (Architectury Loom's Forge runtime has JPMS conflicts with Forge 1.21.x)
-        def useForgeGradle = (project.name == 'forge' && rootProject.ext.has('forge_major_version'))
+    logger.lifecycle("Configuring ${project.name} with is26x=${is26x}")
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
-        if (useForgeGradle) {
-            // Apply java plugin explicitly; ForgeGradle will be applied in the subproject's build.gradle
-            apply plugin: 'java'
-        } else {
-            apply plugin: 'dev.architectury.loom'
-            apply plugin: 'architectury-plugin'
-        }
-        apply plugin: 'maven-publish'
+    // Apply architectury-plugin for MC 1.x (not 26.x)
+    if (!is26x) {
+        apply plugin: 'architectury-plugin'
     }
 
     // Propagate version-specific properties to subprojects
@@ -113,7 +93,7 @@ subprojects {
 
     if (!is26x) {
         def useForgeGradle = (project.name == 'forge' && rootProject.ext.has('forge_major_version'))
-        if (!useForgeGradle) {
+        if (!useForgeGradle && pluginManager.hasPlugin('dev.architectury.loom')) {
             dependencies {
                 minecraft "com.mojang:minecraft:$rootProject.ext.minecraft_version"
                 mappings loom.officialMojangMappings()

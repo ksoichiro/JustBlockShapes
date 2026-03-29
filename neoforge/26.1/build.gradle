@@ -1,5 +1,21 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version "${fabric_loom_26_version}"
+    id 'net.neoforged.moddev' version "${moddevgradle_version}"
+}
+
+neoForge {
+    version = neoforge_version
+
+    runs {
+        client {
+            client()
+        }
+    }
+
+    mods {
+        justblockshapes {
+            sourceSet sourceSets.main
+        }
+    }
 }
 
 configurations {
@@ -12,10 +28,6 @@ configurations {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
-
     compileOnly project(':common')
 
     commonJava project(path: ':common', configuration: 'commonJava')
@@ -37,40 +49,22 @@ tasks.named('processResources') {
     dependsOn configurations.commonResources
     from configurations.commonResources
 
-    filesMatching('fabric.mod.json') {
+    filesMatching('META-INF/neoforge.mods.toml') {
         expand(
             version: mod_version,
             minecraft_version: minecraft_version,
-            fabric_loader_version: fabric_loader_version,
+            neoforge_version: neoforge_version,
         )
-    }
-}
-
-loom {
-    runs {
-        client {
-            client()
-            runDir("run")
-        }
-        server {
-            server()
-            runDir("run")
-        }
-        gameTest {
-            server()
-            runDir("run")
-            vmArg "-Dfabric-api.gametest"
-        }
     }
 }
 
 jar {
     archiveBaseName = rootProject.archives_name
-    archiveVersion = "${rootProject.mod_version}+${minecraft_version}-fabric"
+    archiveVersion = "${rootProject.mod_version}+${minecraft_version}-neoforge"
     archiveClassifier = null
 }
 
 sourcesJar {
     archiveBaseName = rootProject.archives_name
-    archiveVersion = "${rootProject.mod_version}+${minecraft_version}-fabric"
+    archiveVersion = "${rootProject.mod_version}+${minecraft_version}-neoforge"
 }

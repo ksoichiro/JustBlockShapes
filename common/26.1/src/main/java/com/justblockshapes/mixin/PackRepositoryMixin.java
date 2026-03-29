@@ -28,7 +28,7 @@ public class PackRepositoryMixin {
     @Unique
     private InMemoryResourcePack justblockshapes_compatPack;
 
-    @Inject(method = "discoverAvailable", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "discoverAvailable", at = @At("RETURN"), cancellable = true, remap = false)
     private void justblockshapes_addCompatPack(CallbackInfoReturnable<Map<String, Pack>> cir) {
         String packId = JustBlockShapes.MOD_ID + "_compat";
 

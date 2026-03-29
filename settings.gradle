@@ -10,14 +10,17 @@ pluginManagement {
 
     // Declare plugin versions conditionally based on target MC version:
     // - MC 1.x: Architectury Loom + ForgeGradle
-    // - MC 26.x+: Fabric Loom + ForgeGradle
+    // - MC 26.x+: Fabric Loom + ModDevGradle + ForgeGradle
     def targetVer = settings.providers.gradleProperty('target_mc_version').getOrNull()
     plugins {
         if (targetVer.startsWith('1.')) {
+            id 'architectury-plugin' version '3.4-SNAPSHOT'
             id 'dev.architectury.loom' version '1.13-SNAPSHOT'
+            id 'com.gradleup.shadow' version '8.3.6' apply false
             id 'net.minecraftforge.gradle' version settings.providers.gradleProperty('forgegradle_version').get()
         } else {
             id 'net.fabricmc.fabric-loom' version settings.providers.gradleProperty('fabric_loom_26_version').get()
+            id 'net.neoforged.moddev' version settings.providers.gradleProperty('moddevgradle_version').get()
             id 'net.minecraftforge.gradle' version settings.providers.gradleProperty('forgegradle_version').get()
         }
     }

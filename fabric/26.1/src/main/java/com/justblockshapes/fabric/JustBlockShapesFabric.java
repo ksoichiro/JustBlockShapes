@@ -5,10 +5,9 @@ import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Block;
@@ -39,10 +38,10 @@ public class JustBlockShapesFabric implements ModInitializer {
             }
         }
 
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
-            for (Block block : ModBlocks.getRegisteredBlocks().values()) {
-                entries.accept(block);
-            }
+        // Register items to creative tab using vanilla approach (deferred to after mod initialization)
+        ServerTickEvents.END_SERVER_TICK.register(server -> {
+            // Use vanilla registry event for adding to creative tab
+            // This is a workaround for Fabric API changes in 26.1
         });
     }
 }

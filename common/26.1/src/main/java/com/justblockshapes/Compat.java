@@ -16,9 +16,13 @@ import net.minecraft.util.InclusiveRange;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.Optional;
 
 public class Compat {
@@ -60,23 +64,63 @@ public class Compat {
     }
 
     public static Block createTrapDoor(BlockBehaviour.Properties props) {
-        return new net.minecraft.world.level.block.TrapDoorBlock(
-            net.minecraft.world.level.block.state.properties.BlockSetType.OAK, props);
+        try {
+            Constructor<net.minecraft.world.level.block.TrapDoorBlock> ctor =
+                net.minecraft.world.level.block.TrapDoorBlock.class.getDeclaredConstructor(
+                    BlockSetType.class, BlockBehaviour.Properties.class);
+            ctor.setAccessible(true);
+            return ctor.newInstance(BlockSetType.OAK, props);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to create TrapDoorBlock", e);
+        }
     }
 
     public static Block createDoor(BlockBehaviour.Properties props) {
-        return new net.minecraft.world.level.block.DoorBlock(
-            net.minecraft.world.level.block.state.properties.BlockSetType.OAK, props);
+        try {
+            Constructor<net.minecraft.world.level.block.DoorBlock> ctor =
+                net.minecraft.world.level.block.DoorBlock.class.getDeclaredConstructor(
+                    BlockSetType.class, BlockBehaviour.Properties.class);
+            ctor.setAccessible(true);
+            return ctor.newInstance(BlockSetType.OAK, props);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to create DoorBlock", e);
+        }
     }
 
     public static Block createPressurePlate(BlockBehaviour.Properties props) {
-        return new net.minecraft.world.level.block.PressurePlateBlock(
-            net.minecraft.world.level.block.state.properties.BlockSetType.STONE, props);
+        try {
+            Constructor<net.minecraft.world.level.block.PressurePlateBlock> ctor =
+                net.minecraft.world.level.block.PressurePlateBlock.class.getDeclaredConstructor(
+                    BlockSetType.class, BlockBehaviour.Properties.class);
+            ctor.setAccessible(true);
+            return ctor.newInstance(BlockSetType.STONE, props);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to create PressurePlateBlock", e);
+        }
     }
 
     public static Block createButton(int ticksToStayPressed, BlockBehaviour.Properties props) {
-        return new net.minecraft.world.level.block.ButtonBlock(
-            net.minecraft.world.level.block.state.properties.BlockSetType.STONE, ticksToStayPressed, props);
+        try {
+            Constructor<net.minecraft.world.level.block.ButtonBlock> ctor =
+                net.minecraft.world.level.block.ButtonBlock.class.getDeclaredConstructor(
+                    BlockSetType.class, int.class, BlockBehaviour.Properties.class);
+            ctor.setAccessible(true);
+            return ctor.newInstance(BlockSetType.STONE, ticksToStayPressed, props);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to create ButtonBlock", e);
+        }
+    }
+
+    public static Block createStairs(BlockState baseBlockState, BlockBehaviour.Properties props) {
+        try {
+            Constructor<net.minecraft.world.level.block.StairBlock> ctor =
+                net.minecraft.world.level.block.StairBlock.class.getDeclaredConstructor(
+                    BlockState.class, BlockBehaviour.Properties.class);
+            ctor.setAccessible(true);
+            return ctor.newInstance(baseBlockState, props);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to create StairBlock", e);
+        }
     }
 
     public static Block createFence(BlockBehaviour.Properties props) {
