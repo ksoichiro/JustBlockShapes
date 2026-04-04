@@ -1,9 +1,5 @@
 plugins {
-    id 'dev.architectury.loom'
-}
-
-architectury {
-    common rootProject.ext.enabled_platforms.split(',')
+    id 'fabric-loom'
 }
 
 loom {
@@ -25,11 +21,25 @@ sourceSets {
 }
 
 dependencies {
-    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
-    // which get remapped to the correct annotations on each platform.
-    // Do NOT use other classes from Fabric Loader.
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+}
 
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    sourceSets.main.java.srcDirs.each { dir -> commonJava dir }
+    sourceSets.main.resources.srcDirs.each { dir -> commonResources dir }
 }
 
 // Expand pack_format variable in pack.mcmeta
@@ -39,6 +49,11 @@ processResources {
     filesMatching('pack.mcmeta') {
         expand 'pack_format': project.ext.pack_format
     }
+}
+
+// Common module only provides sources to platform modules — no jar remapping needed
+tasks.named('remapJar') {
+    enabled = false
 }
 
 // Set duplicates strategy for sourcesJar to avoid conflicts

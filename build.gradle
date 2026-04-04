@@ -1,5 +1,6 @@
 plugins {
     id 'net.minecraftforge.gradle' version '[7.0.17,8.0)' apply false
+    id 'net.neoforged.moddev' version "${moddevgradle_version}" apply false
 }
 
 // Determine if building for MC 26.x+
@@ -31,12 +32,6 @@ if (targetVersion == null) {
 }
 loadVersionProperties(targetVersion)
 
-if (!is26x) {
-    architectury {
-        minecraft = project.ext.minecraft_version
-    }
-}
-
 allprojects {
     group = rootProject.maven_group
     version = rootProject.mod_version
@@ -46,11 +41,6 @@ subprojects {
     logger.lifecycle("Configuring ${project.name} with is26x=${is26x}")
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-
-    // Apply architectury-plugin for MC 1.x (not 26.x)
-    if (!is26x) {
-        apply plugin: 'architectury-plugin'
-    }
 
     // Propagate version-specific properties to subprojects
     ext.minecraft_version = rootProject.ext.minecraft_version
@@ -64,6 +54,9 @@ subprojects {
     if (rootProject.ext.has('neoforge_version')) {
         ext.neoforge_version = rootProject.ext.neoforge_version
     }
+    if (rootProject.ext.has('neoform_version')) {
+        ext.neoform_version = rootProject.ext.neoform_version
+    }
     if (rootProject.ext.has('forge_version')) {
         ext.forge_version = rootProject.ext.forge_version
     }
@@ -72,33 +65,14 @@ subprojects {
     }
 
     repositories {
-        if (is26x) {
-            maven { url 'https://maven.neoforged.net/releases/' }
-            maven { url 'https://maven.fabricmc.net/' }
-        } else {
-            def useForgeGradle = (project.name == 'forge' && rootProject.ext.has('forge_major_version'))
-            if (!useForgeGradle) {
-                maven { url 'https://maven.architectury.dev/' }
-                maven { url 'https://maven.neoforged.net/releases/' }
-                maven { url 'https://maven.fabricmc.net/' }
-            }
-            maven { url 'https://maven.minecraftforge.net/' }
-        }
         maven {
             name = 'Minecraft libraries'
             url = 'https://libraries.minecraft.net'
         }
+        maven { url 'https://maven.neoforged.net/releases/' }
+        maven { url 'https://maven.fabricmc.net/' }
+        maven { url 'https://maven.minecraftforge.net/' }
         mavenCentral()
-    }
-
-    if (!is26x) {
-        def useForgeGradle = (project.name == 'forge' && rootProject.ext.has('forge_major_version'))
-        if (!useForgeGradle && pluginManager.hasPlugin('dev.architectury.loom')) {
-            dependencies {
-                minecraft "com.mojang:minecraft:$rootProject.ext.minecraft_version"
-                mappings loom.officialMojangMappings()
-            }
-        }
     }
 
     java {

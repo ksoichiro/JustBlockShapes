@@ -2,9 +2,6 @@ apply plugin: 'net.minecraftforge.gradle'
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
-    reobf = false
-    copyIdeResources = true
-
     // Access transformer - only if the file exists
     def atFile = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (atFile.exists()) {
