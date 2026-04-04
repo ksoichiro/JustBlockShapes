@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version "${fabric_loom_26_version}"
+    id 'net.fabricmc.fabric-loom'
 }
 
 configurations {
@@ -46,23 +46,6 @@ tasks.named('processResources') {
     }
 }
 
-loom {
-    runs {
-        client {
-            client()
-            runDir("run")
-        }
-        server {
-            server()
-            runDir("run")
-        }
-        gameTest {
-            server()
-            runDir("run")
-            vmArg "-Dfabric-api.gametest"
-        }
-    }
-}
 
 jar {
     archiveBaseName = rootProject.archives_name

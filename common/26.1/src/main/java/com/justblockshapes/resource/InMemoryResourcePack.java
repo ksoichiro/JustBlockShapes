@@ -1,10 +1,16 @@
 package com.justblockshapes.resource;
 
+import net.minecraft.SharedConstants;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.MetadataSectionType;
+import net.minecraft.server.packs.metadata.pack.PackFormat;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
+import net.minecraft.util.InclusiveRange;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayInputStream;
@@ -80,5 +86,20 @@ public abstract class InMemoryResourcePack implements PackResources {
 
     @Override
     public void close() {
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    @Override
+    public <T> T getMetadataSection(MetadataSectionType<T> type) {
+        if (type == PackMetadataSection.CLIENT_TYPE
+            || type == PackMetadataSection.SERVER_TYPE) {
+            PackFormat format = SharedConstants.getCurrentVersion().packVersion(PackType.CLIENT_RESOURCES);
+            return (T) new PackMetadataSection(
+                Component.literal("JustBlockShapes compat resources"),
+                new InclusiveRange<>(format)
+            );
+        }
+        return null;
     }
 }

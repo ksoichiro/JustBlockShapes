@@ -1,4 +1,4 @@
-package com.justblockshapes.neoforge;
+package com.justblockshapes.forge;
 
 import com.justblockshapes.Compat;
 import com.justblockshapes.JustBlockShapes;
@@ -16,26 +16,37 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Mod(JustBlockShapes.MOD_ID)
-public class JustBlockShapesNeoForge {
+public class JustBlockShapesForge {
 
-    public static final DeferredRegister.Blocks BLOCKS =
-        DeferredRegister.createBlocks(JustBlockShapes.MOD_ID);
-    public static final DeferredRegister.Items ITEMS =
-        DeferredRegister.createItems(JustBlockShapes.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS =
+        DeferredRegister.create(ForgeRegistries.BLOCKS, JustBlockShapes.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS =
+        DeferredRegister.create(ForgeRegistries.ITEMS, JustBlockShapes.MOD_ID);
 
-    public JustBlockShapesNeoForge(IEventBus modEventBus) {
+    static final List<BlockRegistration> BLOCK_REGISTRATIONS = new ArrayList<>();
+
+    record BlockRegistration(String id, RegistryObject<Block> holder) {}
+
+    public JustBlockShapesForge(FMLJavaModLoadingContext context) {
+        var modBusGroup = context.getModBusGroup();
+
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             Block baseBlock = Compat.tryGetBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));
@@ -47,23 +58,31 @@ public class JustBlockShapesNeoForge {
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
 
-                var blockHolder = BLOCKS.register(id,
+                RegistryObject<Block> blockHolder = BLOCKS.register(id,
                     () -> ModBlocks.createVariantBlock(variant, baseBlock, id));
                 ITEMS.register(id,
                     () -> new BlockItem(blockHolder.get(), Compat.createItemProperties(JustBlockShapes.MOD_ID, id)));
 
-                modEventBus.addListener((FMLCommonSetupEvent event) -> {
-                    ModBlocks.register(id, blockHolder.get());
-                });
+                BLOCK_REGISTRATIONS.add(new BlockRegistration(id, blockHolder));
             }
         }
 
-        BLOCKS.register(modEventBus);
-        ITEMS.register(modEventBus);
-        modEventBus.register(ModBusEvents.class);
+        BLOCKS.register(modBusGroup);
+        ITEMS.register(modBusGroup);
     }
 
+    @Mod.EventBusSubscriber(modid = JustBlockShapes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModBusEvents {
+        @SubscribeEvent
+        public static void onCommonSetup(FMLCommonSetupEvent event) {
+            for (BlockRegistration reg : BLOCK_REGISTRATIONS) {
+                ModBlocks.register(reg.id(), reg.holder().get());
+            }
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = JustBlockShapes.MOD_ID)
+    public static class ForgeBusEvents {
         @SubscribeEvent
         public static void addCreative(BuildCreativeModeTabContentsEvent event) {
             if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {

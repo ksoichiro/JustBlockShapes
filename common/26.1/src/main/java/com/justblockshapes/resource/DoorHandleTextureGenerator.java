@@ -28,6 +28,21 @@ public class DoorHandleTextureGenerator {
     private static final int TEXTURE_SIZE = 16;
 
     /**
+     * Provider interface for reading textures at runtime.
+     * In NeoForge 26.1, textures are not on classpath, so we need
+     * to use ResourceManager to read them.
+     */
+    public interface TextureProvider {
+        InputStream openTexture(String namespace, String path);
+    }
+
+    private static TextureProvider textureProvider;
+
+    public static void setTextureProvider(TextureProvider provider) {
+        textureProvider = provider;
+    }
+
+    /**
      * Generates a 16x16 door handle PNG from the given vanilla texture.
      *
      * @param texture ResourceLocation-style texture path (e.g. "minecraft:block/stone")
@@ -35,8 +50,7 @@ public class DoorHandleTextureGenerator {
      */
     public static byte[] generate(String texture) {
         try {
-            String classpathPath = toClasspathPath(texture);
-            BufferedImage image = readTexture(classpathPath);
+            BufferedImage image = readTexture(texture);
             if (image == null) {
                 LOGGER.warn("Failed to read vanilla texture for door handle: {}", texture);
                 return null;
@@ -57,16 +71,33 @@ public class DoorHandleTextureGenerator {
     }
 
     /**
-     * Converts "minecraft:block/stone" to "/assets/minecraft/textures/block/stone.png".
+     * Converts "minecraft:block/stone" to namespace="minecraft", path="block/stone".
      */
-    static String toClasspathPath(String texture) {
+    private static String[] parseTexturePath(String texture) {
         int colonIndex = texture.indexOf(':');
         String namespace = texture.substring(0, colonIndex);
         String path = texture.substring(colonIndex + 1);
-        return "/assets/" + namespace + "/textures/" + path + ".png";
+        return new String[]{namespace, path};
     }
 
-    private static BufferedImage readTexture(String classpathPath) {
+    private static BufferedImage readTexture(String texture) {
+        String[] parts = parseTexturePath(texture);
+        String namespace = parts[0];
+        String path = parts[1];
+
+        // Try TextureProvider first (for NeoForge 26.1)
+        if (textureProvider != null) {
+            try (InputStream is = textureProvider.openTexture(namespace, path)) {
+                if (is != null) {
+                    return ImageIO.read(is);
+                }
+            } catch (Exception e) {
+                // Fall through to classpath
+            }
+        }
+
+        // Fallback to classpath (for Fabric/1.x versions)
+        String classpathPath = "/assets/" + namespace + "/textures/" + path + ".png";
         try (InputStream is = DoorHandleTextureGenerator.class.getResourceAsStream(classpathPath)) {
             if (is == null) return null;
             return ImageIO.read(is);

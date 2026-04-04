@@ -1,18 +1,11 @@
 package com.justblockshapes;
 
 import com.justblockshapes.resource.InMemoryResourcePack;
-import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.metadata.pack.PackFormat;
 import net.minecraft.server.packs.PackLocationInfo;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.MetadataSectionType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraft.util.InclusiveRange;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -133,21 +126,6 @@ public class Compat {
     }
 
     public static InMemoryResourcePack createInMemoryResourcePack(PackLocationInfo locationInfo) {
-        return new InMemoryResourcePack(locationInfo) {
-            @SuppressWarnings("unchecked")
-            @Nullable
-            @Override
-            public <T> T getMetadataSection(MetadataSectionType<T> type) throws IOException {
-                if (type == PackMetadataSection.CLIENT_TYPE
-                    || type == PackMetadataSection.SERVER_TYPE) {
-                    PackFormat format = SharedConstants.getCurrentVersion().packVersion(PackType.CLIENT_RESOURCES);
-                    return (T) new PackMetadataSection(
-                        Component.literal("JustBlockShapes compat resources"),
-                        new InclusiveRange<>(format)
-                    );
-                }
-                return null;
-            }
-        };
+        return new InMemoryResourcePack(locationInfo) {};
     }
 }

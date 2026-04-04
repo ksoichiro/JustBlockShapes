@@ -28,13 +28,11 @@ public class RuntimeResourceGenerator {
 
                 String handleTexture = null;
                 if (variant == VariantType.DOOR) {
-                    byte[] handlePng = DoorHandleTextureGenerator.generate(texture);
-                    if (handlePng != null) {
-                        String handleId = "door_handle_" + baseBlockId;
-                        pack.addBinaryResource(PackType.CLIENT_RESOURCES,
-                            Identifier.fromNamespaceAndPath(MOD_ID, "textures/block/" + handleId + ".png"), handlePng);
-                        handleTexture = MOD_ID + ":block/" + handleId;
-                    }
+                    // Door handle textures are generated on-demand by DynamicCompatPack
+                    // when used with NeoForge 26.1 (vanilla textures not on classpath).
+                    // Just register the handle texture ID here.
+                    String handleId = "door_handle_" + baseBlockId;
+                    handleTexture = MOD_ID + ":block/" + handleId;
                 }
 
                 generateBlockstate(pack, blockId, variant);
@@ -59,13 +57,14 @@ public class RuntimeResourceGenerator {
         for (var tagEntry : tagEntries.entrySet()) {
             generateTag(pack, tagEntry.getKey(), tagEntry.getValue());
         }
+
     }
 
     /**
      * Resolves the base texture for vanilla blocks.
      * Some vanilla blocks use a different texture than their block ID would suggest.
      */
-    private static String getVanillaTexture(String baseBlockId) {
+    static String getVanillaTexture(String baseBlockId) {
         return switch (baseBlockId) {
             case "quartz_block" -> "minecraft:block/quartz_block_side";
             case "smooth_quartz" -> "minecraft:block/quartz_block_bottom";
