@@ -1,13 +1,31 @@
-apply plugin: 'net.minecraftforge.gradle'
+plugins {
+    id 'net.minecraftforge.gradle'
+}
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
-
     // Access transformer - only if the file exists
     def atFile = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (atFile.exists()) {
         accessTransformer = atFile
     }
+
+    runs {
+        configureEach {
+            workingDir = layout.projectDirectory.dir('run')
+        }
+        register('client')
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+}
+
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0-beta.10'
 }
 
 sourceSets.main {
@@ -18,7 +36,7 @@ sourceSets.main {
     }
     resources {
         srcDir rootProject.file("common/${minecraft_version}/src/main/resources")
-        srcDir rootProject.file("common/${minecraft_version}/src/main/generated")
+        srcDir rootProject.file("common/1.21.3/src/main/generated")
         srcDir rootProject.file('common/shared-resources')
     }
 }
@@ -35,11 +53,6 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor 'net.minecraftforge:eventbus-validator:7.0-beta.10'
 }
 
 tasks.named("processResources", ProcessResources).configure {
@@ -61,7 +74,7 @@ jar {
                 "Specification-Vendor"    : rootProject.archives_name,
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.mod_version,
+                "Implementation-Version"  : rootProject.mod_version,
                 "Implementation-Vendor"   : rootProject.archives_name,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
@@ -75,6 +88,7 @@ jar {
 sourcesJar {
     archiveBaseName = rootProject.archives_name
     archiveVersion = "${rootProject.mod_version}+${minecraft_version}-forge"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
