@@ -1,6 +1,7 @@
 plugins {
     id 'net.minecraftforge.gradle' version '[7.0.17,8.0)' apply false
     id 'net.neoforged.moddev' version "${moddevgradle_version}" apply false
+    id 'net.neoforged.moddev.legacyforge' version "${moddevgradle_version}" apply false
 }
 
 // Determine if building for MC 26.x+
