@@ -1,10 +1,8 @@
-apply plugin: 'net.minecraftforge.gradle'
+plugins {
+    id 'net.minecraftforge.gradle'
+}
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
-    reobf = false
-    copyIdeResources = true
-
     // Access transformer - only if the file exists
     def atFile = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (atFile.exists()) {
@@ -13,20 +11,34 @@ minecraft {
 
     runs {
         configureEach {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            workingDir = layout.projectDirectory.dir('run')
         }
-
-        client {
-            property 'forge.enabledGameTestNamespaces', rootProject.archives_name
-        }
-
-        server {
-            property 'forge.enabledGameTestNamespaces', rootProject.archives_name
-            args '--nogui'
-        }
+        register('client')
     }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+    }
+    commonResources {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+
+    compileOnly project(':common')
+
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 sourceSets.main {
@@ -47,10 +59,6 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {
