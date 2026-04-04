@@ -63,11 +63,11 @@ This mod supports **Fabric**, **NeoForge**, and **Forge**!
 
 ### Requirements
 
-- **Minecraft**: Java Edition 1.21.1, or 1.21.3–1.21.11
+- **Minecraft**: Java Edition 1.20.1, 1.21.1, 1.21.3–1.21.11, 26.1
 - **Mod Loader**:
-  - **Fabric**: Fabric Loader + Fabric API
-  - **NeoForge**: NeoForge
-  - **Forge**: Forge (1.21.1–1.21.11)
+  - **Fabric**: Fabric Loader + Fabric API (1.20.1, 1.21.1–1.21.11)
+  - **NeoForge**: NeoForge (1.21.1–1.21.11, 26.1)
+  - **Forge**: Forge (1.20.1, 1.21.1–1.21.11)
 - **No additional dependencies** — no Architectury API or other library mods required at runtime
 
 ### Compatibility
@@ -105,6 +105,6 @@ Found a bug or have a suggestion? Report it on our [GitHub Issues](https://githu
 
 ---
 
-**Developed for Minecraft Java Edition 1.21.1 / 1.21.3–1.21.11**
+**Developed for Minecraft Java Edition 1.20.1 / 1.21.1 / 1.21.3–1.21.11 / 26.1**
 
 Build without limits. Every shape, every material. 🧱

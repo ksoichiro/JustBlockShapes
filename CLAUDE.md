@@ -19,7 +19,8 @@ A Minecraft mod that adds missing wall, stairs, and slab variants for vanilla bu
 
 Supported versions:
 - 1.21.1, 1.21.3–1.21.11: Fabric, NeoForge, Forge
-- 1.20.1: Fabric, Forge (not yet implemented)
+- 1.20.1: Fabric, Forge
+- 26.1: NeoForge (Fabric/Forge blocked by upstream issues)
 
 ## Build Commands
 
