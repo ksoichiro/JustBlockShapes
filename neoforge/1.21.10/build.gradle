@@ -37,6 +37,7 @@ dependencies {
 sourceSets {
     main {
         java {
+            srcDir '../1.21.5/src/main/java'
             srcDir 'src/main/java'
         }
         resources {
@@ -55,9 +56,6 @@ tasks.named('compileJava') {
     source configurations.commonJava
     source fileTree('../base/src/main/java') {
         exclude 'com/justblockshapes/neoforge/JustBlockShapesNeoForge.java'
-        exclude 'com/justblockshapes/neoforge/gametest/**'
-    }
-    source fileTree('../1.21.5/src/main/java') {
         exclude 'com/justblockshapes/neoforge/gametest/**'
     }
 }
