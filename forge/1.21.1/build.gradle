@@ -23,22 +23,8 @@ repositories {
     maven fg.minecraftLibsMaven
 }
 
-configurations {
-    commonJava {
-        canBeResolved = true
-    }
-    commonResources {
-        canBeResolved = true
-    }
-}
-
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
-
-    compileOnly project(':common')
-
-    commonJava project(path: ':common', configuration: 'commonJava')
-    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 sourceSets.main {
