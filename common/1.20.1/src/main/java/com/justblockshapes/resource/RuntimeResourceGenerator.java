@@ -1,5 +1,6 @@
 package com.justblockshapes.resource;
 
+import com.justblockshapes.Compat;
 import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
@@ -30,6 +31,8 @@ public class RuntimeResourceGenerator {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
             String baseBlockId = entry.baseBlockId();
             if (ModBlocks.isSkipped(baseBlockId)) continue;
+            // Also check registry directly — compat pack may be generated before mod init
+            if (Compat.tryGetBlock(Compat.resourceLocation("minecraft", baseBlockId)) == null) continue;
             String texture = getVanillaTexture(baseBlockId);
             String baseItem = "minecraft:" + baseBlockId;
 

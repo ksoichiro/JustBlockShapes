@@ -18,8 +18,12 @@ public class JustBlockShapesFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         for (ModBlocks.BlockEntry entry : ModBlocks.getBlockEntries()) {
-            Block baseBlock = Compat.getBlock(
+            Block baseBlock = Compat.tryGetBlock(
                 Compat.resourceLocation("minecraft", entry.baseBlockId()));
+            if (baseBlock == null) {
+                ModBlocks.markSkipped(entry.baseBlockId());
+                continue;
+            }
 
             for (VariantType variant : entry.variants()) {
                 String id = ModBlocks.variantBlockId(entry.baseBlockId(), variant);
