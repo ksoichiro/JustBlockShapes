@@ -46,7 +46,11 @@ public class JustBlockShapesNeoForge {
         modEventBus.addListener(this::addCreative);
 
         // Register GameTests (1.21.5+ registry-based system)
-        JustBlockShapesGameTestNeoForge.register(modEventBus);
+        try {
+            JustBlockShapesGameTestNeoForge.register(modEventBus);
+        } catch (Throwable e) {
+            // GameTest registration may fail on some NeoForge beta versions
+        }
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
