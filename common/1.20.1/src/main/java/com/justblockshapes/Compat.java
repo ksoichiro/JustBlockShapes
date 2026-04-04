@@ -4,7 +4,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class Compat {
     public static ResourceLocation resourceLocation(String namespace, String path) {
@@ -66,5 +68,9 @@ public class Compat {
     public static Block createFenceGate(BlockBehaviour.Properties props) {
         return new net.minecraft.world.level.block.FenceGateBlock(props,
             net.minecraft.world.level.block.state.properties.WoodType.OAK);
+    }
+
+    public static Block createStairs(BlockState baseBlockState, BlockBehaviour.Properties props) {
+        return new StairBlock(baseBlockState, props);
     }
 }

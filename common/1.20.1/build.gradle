@@ -1,5 +1,5 @@
-architectury {
-    common rootProject.ext.enabled_platforms.split(',')
+plugins {
+    id 'fabric-loom'
 }
 
 loom {
@@ -19,17 +19,28 @@ sourceSets {
 }
 
 dependencies {
-    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
-    // which get remapped to the correct annotations on each platform.
-    // Do NOT use other classes from Fabric Loader.
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+}
 
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    sourceSets.main.java.srcDirs.each { dir -> commonJava dir }
+    sourceSets.main.resources.srcDirs.each { dir -> commonResources dir }
 }
 
 // NBT Structure Multi-Version Conversion
-// Converts 1.21.1 NBT structure files to 1.20.1 format.
-// To enable: set enable_nbt_conversion=true in gradle.properties
-// and update inputDir/outputDir paths to match your mod ID.
 if (rootProject.findProperty('enable_nbt_conversion') == 'true') {
     sourceSets {
         main {
@@ -47,7 +58,6 @@ if (rootProject.findProperty('enable_nbt_conversion') == 'true') {
             project.ext.minecraft_version == '1.20.1'
         }
 
-        // 1.21.1 uses 'structure' (singular), 1.20.1 uses 'structures' (plural)
         def inputDir = rootProject.file('common/1.21.1/src/main/resources/data/justblockshapes/structure')
         def outputDir = file('build/generated/nbt/data/justblockshapes/structures')
         def scriptPath = rootProject.file('scripts/convert_nbt_1_21_to_1_20.py')
@@ -97,7 +107,6 @@ if (rootProject.findProperty('enable_nbt_conversion') == 'true') {
     }
 }
 
-// Expand pack_format variable in pack.mcmeta
 processResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     inputs.property 'pack_format', project.ext.pack_format
@@ -107,7 +116,11 @@ processResources {
     }
 }
 
-// Set duplicates strategy for sourcesJar to avoid conflicts
+// Common module only provides sources to platform modules — no jar remapping needed
+tasks.named('remapJar') {
+    enabled = false
+}
+
 tasks.named('sourcesJar') {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
