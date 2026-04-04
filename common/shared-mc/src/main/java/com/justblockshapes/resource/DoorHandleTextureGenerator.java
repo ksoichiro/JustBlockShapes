@@ -67,12 +67,27 @@ public class DoorHandleTextureGenerator {
     }
 
     private static BufferedImage readTexture(String classpathPath) {
+        // Strip leading '/' for ClassLoader.getResourceAsStream
+        String resourcePath = classpathPath.startsWith("/") ? classpathPath.substring(1) : classpathPath;
+
+        // Try mod's own ClassLoader first (works with fabric-loom)
         try (InputStream is = DoorHandleTextureGenerator.class.getResourceAsStream(classpathPath)) {
-            if (is == null) return null;
-            return ImageIO.read(is);
+            if (is != null) return ImageIO.read(is);
         } catch (Exception e) {
-            return null;
+            // Fall through
         }
+
+        // Try Minecraft's ClassLoader (needed for net.neoforged.moddev which uses a separate ClassLoader)
+        try {
+            ClassLoader mcClassLoader = net.minecraft.world.level.block.Block.class.getClassLoader();
+            try (InputStream is = mcClassLoader.getResourceAsStream(resourcePath)) {
+                if (is != null) return ImageIO.read(is);
+            }
+        } catch (Exception e) {
+            // Fall through
+        }
+
+        return null;
     }
 
     /**
