@@ -1,8 +1,8 @@
 # Just Block Shapes
 
-Completes the vanilla building palette with 365+ missing block shape variants.
+Completes the vanilla building palette with missing block shape variants.
 
-A Minecraft mod that adds missing wall, stairs, slab, trapdoor, door, pressure plate, and button variants for vanilla building blocks.
+A Minecraft mod that adds missing wall, stairs, slab, fence, fence gate, trapdoor, door, pressure plate, and button variants for vanilla building blocks.
 
 ![overview](docs/screenshots/05_many-types-of-blocks.png)
 
@@ -14,19 +14,26 @@ A Minecraft mod that adds missing wall, stairs, slab, trapdoor, door, pressure p
 
 Each base block receives the variant types listed below. Variants that already exist in vanilla are not duplicated.
 
-### Wall + Trapdoor + Door + Pressure Plate + Button (stairs + slab already exist in vanilla)
-Quartz, Smooth Quartz, Polished Andesite, Polished Granite, Polished Diorite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Sandstone, Smooth Red Sandstone
+### Fence + Fence Gate + Trapdoor + Door + Pressure Plate + Button (stairs + slab + wall already exist)
+Cobblestone, Mossy Cobblestone, Stone Bricks, Mossy Stone Bricks, Granite, Diorite, Andesite, Bricks, Sandstone, Red Sandstone, Prismarine, Blackstone, Polished Blackstone Bricks, Cobbled Deepslate, Polished Deepslate, Deepslate Bricks, Deepslate Tiles, Red Nether Bricks, End Stone Bricks, Mud Bricks, Tuff Bricks, Polished Tuff
 
-### Stairs + Wall + Trapdoor + Door + Pressure Plate + Button (slab already exists)
+### Fence Gate + Trapdoor + Door + Pressure Plate + Button (stairs + slab + wall + fence already exist)
+Nether Bricks
+
+### Fence + Fence Gate + Trapdoor + Door (stairs + slab + wall + pressure plate + button already exist)
+Polished Blackstone
+
+### Wall + Fence + Fence Gate + Trapdoor + Door + Pressure Plate + Button (stairs + slab already exist)
+Polished Granite, Polished Diorite, Polished Andesite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Sandstone, Smooth Red Sandstone, Quartz, Smooth Quartz
+
+### Stairs + Wall + Fence + Fence Gate + Trapdoor + Door + Pressure Plate + Button (slab already exists)
 Smooth Stone, Cut Sandstone, Cut Red Sandstone
 
-### Wall + Trapdoor + Door (pressure plate + button already exist in vanilla)
+### Wall + Fence + Fence Gate + Trapdoor + Door (pressure plate + button already exist)
 Stone
 
-### Stairs + Slab + Wall + Trapdoor + Door + Pressure Plate + Button
-Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked Polished Blackstone Bricks, Cracked Deepslate Tiles, Cracked Nether Bricks, End Stone, Gilded Blackstone, Terracotta (plain), 16 Dyed Terracotta, 16 Concrete
-
-**Total: ~365 new blocks**
+### All variants (stairs + slab + wall + fence + fence gate + trapdoor + door + pressure plate + button)
+Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked Deepslate Tiles, Cracked Polished Blackstone Bricks, Cracked Nether Bricks, End Stone, Gilded Blackstone, Tuff, Obsidian, Crying Obsidian, Packed Mud, Dripstone Block, Amethyst Block, Terracotta (plain), 16 Dyed Terracotta, 16 Concrete
 
 ## Installation
 
@@ -46,7 +53,6 @@ Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked 
 # Run client for testing
 ./gradlew fabric:runClient -Ptarget_mc_version=1.21.1
 ./gradlew neoforge:runClient -Ptarget_mc_version=1.21.1
-./gradlew forge:runClient -Ptarget_mc_version=1.21.1
 ```
 
 ## License

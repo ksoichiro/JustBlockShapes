@@ -1,6 +1,6 @@
 # Just Block Shapes - Modrinth Description
 
-**Completes the vanilla building palette with 365+ missing block shape variants.**
+**Completes the vanilla building palette with missing block shape variants.**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Every vanilla material deserves a full set of block shapes.**
 
-Just Block Shapes adds the missing walls, stairs, slabs, trapdoors, doors, pressure plates, and buttons for vanilla building blocks that should have had them all along. No new textures, no custom assets — every block looks like it was always part of vanilla Minecraft.
+Just Block Shapes adds the missing walls, stairs, slabs, fences, fence gates, trapdoors, doors, pressure plates, and buttons for vanilla building blocks that should have had them all along. No new textures, no custom assets — every block looks like it was always part of vanilla Minecraft.
 
 ---
 
@@ -21,11 +21,12 @@ Vanilla Minecraft has inconsistencies where certain building materials lack shap
 - **Walls** for Quartz, Smooth Quartz, Polished Andesite/Granite/Diorite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Stone, Smooth Sandstone, Smooth Red Sandstone, Cut Sandstone, Cut Red Sandstone, Stone, and more
 - **Stairs** for Smooth Stone, Cut Sandstone, Cut Red Sandstone, Calcite, Cracked Stone Bricks, and more
 - **Slabs** for Calcite, Cracked Stone Bricks, Smooth Basalt, End Stone, and more
+- **Fences, Fence Gates** for all targeted blocks
 - **Trapdoors, Doors, Pressure Plates, Buttons** for most targeted blocks
 
 ### 🎨 Terracotta & Concrete — Full Shape Sets
 
-All **16 dyed terracotta** colors and all **16 concrete** colors get the full treatment: stairs, slabs, walls, trapdoors, doors, pressure plates, and buttons.
+All **16 dyed terracotta** colors and all **16 concrete** colors get the full treatment: stairs, slabs, walls, fences, fence gates, trapdoors, doors, pressure plates, and buttons.
 
 Plain **terracotta** is also included.
 
@@ -42,12 +43,13 @@ Plain **terracotta** is also included.
 
 | Base Block | Added Variants |
 |---|---|
-| Quartz Block, Smooth Quartz, Polished Andesite/Granite/Diorite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Sandstone, Smooth Red Sandstone | Wall, Trapdoor, Door, Pressure Plate, Button |
-| Smooth Stone, Cut Sandstone, Cut Red Sandstone | Stairs, Wall, Trapdoor, Door, Pressure Plate, Button |
-| Stone | Wall, Trapdoor, Door |
-| Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked Polished Blackstone Bricks, Cracked Deepslate Tiles, Cracked Nether Bricks, End Stone, Gilded Blackstone, Terracotta | Stairs, Slab, Wall, Trapdoor, Door, Pressure Plate, Button |
-| 16 Dyed Terracotta | Stairs, Slab, Wall, Trapdoor, Door, Pressure Plate, Button |
-| 16 Concrete | Stairs, Slab, Wall, Trapdoor, Door, Pressure Plate, Button |
+| Cobblestone, Mossy Cobblestone, Stone Bricks, Mossy Stone Bricks, Granite, Diorite, Andesite, Bricks, Sandstone, Red Sandstone, Prismarine, Blackstone, Polished Blackstone Bricks, Cobbled Deepslate, Polished Deepslate, Deepslate Bricks, Deepslate Tiles, Red Nether Bricks, End Stone Bricks, Mud Bricks, Tuff Bricks, Polished Tuff | Fence, Fence Gate, Trapdoor, Door, Pressure Plate, Button |
+| Nether Bricks | Fence Gate, Trapdoor, Door, Pressure Plate, Button |
+| Polished Granite/Diorite/Andesite, Dark Prismarine, Prismarine Bricks, Purpur, Smooth Sandstone, Smooth Red Sandstone, Quartz, Smooth Quartz | Wall, Fence, Fence Gate, Trapdoor, Door, Pressure Plate, Button |
+| Smooth Stone, Cut Sandstone, Cut Red Sandstone | Stairs, Wall, Fence, Fence Gate, Trapdoor, Door, Pressure Plate, Button |
+| Stone | Wall, Fence, Fence Gate, Trapdoor, Door |
+| Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks/Tiles, Cracked Polished Blackstone Bricks, Cracked Nether Bricks, End Stone, Gilded Blackstone, Tuff, Obsidian, Crying Obsidian, Packed Mud, Dripstone Block, Amethyst Block, Terracotta | All variants |
+| 16 Dyed Terracotta, 16 Concrete | All variants |
 
 Only shapes that are **missing in vanilla** are added — no duplicates.
 
