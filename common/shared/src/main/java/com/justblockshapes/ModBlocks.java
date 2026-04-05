@@ -100,7 +100,7 @@ public class ModBlocks {
 
         // --- Nether family ---
         // nether_bricks: vanilla has stairs(nether_brick_), slab(nether_brick_), wall(nether_brick_), fence(nether_brick_)
-        withoutStairsSlabWall("nether_bricks");
+        BLOCK_ENTRIES.add(new BlockEntry("nether_bricks", EnumSet.complementOf(EnumSet.of(VariantType.STAIRS, VariantType.SLAB, VariantType.WALL, VariantType.FENCE))));
         withoutStairsSlabWall("red_nether_bricks");
         allVariants("cracked_nether_bricks");
 
