@@ -8,7 +8,7 @@ A Minecraft mod that adds missing wall, stairs, slab, trapdoor, door, pressure p
 
 - **1.21.1, 1.21.3–1.21.11**: Fabric + NeoForge + Forge
 - **1.20.1**: Fabric + Forge
-- **26.1**: NeoForge
+- **26.1**: NeoForge (Fabric/Forge blocked by upstream issues)
 
 ## Added Blocks
 

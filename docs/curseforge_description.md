@@ -67,7 +67,7 @@ This mod supports **Fabric**, **NeoForge**, and **Forge**!
 - **Mod Loader**:
   - **Fabric**: Fabric Loader + Fabric API (1.20.1, 1.21.1–1.21.11)
   - **NeoForge**: NeoForge (1.21.1–1.21.11, 26.1)
-  - **Forge**: Forge (1.20.1, 1.21.1–1.21.11)
+  - **Forge**: Forge (1.20.1, 1.21.1–1.21.11) *(26.1 blocked by upstream bug)*
 - **No additional dependencies** — no Architectury API or other library mods required at runtime
 
 ### Compatibility
