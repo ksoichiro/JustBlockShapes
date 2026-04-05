@@ -69,12 +69,20 @@ if [ -z "$VERSION_TYPES" ] || [ "$VERSION_TYPES" = "null" ]; then
 fi
 
 # Find the Minecraft version type ID (e.g., "Minecraft 1.21" for version "1.21.1")
+# For 3-part versions like "1.21.1", strip last part to get "1.21".
+# For 2-part versions like "26.1", try "26" first, then fall back to "26.1".
 MC_MAJOR="${GAME_VERSION%.*}"
 MC_TYPE_ID=$(echo "$VERSION_TYPES" | jq --arg mc "Minecraft $MC_MAJOR" \
   '[.[] | select(.name == $mc)] | first | .id // empty')
 
+if [ -z "$MC_TYPE_ID" ] && [ "$MC_MAJOR" = "${GAME_VERSION%%.*}" ]; then
+  # 2-part version: the stripped result equals the first segment, try full version
+  MC_TYPE_ID=$(echo "$VERSION_TYPES" | jq --arg mc "Minecraft $GAME_VERSION" \
+    '[.[] | select(.name == $mc)] | first | .id // empty')
+fi
+
 if [ -z "$MC_TYPE_ID" ]; then
-  echo "Error: Could not find version type for Minecraft $MC_MAJOR" >&2
+  echo "Error: Could not find version type for Minecraft $MC_MAJOR (or $GAME_VERSION)." >&2
   exit 1
 fi
 
@@ -139,7 +147,8 @@ METADATA=$(jq -nc \
 echo "Metadata: $METADATA"
 
 # Upload file
+# Use --form-string to prevent curl from interpreting ';' in metadata as parameter separator
 curl -i -X POST "$CURSEFORGE_API/projects/$CURSEFORGE_PROJECT_ID/upload-file" \
   -H "X-Api-Token: $CURSEFORGE_TOKEN" \
-  -F "metadata=$METADATA" \
+  --form-string "metadata=$METADATA" \
   -F "file=@${JAR_PATH}"

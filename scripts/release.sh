@@ -90,7 +90,8 @@ if [ "${EXISTING:-0}" -gt 0 ]; then
 fi
 
 # Create a new version
+# Use --form-string to prevent curl from interpreting ';' in data as parameter separator
 curl -i -X POST "https://api.modrinth.com/v2/version" \
   -H "Authorization: $MODRINTH_TOKEN" \
-  -F "data=$DATA" \
+  --form-string "data=$DATA" \
   -F "file=@${JAR_PATH}"
