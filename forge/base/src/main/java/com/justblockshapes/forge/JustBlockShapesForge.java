@@ -4,11 +4,18 @@ import com.justblockshapes.Compat;
 import com.justblockshapes.JustBlockShapes;
 import com.justblockshapes.ModBlocks;
 import com.justblockshapes.ModBlocks.VariantType;
+import com.justblockshapes.resource.InMemoryResourcePack;
+import com.justblockshapes.resource.RuntimeResourceGenerator;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +61,7 @@ public class JustBlockShapesForge {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::addPackFinders);
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -62,5 +70,26 @@ public class JustBlockShapesForge {
                 event.accept(block);
             }
         }
+    }
+
+    private void addPackFinders(AddPackFindersEvent event) {
+        String packId = JustBlockShapes.MOD_ID + "_resources";
+        InMemoryResourcePack resourcePack = new InMemoryResourcePack(packId);
+        RuntimeResourceGenerator.generate(resourcePack);
+
+        event.addRepositorySource(consumer -> {
+            Pack pack = Pack.readMetaAndCreate(
+                packId,
+                Component.literal("JustBlockShapes Resources"),
+                true,
+                id -> resourcePack,
+                event.getPackType(),
+                Pack.Position.TOP,
+                PackSource.BUILT_IN
+            );
+            if (pack != null) {
+                consumer.accept(pack);
+            }
+        });
     }
 }
