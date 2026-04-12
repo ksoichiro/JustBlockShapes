@@ -1,0 +1,64 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = neoform_version
+
+    accessTransformers {
+        file('src/main/resources/justblockshapes.cfg')
+    }
+}
+
+dependencies {
+    // Mixin annotations for common code
+    compileOnly 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common/shared/src/main/java')
+    }
+    resources {
+        srcDir '../1.21.3/src/main/generated'
+    }
+}
+
+// Add shared-resources but exclude 26.1-specific files
+tasks.named('processResources') {
+    from('../shared-resources') {
+        exclude 'justblockshapes.mixins.json'
+    }
+    duplicatesStrategy = 'include'
+}
+
+tasks.named('sourcesJar') {
+    from('../shared-resources') {
+        exclude 'justblockshapes.mixins.json'
+    }
+    duplicatesStrategy = 'include'
+}
+
+// Include only gametest package from shared-mc (other packages have 26.1-specific versions)
+tasks.named('compileJava') {
+    source fileTree('../shared-mc/src/main/java') {
+        include 'com/justblockshapes/gametest/**'
+    }
+}
+
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    sourceSets.main.java.srcDirs.each { dir -> commonJava dir }
+    sourceSets.main.resources.srcDirs.each { dir -> commonResources dir }
+}

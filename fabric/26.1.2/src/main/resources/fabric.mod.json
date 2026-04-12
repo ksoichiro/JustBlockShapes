@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "justblockshapes",
+  "version": "${version}",
+  "name": "Just Block Shapes",
+  "description": "Adds missing wall, stairs, and slab variants for vanilla building blocks.",
+  "authors": ["ksoichiro"],
+  "contact": {
+    "homepage": "https://github.com/ksoichiro/JustBlockShapes",
+    "sources": "https://github.com/ksoichiro/JustBlockShapes"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/justblockshapes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.justblockshapes.fabric.JustBlockShapesFabric"],
+    "client": ["com.justblockshapes.fabric.JustBlockShapesFabricClient"],
+    "fabric-gametest": ["com.justblockshapes.gametest.JustBlockShapesGameTest"]
+  },
+  "accessWidener": "justblockshapes.accesswidener",
+  "mixins": ["justblockshapes.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=25"
+  }
+}

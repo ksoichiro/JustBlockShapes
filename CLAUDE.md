@@ -21,6 +21,7 @@ Supported versions:
 - 1.21.1, 1.21.3–1.21.11: Fabric, NeoForge, Forge
 - 1.20.1: Fabric, Forge
 - 26.1: NeoForge (Fabric/Forge blocked by upstream issues)
+- 26.1.1, 26.1.2: Fabric, NeoForge, Forge
 
 ## Build Commands
 

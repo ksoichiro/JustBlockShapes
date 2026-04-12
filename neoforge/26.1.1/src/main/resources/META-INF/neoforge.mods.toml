@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL-3.0-only"
+showAsResourcePack=false
+
+[[mods]]
+modId="justblockshapes"
+version="${version}"
+displayName="Just Block Shapes"
+description='''
+Adds missing wall, stairs, and slab variants for vanilla building blocks.
+'''
+authors="ksoichiro"
+displayURL="https://github.com/ksoichiro/JustBlockShapes"
+
+[[mixins]]
+config="justblockshapes.mixins.json"
+
+[[dependencies.justblockshapes]]
+modId="neoforge"
+type="required"
+versionRange="[${neoforge_version},)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.justblockshapes]]
+modId="minecraft"
+type="required"
+versionRange="[${minecraft_version},)"
+ordering="NONE"
+side="BOTH"
