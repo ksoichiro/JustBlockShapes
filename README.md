@@ -44,6 +44,16 @@ Calcite, Cracked Stone Bricks, Smooth Basalt, Cracked Deepslate Bricks, Cracked 
 
 ## Building from Source
 
+This repository uses a Git submodule (`gradle/shared`) for the shared release Gradle scripts. Initialize it after cloning:
+
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://github.com/ksoichiro/JustBlockShapes.git
+
+# Or, if already cloned without submodules
+git submodule update --init
+```
+
 ```bash
 # Build
 ./gradlew build

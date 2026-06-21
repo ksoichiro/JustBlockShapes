@@ -112,10 +112,27 @@ All version differences are abstracted via `Compat.java` in each `common/{versio
 - Forge 60+ (1.21.10+): Same as 56–59 but `AddPackFindersEvent` and `BuildCreativeModeTabContentsEvent` moved to the FORGE (default) bus
 - Forge 56+: `@SubscribeEvent` is in `net.minecraftforge.eventbus.api.listener` (not `net.minecraftforge.eventbus.api`). All methods in `@EventBusSubscriber` classes are scanned, so helper methods must be in separate classes
 
-## Scripts
+## Release
 
-- `scripts/release.sh` - Upload a single JAR to Modrinth (requires `.envrc` with `MODRINTH_TOKEN`)
-- `scripts/release-all.sh` - Upload all JARs in `build/release/` to Modrinth
+Release tasks come from the [minecraft-mod-gradle-scripts](https://github.com/ksoichiro/minecraft-mod-gradle-scripts) submodule at `gradle/shared` (applied in `build.gradle`). After cloning, run `git submodule update --init` to populate it.
+
+- `gradle/shared/release-modrinth.gradle` - `releaseModrinth` task: upload JARs in `build/release/` to Modrinth
+- `gradle/shared/release-curseforge.gradle` - `releaseCurseForge` task: upload JARs in `build/release/` to CurseForge
+- `gradle/shared/changelog-utils.gradle`, `gradle/shared/version-utils.gradle` - shared helpers used by both
+
+> Only the release scripts are used from the submodule. `gradle/multi-version-tasks.gradle` remains a local copy (the submodule's version assumes a `common-<version>` multi-project layout incompatible with this project's single `:common` include).
+
+```bash
+# Collect JARs first (gradle/multi-version-tasks.gradle), then upload
+./gradlew collectJars
+./gradlew releaseModrinth        # all JARs in build/release/
+./gradlew releaseModrinth -Pjar=justblockshapes-0.4.0+1.21.1-fabric.jar   # single JAR
+./gradlew releaseCurseForge
+```
+
+API tokens are read from environment variables: `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`.
+Release config is in `gradle.properties`: `release_project_name`, `modrinth_project_id`, `curseforge_project_id`.
+Changelog is taken from `changelog-{version}.md` if present, otherwise the matching `## [{version}]` section of `CHANGELOG.md`.
 
 ## Resources Location
 

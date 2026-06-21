@@ -114,3 +114,11 @@ subprojects {
 
 // Multi-version build tasks (cleanAll, buildAll, etc.)
 apply from: 'gradle/multi-version-tasks.gradle'
+
+// Release tasks (releaseModrinth, releaseCurseForge) come from the
+// minecraft-mod-gradle-scripts submodule at gradle/shared.
+if (!file('gradle/shared/release-modrinth.gradle').exists()) {
+    throw new GradleException("Shared Gradle scripts not found. Run: git submodule update --init")
+}
+apply from: 'gradle/shared/release-modrinth.gradle'
+apply from: 'gradle/shared/release-curseforge.gradle'
